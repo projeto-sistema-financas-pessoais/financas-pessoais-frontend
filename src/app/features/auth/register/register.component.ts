@@ -73,8 +73,7 @@ export class RegisterComponent implements OnInit, OnDestroy{
     const dia = Number(data.substring(0, 2));
     const mes = Number(data.substring(2, 4));
     const ano = Number(data.substring(4, 8));
-    // const dataNascimentoTimestamp =this.formateDate(this.resourceForm.value.data_nascimento).toISOString()
-    // valueSubmit.data_nascimento = dataNascimentoTimestamp
+ 
     return new Date(ano, mes, dia)
 
 
@@ -82,6 +81,10 @@ export class RegisterComponent implements OnInit, OnDestroy{
 
   submitForm(){
     let valueSubmit: Register = Object.assign(new Register(), this.resourceForm.value);
+    if(valueSubmit.data_nascimento != null){
+      const dataNascimentoTimestamp =this.formateDate(this.resourceForm.value.data_nascimento).toISOString()
+      valueSubmit.data_nascimento = dataNascimentoTimestamp
+    }
 
     this.registerService.register(valueSubmit)
     .pipe(takeUntil(this.ngUnsubscribe))

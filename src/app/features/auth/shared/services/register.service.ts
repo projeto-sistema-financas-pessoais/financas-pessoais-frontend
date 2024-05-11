@@ -24,6 +24,7 @@ export class RegisterService {
         Pragma: "no-cache",
       })
     };
+    console.log(requestData)
     return this.http.post<any>(`${environment.financas}/clientes/`,
       requestData
     )
