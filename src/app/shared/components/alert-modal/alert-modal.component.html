@@ -1,0 +1,13 @@
+<div class="margin-position space">
+  <div class="alert alert-{{type}} alert-dismissible fade show no-margin" role="alert">
+    <i *ngIf="type == 'danger'" class="mx-2 fa-solid fa-circle-exclamation"></i>
+    <i *ngIf="type == 'warning'" class="mx-2 fa-solid fa-triangle-exclamation"></i>
+    <i *ngIf="type == 'success'" class="mx-2 fa-solid fa-circle-check"></i>
+    <i  *ngIf="type == 'info'" class="mx-2 fa-solid fa-circle-info"></i>
+
+    {{message}}
+    <button *ngIf="cantClose" type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
