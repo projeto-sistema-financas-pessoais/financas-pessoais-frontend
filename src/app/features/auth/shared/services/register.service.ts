@@ -24,8 +24,8 @@ export class RegisterService {
         Pragma: "no-cache",
       })
     };
-    return this.http.post<any>(`${environment.financas}/auth/register`,
-      requestData, httpOptions
+    return this.http.post<any>(`${environment.financas}/clientes/`,
+      requestData
     )
   }
 }

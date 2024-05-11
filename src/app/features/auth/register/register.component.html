@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="email">Data de Nascimento<b> * </b></label>
-                    <input type="text" class="form-control" id="date" formControlName="data_nascimento" placeholder="Digite sua Data de Nascimento">
+                    <input type="text" class="form-control" id="date" formControlName="data_nascimento" placeholder="Digite sua Data de Nascimento" mask="00/00/0000">
                     <app-form-field-error [control]="resourceForm.get('data_nascimento')"></app-form-field-error>
 
                 </div>
@@ -37,7 +37,7 @@
 
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="submit" class=" btn btn-primary btn-block btn-lg" >Cadastrar</button>
+                    <button type="submit" [disabled]="" class=" btn btn-primary btn-block btn-lg" >Cadastrar</button>
     
                 </div>
             </form>
