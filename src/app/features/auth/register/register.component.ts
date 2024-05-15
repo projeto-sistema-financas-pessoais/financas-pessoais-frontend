@@ -35,8 +35,7 @@ export class RegisterComponent implements OnInit, OnDestroy{
   protected buildResourceForm(): void {
     this.resourceForm = this.formBuilder.group({
       nome_completo: [null, [Validators.required, Validators.minLength(3)]],
-      cpf: [null, [Validators.required, Validators.minLength(11)]],
-      data_nascimento: [null],
+      data_nascimento: [null, [Validators.required, this.validatorsDate.bind(this)]],
       email: [null, [Validators.required, Validators.email]],
       senha: [null, [Validators.required, Validators.minLength(6)]],
     });
@@ -47,37 +46,52 @@ export class RegisterComponent implements OnInit, OnDestroy{
     if (!date) {
       return null;
     }
+  
+    const dateFormat = this.formateDate(date);
+  
+    const year =  dateFormat.getFullYear();
+    const month = dateFormat.getMonth() +1;
 
-    const [dia, mes, ano] = date.split('/').map(Number);
-
-    const data = new Date(ano, mes - 1, dia); // mês é base 0 em Date
-    if (
-      data.getFullYear() !== ano ||
-      data.getMonth() + 1 !== mes ||
-      data.getDate() !== dia
-    ) {
-      return { dataInvalida: true };
+    console.log( "mes", month)
+    const day = dateFormat.getDate();
+  
+    const yearToday = new Date().getFullYear();
+  
+    if (year < 1900 || year > yearToday) {
+      return { dateInvalid: true };
+    }
+  
+    if (month < 1 || month > 12) {
+      return { dateInvalid: true };
+    }
+  
+    let maxDaysInMonth = 31;
+    if (month !== 2) {
+      maxDaysInMonth = new Date(year, month, 0).getDate();
+    } else {
+      if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
+        maxDaysInMonth = 29;
+      } else {
+        maxDaysInMonth = 28;
+      }
     }
 
-    const anoAtual = new Date().getFullYear();
-    if (ano < 1900 || ano > anoAtual) {
-      return { anoInvalido: true };
+    console.log( "oi", maxDaysInMonth, month)
+
+    if (day < 1 || day > maxDaysInMonth) {
+      return { dateInvalid: true };
     }
 
     return null;
   }
 
-
   formateDate(data: string): Date {
-    // A data vem no formato "DDMMYYYY", então vamos formatá-la para "YYYY-MM-DD"
     const dia = Number(data.substring(0, 2));
-    const mes = Number(data.substring(2, 4));
+    const mes = Number(data.substring(2, 4))-1;
     const ano = Number(data.substring(4, 8));
- 
+    console.log(dia, mes, ano)
     return new Date(ano, mes, dia)
-
-
-}
+  }
 
   submitForm(){
     let valueSubmit: Register = Object.assign(new Register(), this.resourceForm.value);
@@ -95,7 +109,10 @@ export class RegisterComponent implements OnInit, OnDestroy{
       },
       error:(error: any) =>{
         console.log("Error", error, valueSubmit);
-        this.alertService.showAlertDanger("Erro ao fazer cadastro!")
+        if(error.status == 409)
+          this.alertService.showAlertDanger("Email já cadastrado!")
+        else
+          this.alertService.showAlertDanger("Erro ao fazer cadastro!")
 
       }
     })
