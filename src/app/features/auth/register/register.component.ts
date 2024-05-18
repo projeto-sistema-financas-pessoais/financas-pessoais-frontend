@@ -35,55 +35,55 @@ export class RegisterComponent implements OnInit, OnDestroy{
   protected buildResourceForm(): void {
     this.resourceForm = this.formBuilder.group({
       nome_completo: [null, [Validators.required, Validators.minLength(3)]],
-      data_nascimento: [null, [Validators.required]],
+      data_nascimento: [null, [Validators.required, this.validatorsDate.bind(this)]],
       email: [null, [Validators.required, Validators.email]],
       senha: [null, [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  // validatorsDate(control: AbstractControl): { [key: string]: any } | null {
-  //   const date = control.value;
-  //   if (!date) {
-  //     return null;
-  //   }
+  validatorsDate(control: AbstractControl): { [key: string]: any } | null {
+    const date = control.value;
+    if (!date) {
+      return null;
+    }
   
-  //   const dateFormat = this.formateDate(date);
+    const dateFormat = this.formateDate(date);
   
-  //   const year =  dateFormat.getFullYear();
-  //   const month = dateFormat.getMonth() +1;
+    const year =  dateFormat.getFullYear();
+    const month = dateFormat.getMonth() +1;
 
-  //   console.log( "mes", month)
-  //   const day = dateFormat.getDate();
+    console.log( "mes", month)
+    const day = dateFormat.getDate();
   
-  //   const yearToday = new Date().getFullYear();
+    const yearToday = new Date().getFullYear();
   
-  //   if (year < 1900 || year > yearToday) {
-  //     return { dateInvalid: true };
-  //   }
+    if (year < 1900 || year > yearToday) {
+      return { dateInvalid: true };
+    }
   
-  //   if (month < 1 || month > 12) {
-  //     return { dateInvalid: true };
-  //   }
+    if (month < 1 || month > 12) {
+      return { dateInvalid: true };
+    }
   
-  //   let maxDaysInMonth = 31;
-  //   if (month !== 2) {
-  //     maxDaysInMonth = new Date(year, month, 0).getDate();
-  //   } else {
-  //     if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
-  //       maxDaysInMonth = 29;
-  //     } else {
-  //       maxDaysInMonth = 28;
-  //     }
-  //   }
+    let maxDaysInMonth = 31;
+    if (month !== 2) {
+      maxDaysInMonth = new Date(year, month, 0).getDate();
+    } else {
+      if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
+        maxDaysInMonth = 29;
+      } else {
+        maxDaysInMonth = 28;
+      }
+    }
 
-  //   console.log( "oi", maxDaysInMonth, month)
+    console.log( "oi", maxDaysInMonth, month)
 
-  //   if (day < 1 || day > maxDaysInMonth) {
-  //     return { dateInvalid: true };
-  //   }
+    if (day < 1 || day > maxDaysInMonth) {
+      return { dateInvalid: true };
+    }
 
-  //   return null;
-  // }
+    return null;
+  }
 
   formateDate(data: string): Date {
     const dia = Number(data.substring(0, 2));
