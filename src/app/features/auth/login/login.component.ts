@@ -41,17 +41,20 @@ export class LoginComponent {
 
 
   submitForm(){
+    console.log("okayyy")
     let resource = Object.assign({}, this.resourceForm.value);
     this.authService.login(resource)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
         next: (response) => {
           this.response = response
-          sessionStorage.setItem('access_token', JSON.stringify(response.access_token));
+          sessionStorage.setItem('access_token', JSON.stringify(response.acesso_token));
+          sessionStorage.setItem('user_name', JSON.stringify(response.nome));
+
           console.log("login response", response)
           this.alertService.showAlertSuccess("Sucesso ao fazer login")
 
-
+          window.location.href = '/inicio'
         },
         error: (error) => {
           console.log("error login", error)

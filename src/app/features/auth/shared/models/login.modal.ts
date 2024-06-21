@@ -4,6 +4,6 @@ export class Login {
 }
 
 export class LoginResponse{
-    name!: string;
-    access_token!: string;
+    nome!: string;
+    acesso_token!: string;
 }

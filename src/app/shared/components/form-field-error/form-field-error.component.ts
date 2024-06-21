@@ -40,6 +40,8 @@ import { AbstractControl, FormControl } from "@angular/forms";
       }else if(this.control?.errors?.['min']){
         const requiredLenght = this.control.errors?.['min'].min;
         return `Deve ter no mínimo ${requiredLenght} caracteres`
+      }else if(this.control?.errors?.['formatInvalid']){
+        return 'Formato de data inválida';
       }else if(this.control?.errors?.['dateInvalid']){
         return 'Data inválida';
       }

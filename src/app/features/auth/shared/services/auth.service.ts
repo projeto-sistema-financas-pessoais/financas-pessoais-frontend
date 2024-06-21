@@ -20,13 +20,14 @@ export class AuthService {
   }
 
   register(requestData: Register): Observable<any> {
-    return this.http.post<any>(`${environment.financas}/clientes/`,
+    return this.http.post<any>(`${environment.financas}/auth/register/`,
       requestData
     )
   }
 
 
   login(requestData: Login): Observable<LoginResponse>{
+    console.log(requestData, `${environment.financas}/auth/login`)
     return this.http.post<LoginResponse>(`${environment.financas}/auth/login`,
     requestData
     )
@@ -52,4 +53,9 @@ export class AuthService {
     
     return true;
   }
+
+  public GetUser(): string | null{
+    return  JSON.parse(sessionStorage.getItem('user_name')!) as string;
+  }
+
 }
