@@ -4,11 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
 
-      {path: '', redirectTo: '/cadastro', pathMatch:'full'},
-      {path: '**', redirectTo:'/cadastro'},
-  
+  {path: '', redirectTo: 'login', pathMatch:'full'},
+  // {path: '**', redirectTo:'login'},
+
   {
-    path: 'cadastro',
+    path: 'login',
       loadChildren: () =>
         import('./features/auth/auth.module').then((x) => x.AuthModule),
   },

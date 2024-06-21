@@ -5,9 +5,10 @@ import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IConfig, NgxMaskDirective, provideNgxMask } from 'ngx-mask'
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
-  declarations: [RegisterComponent],
+  declarations: [RegisterComponent, LoginComponent],
   imports: [
     SharedModule,
     AuthRoutingModule,

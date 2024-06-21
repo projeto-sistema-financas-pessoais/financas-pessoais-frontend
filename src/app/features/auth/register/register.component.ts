@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Register } from '../shared/models/register.model';
-import { RegisterService } from '../shared/services/register.service';
+import { AuthService } from '../shared/services/auth.service';
 import { Subject, takeUntil } from 'rxjs';
 import { AlertModalService } from 'src/app/shared/services/alert-modal.service';
 
@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit, OnDestroy{
 
   constructor(
     protected formBuilder: FormBuilder,
-    protected registerService: RegisterService,
+    protected authService: AuthService,
     protected alertService: AlertModalService
   ){}
 
@@ -100,7 +100,7 @@ export class RegisterComponent implements OnInit, OnDestroy{
       valueSubmit.data_nascimento = dataNascimentoTimestamp
     }
 
-    this.registerService.register(valueSubmit)
+    this.authService.register(valueSubmit)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe({
       next: async(data: any) =>{
