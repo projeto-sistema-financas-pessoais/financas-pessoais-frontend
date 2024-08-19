@@ -54,11 +54,14 @@ export class LoginComponent {
           console.log("login response", response)
           this.alertService.showAlertSuccess("Sucesso ao fazer login")
 
-          window.location.href = '/inicio'
+          setTimeout( () => {
+            window.location.href = '/inicio'
+          },1000)
+         
         },
         error: (error) => {
           console.log("error login", error)
-          this.alertService.showAlertDanger("Problema ao fazer login: verifique se digitou o usuário e a senha corretamante")
+          this.alertService.showAlertDanger("Problema ao fazer login: verifique se os dados estão corretos")
         }
       }
     )

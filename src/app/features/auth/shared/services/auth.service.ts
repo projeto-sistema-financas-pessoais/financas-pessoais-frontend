@@ -20,15 +20,15 @@ export class AuthService {
   }
 
   register(requestData: Register): Observable<any> {
-    return this.http.post<any>(`${environment.financas}/auth/register/`,
+    return this.http.post<any>(`${environment.financas}/usuarios/cadastro/`,
       requestData
     )
   }
 
 
   login(requestData: Login): Observable<LoginResponse>{
-    console.log(requestData, `${environment.financas}/auth/login`)
-    return this.http.post<LoginResponse>(`${environment.financas}/auth/login`,
+    console.log(requestData, `${environment.financas}/usuario/login`)
+    return this.http.post<LoginResponse>(`${environment.financas}/usuarios/login`,
     requestData
     )
   }
@@ -55,6 +55,7 @@ export class AuthService {
   }
 
   public GetUser(): string | null{
+
     return  JSON.parse(sessionStorage.getItem('user_name')!) as string;
   }
 

@@ -105,6 +105,10 @@ export class RegisterComponent implements OnInit, OnDestroy{
       next: async(data: any) =>{
         console.log("Salvo com sucesso! ", data)
         this.alertService.showAlertSuccess("Cadastro feito com sucesso!")
+
+        setTimeout( () => {
+          window.location.href= '/login';
+        },1000)
       },
       error:(error: any) =>{
         console.log("Error", error, valueSubmit);
