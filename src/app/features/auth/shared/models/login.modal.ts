@@ -1,9 +1,10 @@
 export class Login {
     email!: string;
-    password!: string;
+    senha!: string;
 }
 
 export class LoginResponse{
-    nome!: string;
     acesso_token!: string;
+    token_tipo!: string;
+    nome!: string;
 }

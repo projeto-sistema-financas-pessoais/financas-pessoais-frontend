@@ -41,7 +41,7 @@ export class LoginComponent {
 
 
   submitForm(){
-    console.log("okayyy")
+    console.log("okayyy", this.resourceForm.value)
     let resource = Object.assign({}, this.resourceForm.value);
     this.authService.login(resource)
       .pipe(takeUntil(this.ngUnsubscribe))

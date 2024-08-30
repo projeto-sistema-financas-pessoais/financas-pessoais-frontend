@@ -1,5 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { Register } from '../models/register.model';
@@ -26,11 +26,16 @@ export class AuthService {
   }
 
 
-  login(requestData: Login): Observable<LoginResponse>{
-    console.log(requestData, `${environment.financas}/usuario/login`)
-    return this.http.post<LoginResponse>(`${environment.financas}/usuarios/login`,
-    requestData
-    )
+  login(requestData: Login): Observable<LoginResponse> {
+    const body = new HttpParams()
+      .set('username', requestData.email) // FastAPI espera o campo 'username' para login
+      .set('password', requestData.senha);
+
+      console.log("ress", body.toString(), requestData.senha)
+
+    return this.http.post<LoginResponse>(`${environment.financas}/usuarios/login`, body.toString(), {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
   }
 
   public GetToken(){
