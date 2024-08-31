@@ -48,8 +48,8 @@ export class LoginComponent {
       .subscribe({
         next: (response) => {
           this.response = response
-          sessionStorage.setItem('access_token', JSON.stringify(response.acesso_token));
-          sessionStorage.setItem('user_name', JSON.stringify(response.nome));
+          sessionStorage.setItem('access_token', JSON.stringify(response.access_token));
+          sessionStorage.setItem('user_name', JSON.stringify(response.name));
 
           console.log("login response", response)
           this.alertService.showAlertSuccess("Sucesso ao fazer login")

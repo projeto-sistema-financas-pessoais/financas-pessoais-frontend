@@ -4,7 +4,7 @@ export class Login {
 }
 
 export class LoginResponse{
-    acesso_token!: string;
-    token_tipo!: string;
-    nome!: string;
+    access_token!: string;
+    token_type!: string;
+    name!: string;
 }

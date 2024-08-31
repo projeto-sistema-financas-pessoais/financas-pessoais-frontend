@@ -20,7 +20,7 @@ export class AuthService {
   }
 
   register(requestData: Register): Observable<any> {
-    return this.http.post<any>(`${environment.financas}/usuarios/cadastro/`,
+    return this.http.post<any>(`${environment.financas}/usuarios/cadastro`,
       requestData
     )
   }
