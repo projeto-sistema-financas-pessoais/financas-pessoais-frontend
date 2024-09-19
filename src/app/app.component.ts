@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'financas';
+  pageTitle: string = 'Finanças Pessoais';  // Título padrão
+
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        const routeData = this.route.root.firstChild?.snapshot.data;
+        this.pageTitle = routeData?.['title'] || 'Finanças Pessoais';  // Define o título baseado nos dados da rota
+      });
+  }
 }
