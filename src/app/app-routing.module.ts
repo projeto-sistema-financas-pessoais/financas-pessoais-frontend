@@ -11,6 +11,7 @@ const routes: Routes = [
   {
     path: 'inicio',
     canActivate: [authGuard],
+    data: {title: 'Início'},
     loadChildren: () =>
     import('./features/pages/landing-page/landing-page.module').then((x)=> x.LandingPageModule)
   },
