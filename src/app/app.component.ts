@@ -8,7 +8,7 @@ import { filter } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  pageTitle: string = 'Finanças Pessoais';  // Título padrão
+  pageTitle: string = '';  // Título padrão
 
   constructor(private router: Router, private route: ActivatedRoute) {}
 
@@ -17,7 +17,7 @@ export class AppComponent {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         const routeData = this.route.root.firstChild?.snapshot.data;
-        this.pageTitle = routeData?.['title'] || 'Finanças Pessoais';  // Define o título baseado nos dados da rota
+        this.pageTitle = routeData?.['title'] || '';  // Define o título baseado nos dados da rota
       });
   }
 }
