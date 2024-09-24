@@ -87,8 +87,9 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <div 
+    [style.min-width]="!isCollapsed && pageTitle!== 'Finanças Pessoais' ? '85vw ' : '95vw'"
     [ngClass]="pageTitle!== 'Finanças Pessoais' ? 'full-screen' : 'full-screen-login' ">
-      <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

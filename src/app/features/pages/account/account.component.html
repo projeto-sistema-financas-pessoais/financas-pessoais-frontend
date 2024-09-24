@@ -1,0 +1,90 @@
+
+
+<div class="container-fluid p-5 style-font">
+    <div class="d-flex justify-content-between">
+        <h4>Contas</h4>
+
+        <button type="button" class="btn btn btn-outline-success d-flex align-items-center text-center f-16 "
+        (click)="openAddModal()">
+            <i class="fa-solid fa-plus f-16 mx-2 "></i> Adicionar nova conta
+        </button>
+
+    </div>
+
+    <div class="container mt-5">
+
+        <ng-container *ngFor="let item of account"> 
+            <div class="item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <img class="icon" src="./assets/icons_user/bradesco.png" alt="">
+                    <div class="color-black-1">{{item.nome}}</div>
+                    <div class="btn-group">
+                        <i class="menu-icon fa-solid fa-ellipsis-vertical button-cursor"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                        <div class="dropdown-menu" id="dropdownMenu">
+                            <a class="dropdown-item button-cursor color-black-1"> <i class="fa-solid fa-trash"></i> Excluir</a>
+                            <a class="dropdown-item button-cursor color-black-1"> <i class="fa-regular fa-rectangle-xmark"></i> Desativar</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item button-cursor color-black-1"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="py-2 px-2">
+                    <div class="d-flex justify-content-start color-black-1">Tipo de conta: &nbsp;
+                        <span class="color-light-1">{{item.tipo_conta}}</span></div>
+                    <div class="d-flex justify-content-start color-black-1">Descrição:  &nbsp;
+                        <span class="color-light-1">
+                            {{item.descricao}}
+                        </span>
+                        
+                    </div>
+                </div>
+              
+            </div>
+        </ng-container>
+    
+    </div>
+</div>
+
+
+<app-modal #modal_default [modalConfig]="modalConfig">
+
+    <div modal-generic-content class="pt-3">
+
+        <form [formGroup]="resourceForm">
+            <div class="row">
+                <div class="form-group mb-3">
+                    <label for="nome">Nome da conta<b> * </b></label>
+                    <input type="text" class="form-control" id="nome" formControlName="nome" placeholder="Digite o nome da conta">
+                    <app-form-field-error [control]="resourceForm.get('nome')"></app-form-field-error>
+                </div>
+    
+                <div class="form-group mb-3 col-md-6 col-sm-12">
+                    <label for="nome">Ícone da conta<b> * </b></label>
+
+                    <img class="icon mx-3 button-cursor" src="./assets/icons_user/brb.png" alt="">
+                </div>
+                <div class="form-group mb-3 col-md-6 col-sm-12">
+                    <label for="nome">Tipo de conta<b> * </b></label>
+                    <select class="form-select" formControlName="tipo_conta" id="tipo_conta">
+                        <option value="" disabled [selected]="true">Selecione uma opção</option>
+                        <option *ngFor="let item of tipoConta" [value]="item">{{item}}</option>
+    
+                    </select>
+                    <app-form-field-error [control]="resourceForm.get('tipo_conta')"></app-form-field-error>
+                </div>
+    
+                
+                
+    
+                <div class="form-group mb-3">
+                    <label for="descricao">Descrição<b> * </b></label>
+                    <input type="text" class="form-control" id="descricao" formControlName="descricao" placeholder="Digite a descrição da conta">
+                    <app-form-field-error [control]="resourceForm.get('nome')"></app-form-field-error>
+                </div>
+            </div>
+           
+        </form>
+    
+    </div>
+</app-modal>
