@@ -1,6 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { AuthService } from '../auth/shared/services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,7 +17,10 @@ export class SidebarComponent {
 
 
 
-  constructor(private observer: BreakpointObserver) {}
+  constructor(
+    private observer: BreakpointObserver,
+    public authService: AuthService,
+    ) {}
 
   ngOnInit() {
     this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
@@ -36,5 +40,9 @@ export class SidebarComponent {
       this.sidenav.open(); // On desktop/tablet, the menu can never be fully closed
       this.isCollapsed = !this.isCollapsed;
     }
+  }
+
+  logout(){
+    this.authService.logout();
   }
 }
