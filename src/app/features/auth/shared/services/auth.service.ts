@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { Register } from '../models/register.model';
 import { Login, LoginResponse } from '../models/login.modal';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class AuthService {
 
   constructor(
     public injector: Injector, 
+    private router: Router
   ){
     this.http = injector.get(HttpClient);    
   }
@@ -40,7 +42,7 @@ export class AuthService {
 
   public GetToken(){
 
-    const token = JSON.parse(sessionStorage.getItem('access_token')!) as string;
+    const token = JSON.parse(localStorage.getItem('access_token')!) as string;
     const headers = new HttpHeaders({'Authorization': 'Bearer ' + token});
     this.header = headers;
     this.header = headers;
@@ -61,7 +63,15 @@ export class AuthService {
 
   public GetUser(): string | null{
 
-    return  JSON.parse(sessionStorage.getItem('user_name')!) as string;
+    return  JSON.parse(localStorage.getItem('user_name')!) as string;
   }
 
+
+  logout() {
+    // const authorizationHeader = this.GetToken().get('authorization');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('user_name');
+    this.router.navigate(['/login']);
+    console.log("logout")
+  }
 }
