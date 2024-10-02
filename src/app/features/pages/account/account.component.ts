@@ -171,6 +171,10 @@ export class AccountComponent implements OnInit, OnDestroy {
         window.location.reload()
       },
       error: (error) => {
+
+        if(error.status == 400)
+          this.alertService.showAlertWarning(
+        "A exclusão desta conta não é permitida, pois existem movimentações associadas a ela");
         console.error("error ao deletar conta", error)
 
       }
