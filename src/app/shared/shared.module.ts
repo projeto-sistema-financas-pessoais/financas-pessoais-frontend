@@ -4,13 +4,16 @@ import { FormFieldErrorComponent } from './components/form-field-error/form-fiel
 import { HttpClientModule } from '@angular/common/http';
 import { AlertModalComponent } from './components/alert-modal/alert-modal.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { MatIconModule } from '@angular/material/icon';
+import { ModalComponent } from './components/modal/modal.component';
 
 
 
 @NgModule({
   declarations: [
     FormFieldErrorComponent,
-    AlertModalComponent
+    AlertModalComponent,
+    ModalComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +23,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     CommonModule,
     FormFieldErrorComponent,
     AlertModalComponent,
-    ModalModule
+    ModalModule,
+    MatIconModule,
+    ModalComponent
+
 
   ]
 })

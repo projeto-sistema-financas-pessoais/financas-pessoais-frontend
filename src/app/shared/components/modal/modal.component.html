@@ -1,0 +1,21 @@
+<ng-template #modal_default class="custom-modal " >
+
+    <ng-container *ngIf="modalConfig">
+
+        <div class="m-5 style-font">
+            <div class="d-flex"   [ngClass]="modalConfig.canReturn ? 'justify-content-between': 'justify-content-end'">
+                <i *ngIf="modalConfig.canReturn" class="fa-solid fa-chevron-left button-cursor f-16 color-light-1" (click)="return()"></i>
+                <i class="fa-regular fa-circle-xmark button-cursor f-22 color-light-1" (click)="dismiss()"></i>
+            </div>
+    
+            <div class="d-flex justify-content-center">
+                <div class="color-black-1 f-22">{{modalConfig.modalTitle}}</div>
+            </div>
+            <ng-content select="[modal-generic-content]" ></ng-content>
+        </div>
+       
+
+    </ng-container>
+    
+
+</ng-template>
