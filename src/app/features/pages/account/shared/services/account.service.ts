@@ -1,16 +1,16 @@
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BaseService } from 'src/app/shared/services/base.service';
 import { Account } from '../models/account.model';
 import { environment } from 'src/environments/environment.development';
+import { BaseFormService } from 'src/app/shared/services/base/base-form.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AccountService extends BaseService{
+export class AccountService extends BaseFormService<Account>{
 
   constructor(injector: Injector) {
-    super(injector) 
+    super('contas', 'conta', injector) 
   }
 
   getAccount(): Observable<Account[]>{

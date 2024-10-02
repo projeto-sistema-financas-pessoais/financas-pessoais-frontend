@@ -13,7 +13,7 @@
 
     <div class="container mt-5 container-custom">
 
-        <ng-container *ngFor="let item of account; let i = index;"> 
+        <ng-container *ngFor="let item of resources; let i = index;"> 
             <div class="item">
                 <div class="d-flex justify-content-between align-items-center">
                     <img class="icon" src="./assets/icons_user/{{item.nome_icone}}" (error)="item.nome_icone = '5_wallet.svg'" alt="">
@@ -21,11 +21,11 @@
                     <div class="btn-group">
                         <i class="menu-icon fa-solid fa-ellipsis-vertical button-cursor"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                         <div class="dropdown-menu" id="dropdownMenu">
-                            <a *ngIf="item.nome !== 'Carteira'"  class="dropdown-item button-cursor color-green-2" (click)="deleteAccount(item.id_conta)"> <i class="fa-solid fa-trash"></i> Excluir</a>
-                            <a class="dropdown-item button-cursor color-green-2" (click)="deactivateAccount(item.ativo, item.id_conta)"> <i class="fa-regular fa-rectangle-xmark"></i>
+                            <a *ngIf="item.nome !== 'Carteira'"  class="dropdown-item button-cursor color-green-2" (click)="deleteResource(item.id_conta)"> <i class="fa-solid fa-trash"></i> Excluir</a>
+                            <a class="dropdown-item button-cursor color-green-2" (click)="deactivateResource(item.ativo, item.id_conta)"> <i class="fa-regular fa-rectangle-xmark"></i>
                                  {{item.ativo ? 'Desativar': 'Ativar'}}</a>
                             <div *ngIf="item.nome !== 'Carteira'" class="dropdown-divider"></div>
-                            <a *ngIf="item.nome !== 'Carteira'" class="dropdown-item button-cursor color-green-2" (click)="openEditAccount(item)" ><i class="fa-solid fa-pen-to-square" ></i> Editar</a>
+                            <a *ngIf="item.nome !== 'Carteira'" class="dropdown-item button-cursor color-green-2" (click)="openEdit(item)" ><i class="fa-solid fa-pen-to-square" ></i> Editar</a>
                         </div>
                     </div>
                     
@@ -79,7 +79,7 @@
 
         <ng-container *ngIf="!openMenuGallery; else gallery">
              
-        <form [formGroup]="resourceForm" (submit)="openModalEdit?  editAllAccount(): addAccount()" >
+        <form [formGroup]="resourceForm" (submit)="openModalEdit?  editAllAccount(): addResource()" >
             <div class="row">
                 <div class="form-group mb-3">
                     <label for="nome">Nome da conta<b> * </b></label>
