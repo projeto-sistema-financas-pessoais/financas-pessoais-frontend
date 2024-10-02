@@ -9,7 +9,7 @@ import { BaseFormComponent } from 'src/app/shared/components/base/base-form.comp
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })
-export class AccountComponent extends BaseFormComponent<Account> implements OnInit, OnDestroy {
+export class AccountComponent extends BaseFormComponent<Account> {
 
   tipoConta: string[] = [
     "Corrente",
