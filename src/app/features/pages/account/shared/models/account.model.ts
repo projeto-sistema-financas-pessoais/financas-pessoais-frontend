@@ -1,5 +1,5 @@
 export class Account {
-    id_conta?: number;
+    id_conta!: number;
     descricao?: string;
     tipo_conta!: string;
     nome!: string;

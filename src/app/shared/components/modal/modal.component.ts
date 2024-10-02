@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalConfig } from '../../models/moda-config.model';
@@ -12,6 +12,7 @@ export class ModalComponent {
   private modalRef: NgbModalRef | null = null;
   @Input() public modalConfig!: ModalConfig 
 
+  @Output() returnMessage: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild('modal_default') private modalDefault!: TemplateRef<ModalComponent>
 
   constructor(
@@ -49,5 +50,9 @@ export class ModalComponent {
     this.modalRef = null;
 
 
+  }
+
+  return(){
+    this.returnMessage.emit('return')
   }
 }
