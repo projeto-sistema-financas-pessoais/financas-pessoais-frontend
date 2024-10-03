@@ -1,10 +1,10 @@
 <div class="container-fluid p-5 style-font">
     <div class="d-flex justify-content-between">
-        <h4>Cartões de Crédito</h4>
+        <h4>Membros da Família</h4>
 
         <button type="button" class="btn btn btn-outline-success d-flex align-items-center text-center f-16 "
         (click)="openAddModal()">
-            <i class="fa-solid fa-plus f-16 mx-2 "></i> Adicionar novo cartão
+            <i class="fa-solid fa-plus f-16 mx-2 "></i> Adicionar novo membro
         </button>
 
     </div>
@@ -14,7 +14,7 @@
         <ng-container *ngFor="let item of resources; let i = index;"> 
             <div class="item">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="color-black-1">{{item.nome}}</div>
+                    <div class="color-green-2">  <strong>{{item.nome}}</strong> </div>
                     <div class="btn-group">
                         <i class="menu-icon fa-solid fa-ellipsis-vertical button-cursor"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                         <div class="dropdown-menu" id="dropdownMenu">
@@ -40,7 +40,7 @@
                     </div>
 
                     <div class="d-flex justify-content-end ">
-                        <button type="button" class="btn btn-outline-secondary">Visualizar movimentações</button>
+                        <button type="button" class="btn btn-outline-secondary">Ver movimentações</button>
                     </div>
 
                 </div>

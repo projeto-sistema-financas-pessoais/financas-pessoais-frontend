@@ -38,7 +38,7 @@ const routes: Routes = [
   {
     path: 'membros-da-familia',
     canActivate: [authGuard],
-    data: {title: 'Membros da família'},
+    data: {title: 'Membros da Família'},
     loadChildren: () =>
     import('./features/pages/family-members/family-members.module').then((x)=> x.FamilyMembersModule)
   },
