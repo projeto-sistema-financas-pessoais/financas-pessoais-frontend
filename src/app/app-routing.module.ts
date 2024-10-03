@@ -24,6 +24,15 @@ const routes: Routes = [
     loadChildren: () =>
     import('./features/pages/account/account.module').then((x)=> x.AccountModule)
   },
+
+
+  {
+    path: 'cartao-de-credito',
+    canActivate: [authGuard],
+    data: {title: 'Cartões de Crédito'},
+    loadChildren: () =>
+    import('./features/pages/credit-card/credit-card.module').then((x)=> x.CreditCardModule)
+  },
   {
     path: 'login',
     data: {title: 'Finanças Pessoais'},
