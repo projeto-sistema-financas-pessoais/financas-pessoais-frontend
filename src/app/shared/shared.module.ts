@@ -6,6 +6,7 @@ import { AlertModalComponent } from './components/alert-modal/alert-modal.compon
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { MatIconModule } from '@angular/material/icon';
 import { ModalComponent } from './components/modal/modal.component';
+import { FormatPricePipe, FormatPricePipeInt } from './pipes/format-pipe';
 
 
 
@@ -13,7 +14,9 @@ import { ModalComponent } from './components/modal/modal.component';
   declarations: [
     FormFieldErrorComponent,
     AlertModalComponent,
-    ModalComponent
+    ModalComponent,
+    FormatPricePipeInt,
+    FormatPricePipe
   ],
   imports: [
     CommonModule,
@@ -25,7 +28,9 @@ import { ModalComponent } from './components/modal/modal.component';
     AlertModalComponent,
     ModalModule,
     MatIconModule,
-    ModalComponent
+    ModalComponent,
+    FormatPricePipeInt,
+    FormatPricePipe
 
 
   ]
