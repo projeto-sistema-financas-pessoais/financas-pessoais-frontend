@@ -73,6 +73,7 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
 
   protected async openAddModal(){
     this.openModalAdd = true;
+    this.openMenuGallery = false;
 
     this.modalConfig = {
       modalTitle: `Adicionar ${this.nameComplete}`,

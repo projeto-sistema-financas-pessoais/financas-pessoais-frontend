@@ -5,6 +5,7 @@ export class Account {
     nome!: string;
     nome_icone!: string
     ativo!: boolean
+    gastos_totais?: number;
 
     constructor(data: any){
         Object.assign(this, data);

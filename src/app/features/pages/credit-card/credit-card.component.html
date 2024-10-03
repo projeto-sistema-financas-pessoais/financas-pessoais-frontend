@@ -40,12 +40,11 @@
                        
                         
                         <div class="text-start color-black-1 pb-1">Limite  Disponível:  &nbsp;
-                            <span  class="color-light-1"> <strong>R$ -40,00</strong></span>
+                            <span  class="color-light-1">R$ {{item.limite_disponivel || 0| formatPrice}}</span>
                         </div>
 
                         <div class="text-start color-black-1 pb-1">Fatura atual:  &nbsp;
-                            <span   *ngIf="i == 0" class="text-danger"> <strong>R$ -40,00</strong></span>
-                            <span *ngIf="i != 0" class="text-success"> <strong>R$ 6.000,41</strong></span>
+                            <span  class="color-light-1"> <strong>R$ {{item.fatura_gastos || 0 | formatPrice}}</strong></span>
                         </div>
                     </div>
                     
@@ -92,9 +91,9 @@
         
     
                 <div class="form-group mb-3">
-                    <label for="descricao">Limite</label>
-                    <input type="number" class="form-control" id="nome" formControlName="limite" placeholder="Digite o limite do cartão">
-                    <app-form-field-error [control]="resourceForm.get('descricao')"></app-form-field-error>
+                    <label for="limite">Limite <b> * </b></label>
+                    <input type="number" class="form-control" id="limite" formControlName="limite" placeholder="Digite o limite do cartão">
+                    <app-form-field-error [control]="resourceForm.get('limite')"></app-form-field-error>
                 </div>
             </div>
 
