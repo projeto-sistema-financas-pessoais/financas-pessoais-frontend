@@ -29,6 +29,9 @@
     }
     .f-22{
         font-size: 22px;
+        @media screen and (max-width: 801px) {
+            font-size: 18px;
+        }
     }
 }
 

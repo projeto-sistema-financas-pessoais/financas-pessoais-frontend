@@ -6,7 +6,9 @@
 
         <button type="button" class="btn btn btn-outline-success d-flex align-items-center text-center f-16 "
         (click)="openAddModal()">
-            <i class="fa-solid fa-plus f-16 mx-2 "></i> Adicionar nova conta
+            <i class="fa-solid fa-plus f-16 mx-2 "></i> 
+            <span class="display-none">Adicionar nova conta</span>
+
         </button>
 
     </div>
@@ -74,7 +76,7 @@
 </div>
 
 
-<app-modal #modal_default [modalConfig]="modalConfig" (returnMessage)="this.openMenuGallery = false;">
+<app-modal #modal_default [modalConfig]="modalConfig" (returnMessage)="this.openMenuGallery = false; this.modalConfig.canReturn = false;">
 
     <div modal-generic-content class="pt-3">
 

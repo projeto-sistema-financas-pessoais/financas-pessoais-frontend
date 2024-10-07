@@ -1,0 +1,69 @@
+@import 'src/styles.scss';
+@import 'src/app/theme/_card-theme.scss';
+.height-content{
+    max-height: 24px;
+    min-height: 24px;
+}
+
+.item {
+    flex: 1 1 500px;
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+
+
+    @media  screen and (max-width: 801px) {
+        max-width: 280px;
+
+    }
+     
+    max-width: 600px;
+
+
+
+}
+
+
+
+@media  screen and (min-width: 802px) {
+    .margin-l-min{
+        margin-left: 10px;
+
+    }
+
+   
+
+}
+ 
+
+
+.menu {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.menu-item {
+    margin: 0 10px; 
+    cursor: pointer; 
+    color: $color-light-3; 
+
+}
+
+.menu-item.active h5 {
+    color: $color-green-2;
+    font-weight: bold; 
+}
+
+.underline {
+    height: 3px; 
+    background-color: $color-green-2; 
+    width: 100%; 
+    transition: width 0.3s; 
+}
+
+.menu-item:hover {
+    color: $color-green-2;; 
+}

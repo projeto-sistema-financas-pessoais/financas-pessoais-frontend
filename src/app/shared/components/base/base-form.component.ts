@@ -67,6 +67,9 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
       next: (data)=>{
         console.log("data", data)
         this.resources = data;
+      },
+      error: (error) => {
+        console.log("error to get all", error)
       }
     })
   }
@@ -182,7 +185,7 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe({
       next: (response) =>{
-        console.log("editou!", response)
+        console.log("editou!", response, "resource", resource)
         window.location.reload()
       },
       error: (error) => {
