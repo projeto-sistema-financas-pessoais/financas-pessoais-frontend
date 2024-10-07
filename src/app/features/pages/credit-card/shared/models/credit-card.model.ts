@@ -4,6 +4,8 @@ export class CreditCard{
     nome!: string;
     nome_icone!: string
     ativo!: boolean
+    limite_disponivel?: number;
+    fatura_gastos?: number 
 
     constructor(data: any){
         Object.assign(this, data);

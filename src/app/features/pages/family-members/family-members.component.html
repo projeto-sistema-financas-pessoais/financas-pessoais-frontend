@@ -1,0 +1,91 @@
+<div class="container-fluid p-5 style-font">
+    <div class="d-flex justify-content-between">
+        <h4>Membros da Família</h4>
+
+        <button type="button" class="btn btn btn-outline-success d-flex align-items-center text-center f-16 "
+        (click)="openAddModal()">
+            <i class="fa-solid fa-plus f-16 mx-2 "></i> Adicionar novo membro
+        </button>
+
+    </div>
+
+    <div class="container mt-5 container-custom">
+
+        <ng-container *ngFor="let item of resources; let i = index;"> 
+            <div class="item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="color-green-2">  <strong>{{item.nome}}</strong> </div>
+                    <div class="btn-group">
+                        <i class="menu-icon fa-solid fa-ellipsis-vertical button-cursor"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                        <div class="dropdown-menu" id="dropdownMenu">
+                            <a *ngIf="item.nome !== 'Carteira'"  class="dropdown-item button-cursor color-green-2" (click)="deleteResource(item.id_parente)"> <i class="fa-solid fa-trash"></i> Excluir</a>
+                            <a class="dropdown-item button-cursor color-green-2" (click)="deactivateResource(item.ativo, item.id_parente)"> <i class="fa-regular fa-rectangle-xmark"></i>
+                                 {{item.ativo ? 'Desativar': 'Ativar'}}</a>
+                            <div *ngIf="item.nome !== 'Carteira'" class="dropdown-divider"></div>
+                            <a *ngIf="item.nome !== 'Carteira'" class="dropdown-item button-cursor color-green-2" (click)="openEdit(item)" ><i class="fa-solid fa-pen-to-square" ></i> Editar</a>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="py-2 px-2">
+
+                    <div class="height-content">
+                        <div class="text-start color-black-1 pb-1">Status: &nbsp;
+                            <span class="color-light-1">{{item.ativo ? 'Ativo' : 'Desativado'}}</span>
+                        </div>
+                        <div class="text-start color-black-1 pb-1">Grau de Parentesco: &nbsp;
+                            <span class="color-light-1"> {{item.grau_parentesco}}</span>
+                        </div>                   
+        
+                    </div>
+
+                    <div class="d-flex justify-content-end ">
+                        <button type="button" class="btn btn-outline-secondary">Ver movimentações</button>
+                    </div>
+
+                </div>
+              
+            </div>
+        </ng-container>
+    
+    </div>
+</div>
+
+
+<app-modal #modal_default [modalConfig]="modalConfig" (returnMessage)="this.openMenuGallery = false;">
+
+    <div modal-generic-content class="pt-3">
+
+        <ng-container >
+             
+            <form [formGroup]="resourceForm" (submit)="openModalEdit?  editAllAccount(): addResource()" >
+                <div class="row">
+                    <div class="form-group mb-3">
+                        <label for="nome">Nome do membro da família<b> * </b></label>
+                        <input type="text" class="form-control" id="nome" formControlName="nome" placeholder="Digite o nome do membro">
+                        <app-form-field-error [control]="resourceForm.get('nome')"></app-form-field-error>
+                    </div>
+        
+            
+        
+                    <div class="form-group mb-3">
+                        <label for="descricao">Grau de parentesco</label>
+                        <input type="text" class="form-control" id="nome" formControlName="grau_parentesco" placeholder="Informe o seu grau de parentesco">
+                        <app-form-field-error [control]="resourceForm.get('grau_parentesco')"></app-form-field-error>
+                    </div>
+                </div>
+
+
+                <div class="d-flex justify-content-center">
+                
+                    <button type="submit" [disabled]="this.resourceForm.invalid" class=" btn btn-green btn-block btn-lg" >{{openModalEdit? 'Editar': 'Adicionar'}}</button>
+
+                </div>
+            
+            
+            </form>
+    
+        </ng-container>
+       
+    </div>
+</app-modal>

@@ -33,6 +33,15 @@ const routes: Routes = [
     loadChildren: () =>
     import('./features/pages/credit-card/credit-card.module').then((x)=> x.CreditCardModule)
   },
+
+
+  {
+    path: 'membros-da-familia',
+    canActivate: [authGuard],
+    data: {title: 'Membros da Família'},
+    loadChildren: () =>
+    import('./features/pages/family-members/family-members.module').then((x)=> x.FamilyMembersModule)
+  },
   {
     path: 'login',
     data: {title: 'Finanças Pessoais'},
