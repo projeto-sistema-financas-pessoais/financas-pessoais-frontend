@@ -1,0 +1,9 @@
+
+<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#8E44AD" rx="5" ry="5"/>
+  
+  <g transform="translate(8,8)">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M240-120v-80h200v-200L120-760v-80h720v80L520-400v200h200v80H240Zm58-560h364l72-80H226l72 80Z"/></svg>
+
+  </g>
+</svg>

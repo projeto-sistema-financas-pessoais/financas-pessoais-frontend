@@ -42,6 +42,15 @@ const routes: Routes = [
     loadChildren: () =>
     import('./features/pages/family-members/family-members.module').then((x)=> x.FamilyMembersModule)
   },
+
+  {
+    path: 'configuracoes-de-usuario',
+    canActivate: [authGuard],
+    data: {title: 'Usuário'},
+    loadChildren: () =>
+    import('./features/pages/user/user.module').then((x)=> x.UserModule)
+  },
+
   {
     path: 'login',
     data: {title: 'Finanças Pessoais'},
