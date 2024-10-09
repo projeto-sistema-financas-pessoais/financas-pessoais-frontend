@@ -16,6 +16,8 @@ export class LoginComponent {
 
 
   private ngUnsubscribe = new Subject<void>();
+  showPassword: boolean = true;
+  showConfirmPassword: boolean = false;
 
   constructor(
     protected formBuilder: FormBuilder,
@@ -38,7 +40,6 @@ export class LoginComponent {
       senha: [null, [Validators.required]],
     });
   }
-
 
   submitForm(){
     console.log("okayyy", this.resourceForm.value)
@@ -65,5 +66,13 @@ export class LoginComponent {
         }
       }
     )
+  }
+
+  togglePasswordVisibility(field: string) {
+    if (field === 'password') {
+      this.showPassword = !this.showPassword;
+    } else if (field === 'confirmPassword') {
+      this.showConfirmPassword = !this.showConfirmPassword;
+    }
   }
 }

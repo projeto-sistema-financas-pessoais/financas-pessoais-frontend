@@ -1,1 +1,39 @@
-<p>reset-pass works!</p>
+<div class="container">
+    <div class="row d-flex justify-content-center align-items-center h-100 ">
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+                <div class="card-body p-5">
+                    <h2 class="card-title text-center">Redefinir Senha</h2>
+                    <form [formGroup]="resourceForm" (submit)="submitForm()">
+                        <!-- Campo de Nova Senha -->
+                        <div class="form-group mb-3 position-relative">
+                            <label for="novaSenha">Nova Senha<b> * </b></label>
+                            <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="novaSenha" formControlName="novaSenha" placeholder="Digite sua nova senha">
+                            <button type="button" class="btn-eye" (click)="togglePasswordVisibility('password')">
+                                <i class="fa" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+                            </button>
+                            <app-form-field-error [control]="resourceForm.get('novaSenha')"></app-form-field-error>
+                        </div>
+
+                        <!-- Campo de Confirmação de Senha -->
+                        <div class="form-group mb-3 position-relative">
+                            <label for="confirmPassword">Confirme a Senha<b> * </b></label>
+                            <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirme sua nova senha">
+                            <button type="button" class="btn-eye" (click)="togglePasswordVisibility('confirmPassword')">
+                                <i class="fa" [ngClass]="showConfirmPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+                            </button>
+                            <app-form-field-error [control]="resourceForm.get('confirmPassword')"></app-form-field-error>
+                        </div>
+
+                        <!-- Botão de Salvar -->
+                        <div class="d-flex justify-content-center py-2">
+                            <button type="submit" 
+                                    [disabled]="resourceForm.invalid || resourceForm.get('novaSenha')?.value !== resourceForm.get('confirmPassword')?.value" 
+                                    class="btn btn-green btn-block btn-lg">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
