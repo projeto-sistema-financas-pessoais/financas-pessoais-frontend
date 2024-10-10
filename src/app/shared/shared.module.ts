@@ -7,6 +7,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { MatIconModule } from '@angular/material/icon';
 import { ModalComponent } from './components/modal/modal.component';
 import { FormatPricePipe, FormatPricePipeInt } from './pipes/format-pipe';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -30,7 +31,8 @@ import { FormatPricePipe, FormatPricePipeInt } from './pipes/format-pipe';
     MatIconModule,
     ModalComponent,
     FormatPricePipeInt,
-    FormatPricePipe
+    FormatPricePipe,
+    ReactiveFormsModule
 
 
   ]

@@ -23,7 +23,7 @@ export class CreditCardComponent  extends BaseFormComponent<CreditCard>{
   protected override buildForm(): void {
     this.resourceForm = this.formBuilder.group({
       nome: [null, [Validators.required]],
-      limite: [null],
+      limite: [null, [Validators.required]],
       nome_icone: [this.imageSelected, [Validators.required]],
       ativo: [true],
 

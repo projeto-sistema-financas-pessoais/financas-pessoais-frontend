@@ -4,7 +4,8 @@
 
         <button type="button" class="btn btn btn-outline-success d-flex align-items-center text-center f-16 "
         (click)="openAddModal()">
-            <i class="fa-solid fa-plus f-16 mx-2 "></i> Adicionar novo cartão
+            <i class="fa-solid fa-plus f-16 mx-2 "></i> 
+            <span class="display-none">Adicionar novo cartão</span>
         </button>
 
     </div>
@@ -15,8 +16,8 @@
             <div class="item">
                 <div class="d-flex justify-content-between align-items-center">
                     <img class="icon" src="./assets/icons_user/{{item.nome_icone}}" (error)="item.nome_icone = '5_wallet.svg'" alt="">
-                    <div class="color-black-1">{{item.nome}}</div>
-                    <div class="btn-group">
+                    <div class="color-black-1 f-16">{{item.nome}}</div>
+                    <div class="btn-group f-16">
                         <i class="menu-icon fa-solid fa-ellipsis-vertical button-cursor"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                         <div class="dropdown-menu" id="dropdownMenu">
                             <a *ngIf="item.nome !== 'Carteira'"  class="dropdown-item button-cursor color-green-2" (click)="deleteResource(item.id_cartao_credito)"> <i class="fa-solid fa-trash"></i> Excluir</a>
@@ -30,8 +31,8 @@
                 </div>
                 <div class="py-2 px-2">
 
-                    <div class="height-content">
-                        <div class="text-start color-black-1 pb-1">Status: &nbsp;
+                    <div class="height-content f-16">
+                        <div class="text-start color-black-1 pb-1 ">Status: &nbsp;
                             <span class="color-light-1">{{item.ativo ? 'Ativo' : 'Desativado'}}</span>
                         </div>
                         <div class="text-start color-black-1 pb-1">Limite Total: &nbsp;
@@ -51,7 +52,7 @@
 
 
                     <div class="d-flex justify-content-end ">
-                        <button type="button" class="btn btn-outline-secondary">Ver movimentações</button>
+                        <button type="button" class="btn btn-outline-secondary f-16">Ver movimentações</button>
                     </div>
                     
                     
@@ -69,7 +70,7 @@
 </div>
 
 
-<app-modal #modal_default [modalConfig]="modalConfig" (returnMessage)="this.openMenuGallery = false;">
+<app-modal #modal_default [modalConfig]="modalConfig" (returnMessage)="this.openMenuGallery = false; this.modalConfig.canReturn = false;">
 
     <div modal-generic-content class="pt-3">
 
@@ -77,20 +78,20 @@
              
         <form [formGroup]="resourceForm" (submit)="openModalEdit?  editAllAccount(): addResource()" >
             <div class="row">
-                <div class="form-group mb-3">
-                    <label for="nome">Nome da conta<b> * </b></label>
-                    <input type="text" class="form-control" id="nome" formControlName="nome" placeholder="Digite o nome da conta">
+                <div class="form-group mb-3 f-16">
+                    <label for="nome">Nome do cartão de crédito<b> * </b></label>
+                    <input type="text" class="form-control" id="nome" formControlName="nome" placeholder="Digite o nome do cartão">
                     <app-form-field-error [control]="resourceForm.get('nome')"></app-form-field-error>
                 </div>
     
-                <div class="form-group mb-3 col-md-6 col-sm-12">
-                    <label for="nome">Ícone da conta<b> * </b></label>
+                <div class="form-group mb-3 col-md-6 col-sm-12 f-16">
+                    <label for="nome">Ícone do cartão de crédito<b> * </b></label>
                     <img class="icon mx-3 button-cursor" src="./assets/icons_user/{{imageSelected}}"
                     alt="" (click)="openGallery()">
                 </div>
         
     
-                <div class="form-group mb-3">
+                <div class="form-group mb-3 f-16">
                     <label for="limite">Limite <b> * </b></label>
                     <input type="number" class="form-control" id="limite" formControlName="limite" placeholder="Digite o limite do cartão">
                     <app-form-field-error [control]="resourceForm.get('limite')"></app-form-field-error>
@@ -100,7 +101,7 @@
 
             <div class="d-flex justify-content-center">
               
-                <button type="submit" [disabled]="this.resourceForm.invalid" class=" btn btn-green btn-block btn-lg" >{{openModalEdit? 'Editar': 'Adicionar'}}</button>
+                <button type="submit" [disabled]="this.resourceForm.invalid" class=" btn btn-green btn-block btn-lg f-16" >{{openModalEdit? 'Editar': 'Adicionar'}}</button>
 
             </div>
            

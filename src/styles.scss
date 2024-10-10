@@ -130,3 +130,18 @@ body {
   border-radius: 20px  !important;
 }
 
+
+@media (max-width: 801px) {
+  .display-none {
+    display: none;
+  }
+
+  .icon-min{
+    width: 25px !important;
+    height: 25px !important;
+  }
+  .margin-l-min{
+    margin-left: 5px;
+  }
+
+}

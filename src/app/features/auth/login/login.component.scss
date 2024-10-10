@@ -9,3 +9,25 @@
 a{
     color: $color-green-3;
   }
+  .position-relative {
+    position: relative;
+}
+.btn-eye {
+    position: absolute;
+    top: 51%;
+    right: 55px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #125342;
+}
+
+.btn-eye:focus {
+    outline: none;
+}
+
+.fa-eye, .fa-eye-slash {
+    font-size: 0.8rem;
+    color: #125342;
+}
