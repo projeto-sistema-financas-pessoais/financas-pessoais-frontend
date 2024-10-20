@@ -100,7 +100,7 @@ export class CategoryComponent extends BaseFormComponent<Category>{
   
 
   protected getAllIncome(){
-    this.categoryService.getAllIncome()
+    this.categoryService.getAllIncome(false)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe({
       next: (data)=>{
@@ -114,7 +114,7 @@ export class CategoryComponent extends BaseFormComponent<Category>{
   }
 
   protected getAllExpense(){
-    this.categoryService.getAllExpense()
+    this.categoryService.getAllExpense(false)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe({
       next: (data)=>{
