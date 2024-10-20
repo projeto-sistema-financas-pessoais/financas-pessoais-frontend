@@ -31,7 +31,7 @@
 
 
     <mat-nav-list>
-      <a mat-list-item>
+      <a mat-list-item href="/movimentacoes">
         <span class="entry">
           <mat-icon class="color-green-2">currency_exchange</mat-icon>
           <span *ngIf="!isCollapsed" class="color-black-1">Movimentações</span>
@@ -87,8 +87,12 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <div 
-    [style.min-width]="!isCollapsed && pageTitle!== 'Finanças Pessoais' ? '85vw ' : '95vw'"
-    [ngClass]="pageTitle!== 'Finanças Pessoais' ? 'full-screen' : 'full-screen-login' ">
+    [ngClass]="{
+      'min-width-screen': !isCollapsed && pageTitle !== 'Finanças Pessoais',
+      'min-width-screen-login-collapse': isCollapsed || pageTitle === 'Finanças Pessoais',
+      'full-screen': pageTitle !== 'Finanças Pessoais',
+      'full-screen-login': pageTitle === 'Finanças Pessoais'
+    }">
     <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

@@ -23,7 +23,7 @@ export class SidebarComponent {
     ) {}
 
   ngOnInit() {
-    this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
+    this.observer.observe(['(max-width: 1024px)']).subscribe((screenSize) => {
       if(screenSize.matches){
         this.isMobile = true;
       } else {
