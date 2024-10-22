@@ -1,0 +1,170 @@
+<div class="container-fluid p-5 style-font">
+    <div class="d-flex flex-wrap justify-content-between align-items-center">
+
+        <div>
+            <h4>Movimentações</h4>
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-end">
+            <button type="button" class="btn btn-transation income my-2 ms-0 me-2">
+                <!-- <i class="fa-solid fa-money-bill-trend-up" style="font-size: 30px; color: green"></i> -->
+                <i class="fa-solid fa-arrow-trend-up icon-size"></i>
+                <br class="display-none">
+                <span class="display-none"> Receita</span>
+            </button>
+    
+            <button type="button" class="btn btn-transation expense m-2"  style="background-color: #DC3545;">
+                <!-- <img src="./assets/icons/expense.svg" alt="" style="font-size: 60px;"> -->
+                <i class="fa-solid fa-arrow-trend-down icon-size" ></i>
+
+                <br class="display-none">
+                <span class="display-none "> Despesa</span>
+            </button>
+    
+    
+            <button type="button" class="btn btn-transation transfer m-2">
+                <!-- <i class="fa-solid fa-money-bill-transfer" style="font-size: 30px; color: gray;"></i>  -->
+                <i class="fa-solid fa-shuffle icon-size" ></i> 
+                <br>
+                <span class="display-none"> Transf.</span>
+            </button>
+
+        </div>
+
+        
+
+    </div>
+
+    <div class="container d-flex justify-content-center">
+        <div class="text-center month-year">
+            <i class="fa-solid fa-circle-chevron-left" style="font-size: 20px;"></i>
+            <span class="color-light-3 mx-5 f-20">Fevereiro 2024</span>
+            <i class="fa-solid fa-circle-chevron-right" style="font-size: 20px;"></i>
+        </div>
+         
+    </div>
+
+    <div class="container d-flex justify-content-center flex-row">
+        <div class="col-2">
+            <select class="form-select f-16" formControlName="modelo_categoria" id="modelo_categoria">
+                <option [value]=""  [selected]="true">Todas as categorias</option>
+                <option *ngFor="let item of categoria" [value]="item">{{item}}</option>
+    
+            </select>  
+        </div>
+    </div>
+
+
+    <div class="container mt-5 container-custom">
+
+       
+
+        <ng-container *ngFor="let item of transationList; let i = index;"> 
+            <div class="d-flex justify-content-between align-items-center flex-row">
+
+                <div class="mx-2 color-light-1 f-16 ">{{item.data_pagamento | formatday }}</div>
+
+                <div class="item">
+                    <div class="d-flex justify-content-between align-items-center">
+
+
+                        <div class="d-flex justify-content-start align-items-center col-md-5">
+                            
+                            <img class="icon-min" src="./assets/icones_category/{{item.nome_icone_categoria}}" (error)="item.nome_icone_categoria = 'book.svg'" alt="">
+                            
+                            <div class="text-start">
+                                <div class="ms-3 color-black-1 f-16  display-none">{{item.descricao || 'Outros'}}</div>
+                                <div class="ms-3 color-light-3 display-none" style="font-size: 12px;">
+                                    <span *ngIf="item.condicao_pagamento === enumCondicaoPagamento.PARCELADO" > {{ item.parcela_atual+ '/' + item.quantidade_parcelas}} </span>
+                                    <span *ngIf="item.condicao_pagamento === enumCondicaoPagamento.RECORRENTE">
+                                        <i  class="fa-solid fa-rotate"
+                                         tooltip="Movimentação recorrente" container="body" placement="bottom" [delay]="800"></i>
+                                         <span > {{item.tipo_recorrencia }}</span>
+                                        
+                                    </span>
+                                    
+                                </div>
+                            </div>
+                            
+
+
+                           
+                        </div>
+
+                        <div class="col-md-3 col-sm-12 display-none">
+
+                            <span class="color-light-1 f-16 d-flex align-items-center ">
+                                    <mat-icon *ngIf="item.forma_pagamento == enumFormaPagamento.CREDITO" class="">credit_card</mat-icon>
+                                    <mat-icon *ngIf="item.forma_pagamento !== enumFormaPagamento.CREDITO" class="">account_balance</mat-icon>
+                                    
+                                    <span class="ms-2 "> {{item.nome_conta || item.nome_cartao_credito}}</span>
+                            </span>
+                        </div>
+
+                        
+                        <div class="color-black-1 col-md-2 f-16 d-flex justify-content-end"> 
+                            
+
+                            <span *ngIf="item.tipoMovimentacao == enumMovimentacao.DESPESA" class="text-danger"> R$ -{{item.valor  | formatPrice}}</span>
+                            <span *ngIf="item.tipoMovimentacao == enumMovimentacao.RECEITA" class="text-success"> R$ +{{item.valor  | formatPrice}}</span>
+                            <span *ngIf="item.tipoMovimentacao == enumMovimentacao.TRANSFERENCIA" class="color-light-1"> R$ {{item.valor  | formatPrice}}</span>
+                        </div> 
+
+                        <div>
+                            <i *ngIf="item.consolidado" class="color-green-4 fa-solid fa-circle-check button-cursor"></i>
+                            <i *ngIf="!item.consolidado && !item.id_fatura" class="color-light-3 fa-regular fa-circle-check button-cursor"></i>
+                            <i tooltip="Feche a fatura primeiro" container="body" placement="bottom" [delay]="800" *ngIf="!item.consolidado && item.id_fatura" class="color-light-2 fa-regular fa-circle-check button-cursor"></i>
+
+                        </div>
+
+                    
+                        <div class="btn-group f-16">
+                            <i class="menu-icon fa-solid fa-ellipsis-vertical button-cursor"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                            <div class="dropdown-menu" id="dropdownMenu">
+                                <a  class="dropdown-item button-cursor color-green-2" > <i class="fa-regular fa-window-maximize"></i> Ver detalhes</a>
+                                <a  class="dropdown-item button-cursor color-green-2" (click)="openDelete(item)"> <i class="fa-solid fa-trash"></i> Excluir</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="d-flex justify-content-between align-items-center flex-row  display-none-desktop">
+                        
+                        <div class="col-sm-12 justify-content-start align-items-center display-none-desktop mt-1">
+
+                            <div class="color-black-1 f-16 display-none-desktop">{{item.descricao || 'Outros'}}</div>
+                            
+                        </div>
+
+                        
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center flex-row display-none-desktop">
+                        
+                        <div class="col-sm-6 display-none-desktop mt-1">
+
+                            <span class="color-light-1 f-16 d-flex align-items-center ">
+                                 <span class=""> {{item.nome_conta || item.nome_cartao_credito}}</span>
+                            </span>
+
+                            
+                        </div>
+
+                        <div class="col-sm-6 display-none-desktop">
+                            <div class="ms-2 color-light-3">
+                                <span *ngIf="item.condicao_pagamento === enumCondicaoPagamento.PARCELADO" > {{ item.parcela_atual+ '/' + item.quantidade_parcelas}} </span>
+                                <i  *ngIf="item.condicao_pagamento === enumCondicaoPagamento.RECORRENTE" class="fa-solid fa-rotate"
+                                tooltip="Movimentação recorrente" container="body" placement="bottom" [delay]="800"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                                 
+                </div>
+            </div>
+
+        </ng-container>
+    
+    </div>
+
+</div>

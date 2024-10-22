@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ModalComponent } from './components/modal/modal.component';
 import { FormatPricePipe, FormatPricePipeInt } from './pipes/format-pipe';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormatDayDate } from './pipes/format-data';
 
 
 
@@ -17,7 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AlertModalComponent,
     ModalComponent,
     FormatPricePipeInt,
-    FormatPricePipe
+    FormatPricePipe,
+    FormatDayDate
   ],
   imports: [
     CommonModule,
@@ -32,6 +34,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ModalComponent,
     FormatPricePipeInt,
     FormatPricePipe,
+    FormatDayDate,
     ReactiveFormsModule
 
 

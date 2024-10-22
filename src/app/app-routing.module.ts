@@ -18,6 +18,14 @@ const routes: Routes = [
 
 
   {
+    path: 'movimentacoes',
+    canActivate: [authGuard],
+    data: {title: 'Movimentações'},
+    loadChildren: () =>
+    import('./features/pages/transaction/transaction.module').then((x)=> x.TransactionsModule)
+  },
+
+  {
     path: 'contas',
     canActivate: [authGuard],
     data: {title: 'Contas'},
