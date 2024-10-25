@@ -7,10 +7,11 @@ export class TransationFilter{
     ano!: number;
     forma_pagamento: FormaPagamento | null = null;
     tipo_movimentacao: TipoMovimentacao | null = null;
-    consolidado: boolean | null = null;;
-    id_categoria: number | null = null;;
-    id_conta: number | null = null;;
-    id_fatura: number | null = null;;
+    consolidado: boolean | null = null;
+    id_categoria: number | null = null;
+    id_conta: number | null = null;
+    // id_fatura: number | null = null;;
+    id_cartao_credito: number | null = null;
     id_parente: number | null = null;  
 }
 

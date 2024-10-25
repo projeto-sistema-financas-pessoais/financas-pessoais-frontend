@@ -14,7 +14,8 @@ import { FormsModule } from '@angular/forms';
     SharedModule,
     TransactionsRoutingModule,
     TooltipModule.forRoot(),
-    FormsModule
+    FormsModule,
+    
 
   ]
 })

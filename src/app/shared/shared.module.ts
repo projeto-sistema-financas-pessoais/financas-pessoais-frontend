@@ -7,8 +7,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { MatIconModule } from '@angular/material/icon';
 import { ModalComponent } from './components/modal/modal.component';
 import { FormatPricePipe, FormatPricePipeInt } from './pipes/format-pipe';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormatDayDate } from './pipes/format-data';
+import { TransactionListComponent } from './components/transaction-list/transaction-list.component';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 
 
@@ -19,11 +21,16 @@ import { FormatDayDate } from './pipes/format-data';
     ModalComponent,
     FormatPricePipeInt,
     FormatPricePipe,
-    FormatDayDate
+    FormatDayDate,
+    TransactionListComponent
   ],
   imports: [
     CommonModule,
-    ModalModule
+    ModalModule,
+    FormsModule,
+    TooltipModule.forRoot(),
+    MatIconModule
+
   ],
   exports: [
     CommonModule,
@@ -35,7 +42,8 @@ import { FormatDayDate } from './pipes/format-data';
     FormatPricePipeInt,
     FormatPricePipe,
     FormatDayDate,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TransactionListComponent
 
 
   ]

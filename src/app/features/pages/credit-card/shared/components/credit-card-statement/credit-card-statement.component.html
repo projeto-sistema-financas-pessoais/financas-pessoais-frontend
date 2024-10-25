@@ -1,0 +1,13 @@
+
+<div *ngIf="resourceData" class="container-fluid p-5 style-font">
+    <div class="d-flex justify-content-between">
+        <h4>Fatura do Cartão de Crédito 
+            <strong>{{resourceData.nome}}</strong>
+        </h4>
+
+    </div>
+
+    <app-transaction-list [type]="'credit'" [id_type]="id"></app-transaction-list>
+
+</div>
+

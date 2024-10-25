@@ -43,4 +43,8 @@ export abstract class BaseFormService<T extends BaseModel> {
     return this.http.put<T>(`${environment.financas}/${this.apiPath}/editar/${resource[`id_${this.name}`]}`, resource , {headers: this.headers})
   }
 
+  getById(id: number):Observable<T>{
+    return this.http.get<T>(`${environment.financas}/${this.apiPath}/visualizar/${id}` , {headers: this.headers})
+  }
+
 }
