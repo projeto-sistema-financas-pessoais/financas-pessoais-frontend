@@ -3,6 +3,7 @@ import { TransactionsComponent } from './transaction.component';
 import { TransactionsRoutingModule } from './transaction-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     SharedModule,
     TransactionsRoutingModule,
     TooltipModule.forRoot(),
+    FormsModule
 
   ]
 })

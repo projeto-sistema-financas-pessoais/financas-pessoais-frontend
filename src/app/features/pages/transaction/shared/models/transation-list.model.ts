@@ -5,14 +5,13 @@ export class TransationFilter{
     
     mes!: number;
     ano!: number;
-    forma_pagamento?: FormaPagamento;
-    tipo_movimentacao?: TipoMovimentacao;
-    consolidado?: boolean;
-    id_categoria?: number;
-    id_conta?: number;
-    id_fatura?: number;
-    id_parente?: number
-    
+    forma_pagamento: FormaPagamento | null = null;
+    tipo_movimentacao: TipoMovimentacao | null = null;
+    consolidado: boolean | null = null;;
+    id_categoria: number | null = null;;
+    id_conta: number | null = null;;
+    id_fatura: number | null = null;;
+    id_parente: number | null = null;  
 }
 
 
@@ -37,6 +36,8 @@ export class TransationList{
     nome_conta!: string;
     nome_cartao_credito!: string;
     id_movimentacao!: number;
+    id_conta_destino!: number;
+    nome_conta_destino!: string
     divide_parente!: DivideMember[]
     fatura_info?: FaturaInfo
 }

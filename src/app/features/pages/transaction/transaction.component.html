@@ -5,16 +5,14 @@
             <h4>Movimentações</h4>
         </div>
 
-        <div class="d-flex flex-wrap justify-content-end">
+        <div class="d-flex flex-wrap justify-content-center">
             <button type="button" class="btn btn-transation income my-2 ms-0 me-2">
-                <!-- <i class="fa-solid fa-money-bill-trend-up" style="font-size: 30px; color: green"></i> -->
                 <i class="fa-solid fa-arrow-trend-up icon-size"></i>
                 <br class="display-none">
                 <span class="display-none"> Receita</span>
             </button>
     
             <button type="button" class="btn btn-transation expense m-2"  style="background-color: #DC3545;">
-                <!-- <img src="./assets/icons/expense.svg" alt="" style="font-size: 60px;"> -->
                 <i class="fa-solid fa-arrow-trend-down icon-size" ></i>
 
                 <br class="display-none">
@@ -23,7 +21,6 @@
     
     
             <button type="button" class="btn btn-transation transfer m-2">
-                <!-- <i class="fa-solid fa-money-bill-transfer" style="font-size: 30px; color: gray;"></i>  -->
                 <i class="fa-solid fa-shuffle icon-size" ></i> 
                 <br>
                 <span class="display-none"> Transf.</span>
@@ -37,23 +34,63 @@
 
     <div class="container d-flex justify-content-center">
         <div class="text-center month-year">
-            <i class="fa-solid fa-circle-chevron-left" style="font-size: 20px;"></i>
-            <span class="color-light-3 mx-5 f-20">Fevereiro 2024</span>
-            <i class="fa-solid fa-circle-chevron-right" style="font-size: 20px;"></i>
+            <i class="me-5 fa-solid fa-filter button-cursor" (click)="openFilter()" 
+            [ngClass]="canOpenFilter ? 'color-light-3' : ''"
+            ></i>
+
+            <i class="fa-solid fa-circle-chevron-left button-cursor" style="font-size: 20px;" (click)="changeMonth(false)"></i>
+            <span class="color-light-3 mx-5 f-20 button-cursor">{{month[transationFilter.mes -1]}} {{transationFilter.ano}}</span>
+            <i class="fa-solid fa-circle-chevron-right button-cursor" style="font-size: 20px;" (click)="changeMonth(true)"></i>
+
         </div>
          
     </div>
 
-    <div class="container d-flex justify-content-center flex-row">
-        <div class="col-2">
-            <select class="form-select f-16" formControlName="modelo_categoria" id="modelo_categoria">
-                <option [value]=""  [selected]="true">Todas as categorias</option>
-                <option *ngFor="let item of categoria" [value]="item">{{item}}</option>
-    
-            </select>  
-        </div>
-    </div>
+    <div class="container d-flex justify-content-center flex-row mt-3 align-items-center" >
 
+
+        <ng-container *ngIf="canOpenFilter">
+
+            <div class="col-2">
+                <select class="form-select filter f-16" [(ngModel)]="transationFilter.tipo_movimentacao" (ngModelChange)="chargeList()"  id="tipo_movimentacao">
+                    <option [ngValue]="null"   [selected]="true">Movimentação(todas)</option>
+                    <option *ngFor="let value of Object.values(enumMovimentacao)" [value]="value">
+                        {{ value }}
+                    </option>
+                </select>  
+            </div>
+
+            <div class="col-2">
+                <select class="form-select filter f-16" [(ngModel)]="transationFilter.id_categoria" (ngModelChange)="chargeList()"  id="modelo_categoria">
+                    <option [ngValue]="null"  [selected]="true">Categorias(todas)</option>
+                    <option *ngFor="let item of category" [value]="item.id_categoria">{{item.nome}}</option>
+        
+                </select>  
+            </div>
+    
+            <div class="col-2">
+                <select class="form-select filter f-16" [(ngModel)]="transationFilter.forma_pagamento" (ngModelChange)="chargeList()"  id="forma_pagamento">
+                    <option [ngValue]="null"   [selected]="true">Formas de pgto.(todas)</option>
+                    <option *ngFor="let value of Object.values(enumFormaPagamento)" [value]="value">
+                        {{ value }}
+                    </option>
+                </select>  
+            </div>
+    
+            <div class="col-2">
+                <select class="form-select filter f-16" [(ngModel)]="transationFilter.consolidado" (ngModelChange)="chargeList()"  id="consolidado">
+                    <option [ngValue]="null" [selected]="true">Consolidadas e não </option>
+                    <option [ngValue]="true">Consolidado</option>
+                    <option [ngValue]="false">Não Consolidado</option>
+
+                </select>  
+            </div>
+     
+        </ng-container>
+        
+
+        
+    </div>
 
     <div class="container mt-5 container-custom">
 
@@ -70,8 +107,9 @@
 
                         <div class="d-flex justify-content-start align-items-center col-md-5">
                             
-                            <img class="icon-min" src="./assets/icones_category/{{item.nome_icone_categoria}}" (error)="item.nome_icone_categoria = 'book.svg'" alt="">
-                            
+                            <img *ngIf="item.tipoMovimentacao != enumMovimentacao.TRANSFERENCIA" class="icon-min" src="./assets/icones_category/{{item.nome_icone_categoria}}" (error)="item.nome_icone_categoria = 'book.svg'" alt="">
+                            <img *ngIf="item.tipoMovimentacao == enumMovimentacao.TRANSFERENCIA" class="icon-min" src="./assets/icons/transfer.svg" (error)="item.nome_icone_categoria = 'book.svg'" alt="">
+
                             <div class="text-start">
                                 <div class="ms-3 color-black-1 f-16  display-none">{{item.descricao || 'Outros'}}</div>
                                 <div class="ms-3 color-light-3 display-none" style="font-size: 12px;">
@@ -82,7 +120,8 @@
                                          <span > {{item.tipo_recorrencia }}</span>
                                         
                                     </span>
-                                    
+                                    <span *ngIf="item.tipoMovimentacao == enumMovimentacao.TRANSFERENCIA" > Transferência para {{item.nome_conta_destino}}</span>
+
                                 </div>
                             </div>
                             

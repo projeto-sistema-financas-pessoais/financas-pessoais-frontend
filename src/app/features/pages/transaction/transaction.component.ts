@@ -6,6 +6,8 @@ import { ModalConfig } from 'src/app/shared/models/moda-config.model';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CondicaoPagamento, FormaPagamento, TipoMovimentacao } from './shared/models/transation-enum.model';
+import { CategoryService } from '../user/shared/models/services/category.service';
+import { Category } from '../user/shared/models/category.model';
 
 @Component({
   selector: 'app-transactions',
@@ -21,19 +23,41 @@ export class TransactionsComponent implements OnInit{
   categorySelected!: string;
   
 
-  categoria = [
-    "categoria 1", "categoria 2"
-  ]
+
+  category!: Category[]
+  month = [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro"
+  ];
+  
 
   transationList: TransationList[] = [];
   transationFilter!: TransationFilter ;
 
   enumMovimentacao!: typeof TipoMovimentacao
+  // movimentacaoValues = Object.values(TipoMovimentacao);
+
+
   enumFormaPagamento!: typeof FormaPagamento
   enumCondicaoPagamento!: typeof CondicaoPagamento
+  Object = Object;
+
+  canOpenFilter: boolean = false;
 
 
-  constructor(private readonly transationService: TransationService){
+  constructor(
+    private readonly transationService: TransationService,
+    private readonly categoryService: CategoryService){
     this.enumMovimentacao = TipoMovimentacao;
     this.enumFormaPagamento = FormaPagamento;
     this.enumCondicaoPagamento = CondicaoPagamento;
@@ -41,14 +65,17 @@ export class TransactionsComponent implements OnInit{
     this.transationFilter = new TransationFilter()
     this.transationFilter.ano = new Date().getFullYear();
     this.transationFilter.mes = new Date().getMonth() + 1;
+    this.transationFilter.id_categoria = null
   }
 
   ngOnInit(): void {
     this.chargeList();
+    this.getCategory()
+    console.log("month", this.month)
   }
 
 
-  private chargeList(){
+  protected chargeList(){
     this.transationService.getAllByFilter(this.transationFilter)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe({
@@ -57,7 +84,24 @@ export class TransactionsComponent implements OnInit{
           console.log(this.transationList)
       }, 
       error: (error: HttpErrorResponse) => {
+        
+        if(error.status == 404){
+          this.transationList = []
+        }
         console.error("error to get list of transations", error)
+      }
+    })
+  }
+
+  private getCategory(){
+    this.categoryService.getAll()
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe({
+      next: (data: Category[]) => {
+        this.category = data;
+      },
+      error: (error: HttpErrorResponse) =>{
+
       }
     })
   }
@@ -66,11 +110,40 @@ export class TransactionsComponent implements OnInit{
 
   }
 
-
-  day(data: Date){
-    const validDate = new Date(data); // Converte o valor em um objeto Date
-    console.log(validDate.getDate())
-
-    return data
+  protected openFilter(){
+    this.canOpenFilter = !this.canOpenFilter
   }
+
+  changeMonth(plus: boolean){
+
+
+    if (plus){
+      if(this.transationFilter.mes == 12){
+        this.transationFilter.mes = 1;
+        this.transationFilter.ano += 1;
+      }else{
+        this.transationFilter.mes += 1;
+      }
+    }
+    else{
+      if(this.transationFilter.mes == 1){
+        this.transationFilter.mes = 12;
+        this.transationFilter.ano -= 1;
+      }else{
+        this.transationFilter.mes -= 1;
+      }
+    }
+
+    this.chargeList();
+
+      
+
+  }
+
+  // day(data: Date){
+  //   const validDate = new Date(data); // Converte o valor em um objeto Date
+  //   console.log(validDate.getDate())
+
+  //   return data
+  // }
 }
