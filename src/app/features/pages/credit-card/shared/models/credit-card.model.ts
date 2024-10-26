@@ -6,6 +6,8 @@ export class CreditCard{
     ativo!: boolean
     limite_disponivel?: number;
     fatura_gastos?: number 
+    dia_vencimento?: number
+    dia_fechamento?: number
 
     constructor(data: any){
         Object.assign(this, data);

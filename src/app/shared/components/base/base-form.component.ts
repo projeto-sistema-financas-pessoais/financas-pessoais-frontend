@@ -145,6 +145,9 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
         if(error.status == 406)
           this.alertService.showAlertDanger(`Já existe um registro com esse nome. Por favor, escolha um nome diferente!"`)
 
+        if(error.status == 400)
+          this.alertService.showAlertDanger(`O dia do vencimento da fatura não pode ser maior que o dia do fechamento"`)
+
         console.error(`error ao criar ${this.nameComplete}`, error, resource)
 
       }

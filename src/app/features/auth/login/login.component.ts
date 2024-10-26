@@ -51,6 +51,8 @@ export class LoginComponent {
           this.response = response
           localStorage.setItem('access_token', JSON.stringify(response.access_token));
           localStorage.setItem('user_name', JSON.stringify(response.name));
+          localStorage.setItem('date_user', JSON.stringify(response.date_user));
+          localStorage.setItem('email', JSON.stringify(this.resourceForm.get('email')?.value));
 
           console.log("login response", response)
           this.alertService.showAlertSuccess("Sucesso ao fazer login")
@@ -75,4 +77,5 @@ export class LoginComponent {
       this.showConfirmPassword = !this.showConfirmPassword;
     }
   }
+
 }
