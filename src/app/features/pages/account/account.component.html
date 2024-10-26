@@ -100,7 +100,7 @@
                     <label for="nome">Tipo de conta<b> * </b></label>
                     <select class="form-select" formControlName="tipo_conta" id="tipo_conta">
                         <option value="" disabled [selected]="true">Selecione uma opção</option>
-                        <option *ngFor="let item of tipoConta" [value]="item">{{item}}</option>
+                        <option *ngFor="let item of Object.values(enumTipoConta)" [value]="item">{{item}}</option>
     
                     </select>
                     <app-form-field-error [control]="resourceForm.get('tipo_conta')"></app-form-field-error>

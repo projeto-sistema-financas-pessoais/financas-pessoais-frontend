@@ -50,7 +50,7 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
     this.images = this.imageListService.getImages();
     this.imageSelected = this.images[0].fileName;
 
-    this.getAll();
+    this.getAll(false);
     this.buildForm();
 
   }
@@ -60,8 +60,8 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
     this.ngUnsubscribe.complete();
   }
 
-  protected getAll(){
-    this.baseService.getAll()
+  protected getAll(somenteAtivo: boolean){
+    this.baseService.getAll(somenteAtivo)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe({
       next: (data)=>{

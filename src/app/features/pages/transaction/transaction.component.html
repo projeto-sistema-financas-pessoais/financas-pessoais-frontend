@@ -5,14 +5,33 @@
             <h4>Movimentações</h4>
         </div>
 
-        <div class="d-flex flex-wrap justify-content-center">
-            <button type="button" class="btn btn-transation income my-2 ms-0 me-2">
+
+        <ng-container *ngIf="isMobile">
+            <button type="button" 
+                class=" btn btn btn-outline-success d-flex align-items-center text-center f-16 me-1"
+                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa-solid fa-plus f-16 mx-2 "></i>
+                </button>
+
+                <div class="dropdown-menu f-16" id="dropdownMenu">
+                    <div class="dropdown-item button-cursor color-green-2" (click)="openIncome()">Receita</div>
+                    <div class="dropdown-item button-cursor color-green-2" (click)="openExpense()">Despesa</div>
+                    <div class="dropdown-item button-cursor color-green-2" (click)="openTransfer()">Transferência</div>
+
+                </div>
+        </ng-container>
+                
+        
+
+
+        <div *ngIf="!isMobile" class=" d-flex flex-wrap justify-content-center display-none">
+            <button type="button" class="display-none btn btn-transation income my-2 ms-0 me-2" (click)="openIncome()">
                 <i class="fa-solid fa-arrow-trend-up icon-size"></i>
                 <br class="display-none">
                 <span class="display-none"> Receita</span>
             </button>
     
-            <button type="button" class="btn btn-transation expense m-2"  style="background-color: #DC3545;">
+            <button type="button" class="display-none btn btn-transation expense m-2" (click)="openExpense()">
                 <i class="fa-solid fa-arrow-trend-down icon-size" ></i>
 
                 <br class="display-none">
@@ -20,9 +39,9 @@
             </button>
     
     
-            <button type="button" class="btn btn-transation transfer m-2">
+            <button type="button" class="display-none btn btn-transation transfer m-2" (click)="openTransfer()">
                 <i class="fa-solid fa-shuffle icon-size" ></i> 
-                <br>
+                <br class="display-none">
                 <span class="display-none"> Transf.</span>
             </button>
 
@@ -36,3 +55,61 @@
 
 
 </div>
+
+
+<app-modal #modal_default [modalConfig]="modalConfig" >
+
+    <div modal-generic-content class="pt-3">
+
+        <ng-container *ngIf="openModalTransfer">
+                <form [formGroup]="resourceFormTransfer" (submit)="addTransationTransfer()">
+                    <div class="form-group mb-3">
+                        <label class="f-16" for="nome">Valor da transferência<b> * </b></label>
+                        <input type="number" class="form-control" id="valor" formControlName="valor" placeholder="Digite o valor da transferência">
+                        <app-form-field-error [control]="resourceFormTransfer.get('nome')"></app-form-field-error>
+                    </div>
+        
+            
+        
+                    <div class="form-group mb-3">
+                        <label  class="f-16" for="descricao">Descrição</label>
+                        <input type="text" class="form-control" id="descricao" formControlName="descricao" placeholder="Informe a descrição da movimentcação">
+                        <app-form-field-error [control]="resourceFormTransfer.get('grau_parentesco')"></app-form-field-error>
+                    </div>
+                </form>
+        </ng-container>
+        
+
+        <!-- <ng-container >
+             
+            <form [formGroup]="resourceForm" (submit)="openModalEdit?  editAllAccount(): addResource()" >
+                <div class="row">
+                    <div class="form-group mb-3">
+                        <label class="f-16" for="nome">Nome do membro da família<b> * </b></label>
+                        <input type="text" class="form-control" id="nome" formControlName="nome" placeholder="Digite o nome do membro">
+                        <app-form-field-error [control]="resourceForm.get('nome')"></app-form-field-error>
+                    </div>
+        
+            
+        
+                    <div class="form-group mb-3">
+                        <label  class="f-16" for="descricao">Grau de parentesco</label>
+                        <input type="text" class="form-control" id="nome" formControlName="grau_parentesco" placeholder="Informe o seu grau de parentesco">
+                        <app-form-field-error [control]="resourceForm.get('grau_parentesco')"></app-form-field-error>
+                    </div>
+                </div>
+
+
+                <div class="d-flex justify-content-center">
+                
+                    <button type="submit" [disabled]="this.resourceForm.invalid" class=" btn btn-green btn-block btn-lg f-16" >{{openModalEdit? 'Editar': 'Adicionar'}}</button>
+
+                </div>
+            
+            
+            </form>
+    
+        </ng-container> -->
+       
+    </div>
+</app-modal>

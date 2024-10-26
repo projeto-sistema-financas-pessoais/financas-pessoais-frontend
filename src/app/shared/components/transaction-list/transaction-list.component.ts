@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { CondicaoPagamento, FormaPagamento, TipoMovimentacao } from 'src/app/features/pages/transaction/shared/models/transation-enum.model';
+import { CondicaoPagamento, FormaPagamento, TipoMovimentacao } from 'src/app/shared/models/enum.model';
 import { TransationFilter, TransationList } from 'src/app/features/pages/transaction/shared/models/transation-list.model';
 import { TransationService } from 'src/app/features/pages/transaction/shared/services/transation.service';
 import { Category } from 'src/app/features/pages/user/shared/models/category.model';
@@ -103,7 +103,7 @@ export class TransactionListComponent {
   }
 
   private getCategory(){
-    this.categoryService.getAll()
+    this.categoryService.getAll(false)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe({
       next: (data: Category[]) => {

@@ -22,3 +22,11 @@ export enum TipoMovimentacao {
     RECEITA = "Receita",
     TRANSFERENCIA = "Transferencia"
 }
+
+export enum TipoConta{
+    CORRENTE = "Corrente",
+    POUPANCA = "Poupança",
+    CONTA_PAGAMENTO = "Conta de pagamento",
+    CARTEIRA = "Carteira",
+    SALARIO = "Conta Salário"
+}

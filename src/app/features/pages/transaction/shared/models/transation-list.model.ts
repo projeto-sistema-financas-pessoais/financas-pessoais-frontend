@@ -1,4 +1,4 @@
-import { CondicaoPagamento, FormaPagamento, TipoMovimentacao } from "./transation-enum.model";
+import { CondicaoPagamento, FormaPagamento, TipoMovimentacao } from "../../../../../shared/models/enum.model";
 import { DivideMember } from "./transation.model";
 
 export class TransationFilter{

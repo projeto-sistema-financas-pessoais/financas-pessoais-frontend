@@ -1,4 +1,4 @@
-import { CondicaoPagamento, TipoRecorrencia, FormaPagamento } from "./transation-enum.model";
+import { CondicaoPagamento, TipoRecorrencia, FormaPagamento } from "../../../../../shared/models/enum.model";
 
 export class RegisterExpenseIncome
 {

@@ -24,8 +24,8 @@ export abstract class BaseFormService<T extends BaseModel> {
     this.headers = this.auth.GetToken();
   }
 
-  getAll(): Observable<T[]>{
-    return this.http.get<T[]>(`${environment.financas}/${this.apiPath}/listar`, {headers: this.headers})
+  getAll(somenteAtivo: boolean): Observable<T[]>{
+    return this.http.get<T[]>(`${environment.financas}/${this.apiPath}/listar/${somenteAtivo}`, {headers: this.headers})
   }
 
   addResource(resource: T):Observable<T>{
