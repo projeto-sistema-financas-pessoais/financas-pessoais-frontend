@@ -22,6 +22,7 @@ export class FamilyMembersComponent extends BaseFormComponent<FamilyMembers>{
   protected override buildForm(): void {
     this.resourceForm = this.formBuilder.group({
       nome: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
       grau_parentesco: [null],
       ativo: [null],
     });
