@@ -67,9 +67,12 @@
                         <input type="text" class="form-control" id="nome" formControlName="nome" placeholder="Digite o nome do membro">
                         <app-form-field-error [control]="resourceForm.get('nome')"></app-form-field-error>
                     </div>
-        
-            
-        
+                    <div class="form-group mb-3">
+                        <label class="f-16" for="email">Email do membro da família<b> * </b></label>
+                        <input type="text" class="form-control" id="email" formControlName="email" placeholder="Digite o email do membro">
+                        <app-form-field-error [control]="resourceForm.get('email')"></app-form-field-error>
+                    </div>
+                    
                     <div class="form-group mb-3">
                         <label  class="f-16" for="descricao">Grau de parentesco</label>
                         <input type="text" class="form-control" id="nome" formControlName="grau_parentesco" placeholder="Informe o seu grau de parentesco">

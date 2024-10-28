@@ -6,18 +6,14 @@
 
 }
 
-a{
-    color: $color-green-3;
- }
-
-  .position-relative {
+.position-relative {
     position: relative;
 }
 
 .btn-eye {
     position: absolute;
-    top: 70%;
-    right: 15px;
+    top: 50%; 
+    right: 10px; 
     transform: translateY(-50%);
     background: none;
     border: none;
@@ -29,7 +25,17 @@ a{
     outline: none;
 }
 
-.fa-eye, .fa-eye-slash {
+.fa-eye,
+.fa-eye-slash {
     font-size: 0.8rem;
     color: #125342;
+}
+
+
+.password-wrapper {
+    position: relative;
+
+    input {
+        padding-right: 40px; 
+    }
 }

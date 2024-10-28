@@ -8,7 +8,7 @@
             <h2 class="card-title text-center">Cadastro</h2>
             <form [formGroup]="resourceForm" (submit)="submitForm()">
                 <div class="form-group mb-3">
-                    <label for="nome">Nome Completo<b> * </b></label>
+                    <label for="nome">Nome<b> * </b></label>
                     <input type="text" class="form-control" id="nome" formControlName="nome_completo" placeholder="Digite seu nome">
                     <app-form-field-error [control]="resourceForm.get('nome_completo')"></app-form-field-error>
                 </div>
