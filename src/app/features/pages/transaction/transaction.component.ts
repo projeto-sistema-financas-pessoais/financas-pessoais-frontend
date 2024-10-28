@@ -69,6 +69,8 @@ export class TransactionsComponent implements OnInit{
   openModalIncome: boolean = false;
   openModalExpense: boolean = false;
 
+  nameUser!: string
+
   resourceFormTransfer!: FormGroup;
   resourceFormIncomeExpense!: FormGroup;
 
@@ -131,7 +133,8 @@ export class TransactionsComponent implements OnInit{
     private readonly categoryService: CategoryService,
     private readonly creditCardService: CreditCardService,
     private readonly memberService: FamilyMembersService,
-    private alertService: AlertModalService 
+    private alertService: AlertModalService,
+    private readonly authService: AuthService 
     ){
 
       this.enumTipoConta = TipoConta;
@@ -145,6 +148,9 @@ export class TransactionsComponent implements OnInit{
   }
 
   ngOnInit(): void {
+
+    this.nameUser = this.authService.GetUser().name || 'null'
+
     this.observer.observe(['(max-width: 1024px)']).subscribe((screenSize) => {
       if(screenSize.matches){
         this.isMobile = true;
@@ -314,13 +320,19 @@ export class TransactionsComponent implements OnInit{
 
 
   setDivideMember(resource: any){
-    if(resource.quantity_member == "Somente eu")
-    // pegar o id real 
-    resource.divide_parente = [{
-      id_parente: 1,
-      valor_parente: resource.valor
-    }]
+    let member: FamilyMembers | undefined;
 
+    if(resource.quantity_member == "Somente eu"){
+      member = this.member.find(item => item.nome == this.nameUser)
+
+      if(member)
+        resource.divide_parente = [{
+          id_parente: member.id_parente,
+          valor_parente: resource.valor
+        }]
+    }
+
+  
     return resource
   }
 
@@ -470,7 +482,6 @@ export class TransactionsComponent implements OnInit{
   checkIfAccountTransf(){
     const atual = this.resourceFormTransfer.get('id_conta_atual')?.value
     const transf = this.resourceFormTransfer.get('id_conta_transferencia')?.value
-    console.log("account", atual, transf)
     return atual  == transf && atual!= null && transf !== null
   }
 
