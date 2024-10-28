@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/features/auth/shared/services/auth.service';
 import { TransationFilter, TransationList } from '../models/transation-list.model';
 import { environment } from 'src/environments/environment.development';
+import { RegisterExpenseIncome, RegisterTransfer } from '../models/transation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +25,17 @@ export class TransationService  {
 
   getAllByFilter(filter: TransationFilter): Observable<TransationList[]>{
     return this.http.post<TransationList[]>(`${environment.financas}/movimentacao/listar/filtro`, filter ,{headers: this.headers})
+  }
+
+  addTransfer(resource: RegisterTransfer): Observable<RegisterTransfer>{
+    return this.http.post<RegisterTransfer>(`${environment.financas}/movimentacao/cadastro/transferencia`, resource ,{headers: this.headers})
+  }
+
+  addExpense(resource: RegisterExpenseIncome): Observable<RegisterExpenseIncome>{
+    return this.http.post<RegisterExpenseIncome>(`${environment.financas}/movimentacao/cadastro/despesa`, resource ,{headers: this.headers})
+  }
+
+  addIncome(resource: RegisterExpenseIncome): Observable<RegisterExpenseIncome>{
+    return this.http.post<RegisterExpenseIncome>(`${environment.financas}/movimentacao/cadastro/receita`, resource ,{headers: this.headers})
   }
 }

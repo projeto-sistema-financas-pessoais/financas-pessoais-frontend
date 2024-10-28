@@ -36,7 +36,7 @@ import { AbstractControl, FormControl } from "@angular/forms";
       }
       else if (this.control?.errors?.['maxlength']){
         const requiredLenght = this.control.errors?.['maxlength'].requiredLength;
-        return `deve ter no máximo ${requiredLenght} caracteres`
+        return `Deve ter no máximo ${requiredLenght} caracteres`
       }else if(this.control?.errors?.['min']){
         const requiredLenght = this.control.errors?.['min'].min;
         return `Deve ter no mínimo ${requiredLenght} caracteres`
@@ -44,6 +44,10 @@ import { AbstractControl, FormControl } from "@angular/forms";
         return 'Formato de data inválida';
       }else if(this.control?.errors?.['dateInvalid']){
         return 'Data inválida';
+      }
+      else if (this.control?.errors?.['max']){
+        const requiredLenght = this.control.errors?.['max'].max;
+        return `Deve ter no máximo ${requiredLenght}`
       }
       else
         return null;

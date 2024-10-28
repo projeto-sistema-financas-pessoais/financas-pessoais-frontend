@@ -1,5 +1,5 @@
 export enum CondicaoPagamento {
-    AVISTA = 'À Vista',
+    AVISTA = 'À vista',
     PARCELADO = 'Parcelado',
     RECORRENTE = 'Recorrente'
 }
