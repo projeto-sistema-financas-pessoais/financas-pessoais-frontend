@@ -90,9 +90,7 @@
 
                             </div>
                         </div>
-                        
-
-
+      
                        
                     </div>
 
@@ -115,11 +113,20 @@
                         <span *ngIf="item.tipoMovimentacao == enumMovimentacao.TRANSFERENCIA" class="color-light-1"> R$ {{item.valor  | formatPrice}}</span>
                     </div> 
 
-                    <div>
-                        <i *ngIf="item.consolidado" class="color-green-4 fa-solid fa-circle-check button-cursor"></i>
-                        <i *ngIf="!item.consolidado && !item.id_fatura" class="color-light-3 fa-regular fa-circle-check button-cursor"></i>
-                        <i tooltip="Feche a fatura primeiro" container="body" placement="bottom" [delay]="800" *ngIf="!item.consolidado && item.id_fatura" class="color-light-2 fa-regular fa-circle-check button-cursor"></i>
+                    <div *ngIf="item.tipoMovimentacao !== enumMovimentacao.TRANSFERENCIA && !item.id_fatura"
+                     (click)="changeConsolidated(item)" class="button-cursor">
+                        <i *ngIf="item.consolidado" class="color-green-4 fa-solid fa-circle-check "></i>
+                        <i *ngIf="!item.consolidado" class="color-light-3 fa-solid fa-circle-check"></i>
+                        
 
+                    </div>
+
+                    <div *ngIf="item.tipoMovimentacao === enumMovimentacao.TRANSFERENCIA || item.id_fatura" class="cursor-blocked"> 
+                        <i 
+                        tooltip="Fatura do cartão aberta" container="body" placement="bottom" [delay]="800"
+                        *ngIf="!item.consolidado && item.id_fatura" class="color-light-2 fa-solid fa-circle-check button-cursor"></i>
+                        <i [tooltip]="item.id_fatura ? 'Não é possível alterar de uma fatura paga': 'Não é possível alterar de uma transferência'" container="body" placement="bottom" [delay]="800"
+                        *ngIf="item.consolidado" class=" fa-solid fa-circle-check" style="color: #0BFA9F33;"></i>
                     </div>
 
                 

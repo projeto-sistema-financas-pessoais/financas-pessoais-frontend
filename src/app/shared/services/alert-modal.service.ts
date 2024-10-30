@@ -24,7 +24,7 @@ private showAlert(message: string, type: AlertTypes){
 
   setTimeout(() => {
     bsModalRef.hide();
-  }, 2800); 
+  }, 800); 
 
 }
 

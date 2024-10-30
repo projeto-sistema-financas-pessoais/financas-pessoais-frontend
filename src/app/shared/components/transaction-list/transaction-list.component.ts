@@ -9,6 +9,7 @@ import { CategoryService } from 'src/app/features/pages/user/shared/models/servi
 import { ModalComponent } from '../modal/modal.component';
 import { ModalConfig } from '../../models/moda-config.model';
 import { AlertModalService } from '../../services/alert-modal.service';
+import { TransationConsolidated } from 'src/app/features/pages/transaction/shared/models/transation.model';
 
 @Component({
   selector: 'app-transaction-list',
@@ -186,4 +187,30 @@ export class TransactionListComponent {
     })
   }
 
+  changeConsolidated(item: TransationList){
+
+    item.consolidado = !item.consolidado;
+
+    let consolidated: TransationConsolidated = {
+      id_movimentacao: item.id_movimentacao,
+      consolidado: item.consolidado
+    }
+    this.transationService.consolidatedTransation(consolidated)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe({
+      next: (data: any) =>{
+
+        this.alertService.showAlertSuccess(
+          item.consolidado ? 'Sucesso ao consolidar movimentação!' : 'Sucesso ao não consolidar movimentação!'
+         
+        )
+
+        
+        console.log("delete transation success", data)
+      },
+      error: (error: HttpErrorResponse) =>{
+        console.log('error delete transation', error)
+      }
+    })
+  }
 }

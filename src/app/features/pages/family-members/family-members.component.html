@@ -16,7 +16,7 @@
             <div class="item">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="color-green-2 f-16">  <strong>{{item.nome}}</strong> </div>
-                    <div class="btn-group f-16">
+                    <div class="btn-group f-16" *ngIf="nameUser != item.nome">
                         <i class="menu-icon fa-solid fa-ellipsis-vertical button-cursor"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                         <div class="dropdown-menu f-16" id="dropdownMenu">
                             <a *ngIf="item.nome !== 'Carteira'"  class="dropdown-item button-cursor color-green-2" (click)="deleteResource(item.id_parente)"> <i class="fa-solid fa-trash"></i> Excluir</a>

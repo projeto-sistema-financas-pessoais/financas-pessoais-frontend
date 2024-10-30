@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/features/auth/shared/services/auth.service';
 import { TransationFilter, TransationList } from '../models/transation-list.model';
 import { environment } from 'src/environments/environment.development';
-import { RegisterExpenseIncome, RegisterTransfer } from '../models/transation.model';
+import { RegisterExpenseIncome, RegisterTransfer, TransationConsolidated } from '../models/transation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +42,11 @@ export class TransationService  {
   deleteTransation(transationId: number): Observable<any>{
     return this.http.delete<any>(`${environment.financas}/movimentacao/deletar/${transationId}` ,{headers: this.headers})
   }
+
+  consolidatedTransation(transationConsolidated: TransationConsolidated): Observable<any>{
+    return this.http.post<any>(`${environment.financas}/movimentacao/consolidar` , transationConsolidated, {headers: this.headers})
+  }
+
 
   
 }
