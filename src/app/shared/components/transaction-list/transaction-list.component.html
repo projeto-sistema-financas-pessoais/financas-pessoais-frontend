@@ -171,3 +171,28 @@
     </ng-container>
 
 </div>
+
+
+<app-modal #modal_small [modalConfig]="modalConfig" >
+
+    <div modal-generic-content-small class="pt-3" *ngIf="openModalDelete">
+        <span class="color-light-1">
+            <p class="text-center">Tem certeza que deseja excluir a movimentação?
+                {{deleteItem.id_repeticao ? 'Essa e as movimentações seguintes associadas serão deletadas.': ''}}
+            </p>
+            <span class="d-flex justify-content-center"> Descrição: &nbsp; <strong>{{deleteItem.descricao}}</strong></span>
+            <span class="d-flex justify-content-center">  Data de pagamento: &nbsp; <strong>{{deleteItem.data_pagamento}}</strong></span>
+            <span class="d-flex justify-content-center">  Condição de pagamento: &nbsp; <strong>{{deleteItem.condicao_pagamento}}</strong></span>
+
+        </span>
+        
+        <div class="d-flex justify-content-evenly mt-4">
+
+            <button type="button" class="btn btn-outline-secondary f-16" (click)="modalSmall.dismiss()" >Cancelar</button>
+            <button type="button" class="btn btn-danger  f-16" (click)="deleteTransation()">Remover</button>
+
+        </div>
+
+    </div>
+
+</app-modal>

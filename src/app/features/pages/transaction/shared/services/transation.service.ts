@@ -38,4 +38,10 @@ export class TransationService  {
   addIncome(resource: RegisterExpenseIncome): Observable<RegisterExpenseIncome>{
     return this.http.post<RegisterExpenseIncome>(`${environment.financas}/movimentacao/cadastro/receita`, resource ,{headers: this.headers})
   }
+
+  deleteTransation(transationId: number): Observable<any>{
+    return this.http.delete<any>(`${environment.financas}/movimentacao/deletar/${transationId}` ,{headers: this.headers})
+  }
+
+  
 }

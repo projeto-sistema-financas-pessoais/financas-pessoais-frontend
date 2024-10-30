@@ -63,6 +63,7 @@ export class TransactionsComponent implements OnInit{
 
   // modals
   @ViewChild('modal_default') protected modalDefault!: ModalComponent;
+
   modalConfig! : ModalConfig;
   openModalTransfer: boolean = false;
   openModalIncome: boolean = false;

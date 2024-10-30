@@ -76,16 +76,6 @@
                         <app-form-field-error [control]="resourceFormTransfer.get('descricao')"></app-form-field-error>
                     </div>
 
-                    <!-- <div class="form-group mb-2">
-                        <label class="f-16" for="id_conta_atual">Conta atual<b> * </b></label>
-                        <select class="form-select f-16" formControlName="id_conta_atual" id="id_conta_atual">
-                            <option [ngValue]="null" disabled [selected]="true">Selecione uma opção</option>
-                            <option *ngFor="let item of account" [value]="item.id_conta">{{item.nome}}</option>
-        
-                        </select>                    
-                        <app-form-field-error [control]="resourceFormTransfer.get('id_conta_atual')"></app-form-field-error>
-                    </div> -->
-
                     <div class="mb-2 custom-dropdown">
                                 
 
@@ -128,20 +118,6 @@
                         *ngIf="checkIfAccountTransf()"
                         > Conta atual não pode ser igual a conta destino</p>
                     </div>
-
-                    <!-- <div class="form-group mb-2">
-                        <label class="f-16" for="id_conta_transferencia">Conta destino<b> * </b></label>
-                        <select class="form-select f-16" formControlName="id_conta_transferencia" id="id_conta_transferencia">
-                            <option [ngValue]="null" disabled [selected]="true">Selecione uma opção</option>
-                            <option *ngFor="let item of account" [value]="item.id_conta">{{item.nome}}</option>
-        
-                        </select>                    
-                        <app-form-field-error [control]="resourceFormTransfer.get('id_conta_transferencia')"></app-form-field-error>
-                        <p class="text-danger"
-                        *ngIf="checkIfAccountTransf()"
-                        > Conta atual não pode ser igual a conta destino</p>
-
-                    </div> -->
 
                     <div class="d-flex justify-content-center">
                         <button type="submit" [disabled]="this.resourceFormTransfer.invalid
@@ -327,9 +303,6 @@
                          class="form-group mb-2 col-md-6 col-sm-6 d-flex align-items-center justify-content-center">
                             <label  class="f-16" for="data_pagamento">Consolidado</label>
                             <div class="mx-2 button-cursor"  (click)="changeConsolidado()">
-                                <!-- <i *ngIf="resourceFormIncomeExpense.get('consolidado')?.value == true" class=" button-cursor" style="font-size: 25px;"></i>
-                                <i  *ngIf="resourceFormIncomeExpense.get('consolidado')?.value == false" class=" button-cursor"></i> -->
-
                                 <i class="button-cursor f-22"
                                 [ngClass]="resourceFormIncomeExpense.get('consolidado')?.value == true ? 'color-green-4 fa-solid fa-circle-check': 'color-light-3 fa-regular fa-circle-check'"></i>
     

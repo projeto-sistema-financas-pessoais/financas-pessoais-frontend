@@ -14,6 +14,7 @@ export class ModalComponent {
 
   @Output() returnMessage: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild('modal_default') private modalDefault!: TemplateRef<ModalComponent>
+  @ViewChild('modal_small') private modalSmall!: TemplateRef<ModalComponent>
 
   constructor(
     private modalService: NgbModal,
@@ -37,6 +38,23 @@ export class ModalComponent {
     })
   }
 
+
+
+
+  openSmall(): Promise<boolean> {
+
+    if (this.modalRef) {
+      this.modalRef.close(null);
+    }
+
+    return new Promise<boolean>(resolve => {
+      this.modalRef = this.modalService.open(
+        this.modalSmall, { 
+          backdrop: 'static',  centered: true, keyboard : false, size:''
+    })
+      this.modalRef.result.then(resolve, resolve)
+    })
+  }
 
   async close(): Promise<void> {
     if (this.modalRef) {
