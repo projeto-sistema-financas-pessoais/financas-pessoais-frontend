@@ -64,29 +64,19 @@
         <!-- Transferencia -->
         <ng-container *ngIf="openModalTransfer">
                 <form [formGroup]="resourceFormTransfer" (submit)="addTransationTransfer(true)">
-                    <div class="form-group mb-3">
+                    <div class="form-group mb-2">
                         <label class="f-16" for="valor_tranferencia">Valor da transferência<b> * </b></label>
                         <input type="number" class="form-control" id="valor_tranferencia" formControlName="valor" placeholder="Digite o valor da transferência">
                         <app-form-field-error [control]="resourceFormTransfer.get('nome')"></app-form-field-error>
                     </div>
         
-                    <div class="form-group mb-3">
+                    <div class="form-group mb-2">
                         <label  class="f-16" for="descricao">Descrição</label>
                         <input type="text" class="form-control" id="descricao" formControlName="descricao" placeholder="Informe a descrição da movimentação">
                         <app-form-field-error [control]="resourceFormTransfer.get('descricao')"></app-form-field-error>
                     </div>
 
-                    <!-- <div class="form-group mb-3">
-                        <label class="f-16" for="id_conta_atual">Conta atual<b> * </b></label>
-                        <select class="form-select f-16" formControlName="id_conta_atual" id="id_conta_atual">
-                            <option [ngValue]="null" disabled [selected]="true">Selecione uma opção</option>
-                            <option *ngFor="let item of account" [value]="item.id_conta">{{item.nome}}</option>
-        
-                        </select>                    
-                        <app-form-field-error [control]="resourceFormTransfer.get('id_conta_atual')"></app-form-field-error>
-                    </div> -->
-
-                    <div class="mb-3 custom-dropdown">
+                    <div class="mb-2 custom-dropdown">
                                 
 
                         <label class="f-16 d-flex align-items-center" for="id_carteira">
@@ -107,7 +97,7 @@
                     </div>
 
 
-                    <div class="mb-3 custom-dropdown">
+                    <div class="mb-2 custom-dropdown">
                                 
 
                         <label class="f-16 d-flex align-items-center" for="id_carteira">
@@ -129,20 +119,6 @@
                         > Conta atual não pode ser igual a conta destino</p>
                     </div>
 
-                    <!-- <div class="form-group mb-3">
-                        <label class="f-16" for="id_conta_transferencia">Conta destino<b> * </b></label>
-                        <select class="form-select f-16" formControlName="id_conta_transferencia" id="id_conta_transferencia">
-                            <option [ngValue]="null" disabled [selected]="true">Selecione uma opção</option>
-                            <option *ngFor="let item of account" [value]="item.id_conta">{{item.nome}}</option>
-        
-                        </select>                    
-                        <app-form-field-error [control]="resourceFormTransfer.get('id_conta_transferencia')"></app-form-field-error>
-                        <p class="text-danger"
-                        *ngIf="checkIfAccountTransf()"
-                        > Conta atual não pode ser igual a conta destino</p>
-
-                    </div> -->
-
                     <div class="d-flex justify-content-center">
                         <button type="submit" [disabled]="this.resourceFormTransfer.invalid
                         || checkIfAccountTransf()" class=" btn btn-green btn-block btn-lg f-16" >Salvar</button>
@@ -162,20 +138,20 @@
             <form [formGroup]="resourceFormIncomeExpense" (submit)="openModalExpense? addTransationExpense(true) : addTransationIncome(true)">
 
                 <div class="row">
-                    <div class="form-group mb-3 col-md-6 col-sm-12">
+                    <div class="form-group mb-2 col-md-6 col-sm-12">
                         <label class="f-16" for="valor">Valor<b> * </b></label>
                         <input type="number" class="form-control" id="valor" formControlName="valor" [placeholder]=" openModalExpense ? 'Digite o valor da despesa': 'Digite o valor da receita' ">
                         <app-form-field-error [control]="resourceFormIncomeExpense.get('valor')"></app-form-field-error>
                     </div>
         
-                    <div class="form-group mb-3 col-md-6 col-sm-12">
+                    <div class="form-group mb-2 col-md-6 col-sm-12">
                         <label  class="f-16" for="descricao">Descrição</label>
                         <input type="text" class="form-control" id="descricao" formControlName="descricao" placeholder="Descrição da movimentação">
                         <app-form-field-error [control]="resourceFormIncomeExpense.get('descricao')"></app-form-field-error>
                     </div>
 
     
-                    <div class="mb-3 custom-dropdown col-md-6 col-sm-12">
+                    <div class="mb-2 custom-dropdown col-md-6 col-sm-12">
                         <label class="f-16" for="id_categoria">Categoria <b> * </b></label>
                         <div class="form-select" (click)="toggleDropdownCategory()">
                           <img *ngIf="selectedCategoryIcon" [src]="'./assets/icones_category/' + selectedCategoryIcon" alt="Ícone da categoria" style="width: 20px; margin-right: 8px;">
@@ -204,7 +180,7 @@
     
                     </div>
     
-                    <div class="form-group mb-3 col-md-6 col-sm-12">
+                    <div class="form-group mb-2 col-md-6 col-sm-12">
                         <label class="f-16" for="forma_pagamento">Forma de Pagamento<b> * </b></label>
                         <select class="form-select f-16" formControlName="forma_pagamento" id="forma_pagamento" (change)="cleanSelected()">
                             <option [ngValue]="null" disabled [selected]="true">Selecione uma opção</option >
@@ -223,7 +199,7 @@
                    
 
                     <!-- Credito -->
-                    <div *ngIf="resourceFormIncomeExpense.get('forma_pagamento')?.value === enumFormaPagamento.CREDITO" class="mb-3 custom-dropdown col-md-6 col-sm-12">
+                    <div *ngIf="resourceFormIncomeExpense.get('forma_pagamento')?.value === enumFormaPagamento.CREDITO" class="mb-2 custom-dropdown col-md-6 col-sm-12">
                         <label class="f-16 d-flex align-items-center" for="id_categoria">
                                <mat-icon class="color-light-1 me-1" >credit_card</mat-icon>Cartão de Crédito <b> * </b>
                         </label>
@@ -242,7 +218,7 @@
                     </div>
 
                     <!-- Dinheiro -->
-                    <div *ngIf="resourceFormIncomeExpense.get('forma_pagamento')?.value === enumFormaPagamento.DINHEIRO" class="mb-3 custom-dropdown col-md-6 col-sm-12">
+                    <div *ngIf="resourceFormIncomeExpense.get('forma_pagamento')?.value === enumFormaPagamento.DINHEIRO" class="mb-2 custom-dropdown col-md-6 col-sm-12">
                         <label class="f-16 d-flex align-items-center" for="id_carteira">
                             <mat-icon class="color-light-1 me-1" >account_balance</mat-icon>Conta Carteira <b> * </b>
 
@@ -264,7 +240,7 @@
 
                     <!-- Débito -->
 
-                    <div *ngIf="resourceFormIncomeExpense.get('forma_pagamento')?.value === enumFormaPagamento.DEBITO"  class="mb-3 custom-dropdown col-md-6 col-sm-12">
+                    <div *ngIf="resourceFormIncomeExpense.get('forma_pagamento')?.value === enumFormaPagamento.DEBITO"  class="mb-2 custom-dropdown col-md-6 col-sm-12">
                                 
 
                         <label class="f-16 d-flex align-items-center" for="id_carteira">
@@ -285,7 +261,7 @@
                     </div>
 
 
-                    <div class="form-group mb-3 col-md-6 col-sm-6">
+                    <div class="form-group mb-2 col-md-6 col-sm-6">
                         <label class="f-16" for="condicao_pagamento">Condição de Pagamento<b> * </b></label>
                         <select class="form-select f-16" formControlName="condicao_pagamento" id="condicao_pagamento">
                             <option [ngValue]="null" disabled [selected]="true">Selecione uma opção</option>
@@ -300,13 +276,13 @@
                     </div>
 
 
-                    <div *ngIf="resourceFormIncomeExpense.get('condicao_pagamento')?.value == enumCondicaoPagamento.PARCELADO" class="form-group mb-3 col-md-6 col-sm-12">
+                    <div *ngIf="resourceFormIncomeExpense.get('condicao_pagamento')?.value == enumCondicaoPagamento.PARCELADO" class="form-group mb-2 col-md-6 col-sm-12">
                         <label class="f-16" for="quantidade_parcelas">Quantidade de parcelas<b> * </b></label>
                         <input type="number" class="form-control" id="quantidade_parcelas" formControlName="quantidade_parcelas" placeholder="Digite a quantidade de parcelas">
                         <app-form-field-error [control]="resourceFormIncomeExpense.get('quantidade_parcelas')"></app-form-field-error>
                     </div>
 
-                    <div *ngIf="resourceFormIncomeExpense.get('condicao_pagamento')?.value == enumCondicaoPagamento.RECORRENTE" class="form-group mb-3 col-md-6 col-sm-6">
+                    <div *ngIf="resourceFormIncomeExpense.get('condicao_pagamento')?.value == enumCondicaoPagamento.RECORRENTE" class="form-group mb-2 col-md-6 col-sm-6">
                         <label class="f-16" for="tipo_recorrencia">Tipo de Recorrência<b> * </b></label>
                         <select class="form-select f-16" formControlName="tipo_recorrencia" id="tipo_recorrencia">
                             <option [ngValue]="null" disabled [selected]="true">Selecione uma opção</option>
@@ -317,25 +293,25 @@
                     </div>
 
                     <ng-container *ngIf="resourceFormIncomeExpense.get('forma_pagamento')?.value !== null">
-                        <div class="form-group mb-3 col-md-6 col-sm-6">
+                        <div class="form-group mb-2 col-md-6 col-sm-6">
                             <label  class="f-16" for="data_pagamento">Data de Pagamento <b> * </b></label>
                             <input type="date" class="form-control" id="data_pagamento" formControlName="data_pagamento" >
                             <app-form-field-error [control]="resourceFormIncomeExpense.get('data_pagamento')"></app-form-field-error>
                         </div>
     
                         <div *ngIf=" resourceFormIncomeExpense.get('forma_pagamento')?.value !== enumFormaPagamento.CREDITO" 
-                         class="form-group mb-3 col-md-6 col-sm-6 d-flex align-items-center justify-content-center">
+                         class="form-group mb-2 col-md-6 col-sm-6 d-flex align-items-center justify-content-center">
                             <label  class="f-16" for="data_pagamento">Consolidado</label>
-                            <div class="mx-2" style="font-size: 25px;" (click)="changeConsolidado()">
-                                <i *ngIf="resourceFormIncomeExpense.get('consolidado')?.value == true" class="color-green-4 fa-solid fa-circle-check button-cursor" style="font-size: 25px;"></i>
-                                <i  *ngIf="resourceFormIncomeExpense.get('consolidado')?.value == false" class="color-light-3 fa-regular fa-circle-check button-cursor"></i>
+                            <div class="mx-2 button-cursor"  (click)="changeConsolidado()">
+                                <i class="button-cursor f-22"
+                                [ngClass]="resourceFormIncomeExpense.get('consolidado')?.value == true ? 'color-green-4 fa-solid fa-circle-check': 'color-light-3 fa-regular fa-circle-check'"></i>
     
                             </div>
                             
                         </div>
 
                         <ng-container *ngIf="openModalExpense">
-                            <div class="form-group mb-3 col-md-6 col-sm-12">
+                            <div class="form-group mb-2 col-md-6 col-sm-12">
                                 <label class="f-16 d-flex align-items-center" for="quantity_member">
                                     <mat-icon class="color-light-1 me-1" >groups</mat-icon> Qtd. de Membros <b> * </b>
                                 </label> 
@@ -352,7 +328,7 @@
                             <div formArrayName="divide_parente">
                                 <div *ngFor="let item of divideMember.controls; let i = index" [formGroupName]="i" class="row">
     
-                                    <div class="form-group mb-3 col-md-6 col-sm-12">
+                                    <div class="form-group mb-2 col-md-6 col-sm-12">
                                         <label class="f-16 d-flex align-items-center" for="id_parente-{{i}}">
                                             <mat-icon class="color-light-1 me-1" >groups</mat-icon> Nome do membro <b> * </b>
                                         </label> 
@@ -366,10 +342,10 @@
                                     </div>
                         
     
-                                    <div class="form-group mb-3 col-md-6 col-sm-12">
+                                    <div class="form-group mb-2 col-md-6 col-sm-12">
                                         <label class="f-16" for="valor-{{i}}">Valor<b> * </b></label>
-                                        <input type="number" class="form-control" id="valor-{{i}}" formControlName="valor" placeholder="Digite o valor da despesa">
-                                        <app-form-field-error [control]="resourceFormIncomeExpense.get('valor')"></app-form-field-error>
+                                        <input type="number" class="form-control" id="valor-{{i}}" formControlName="valor_parente" placeholder="Digite o valor da despesa">
+                                        <app-form-field-error [control]="resourceFormIncomeExpense.get('valor_parente')"></app-form-field-error>
                                     </div>
     
                                 </div>

@@ -10,7 +10,7 @@ export class RegisterExpenseIncome
     tipo_recorrencia!: TipoRecorrencia;
     datatime!: string;
     data_pagamento!: string;
-    consolidado!: true;
+    consolidado!: boolean;
     forma_pagamento!: FormaPagamento;
     id_financeiro!: number;
     quantidade_parcelas!: number;
@@ -38,3 +38,7 @@ export class DivideMember{
 }
 
 
+export class TransationConsolidated{
+    id_movimentacao!: number;
+    consolidado!: boolean
+}

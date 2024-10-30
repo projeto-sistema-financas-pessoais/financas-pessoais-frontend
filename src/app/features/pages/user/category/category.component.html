@@ -87,13 +87,13 @@
              
         <form [formGroup]="resourceForm" (submit)="openModalEdit?  editAllAccount(): addResource()" >
             <div class="row">
-                <div class="form-group mb-3">
+                <div class="form-group mb-2">
                     <label class="f-16" for="nome">Nome da categoria<b> * </b></label>
                     <input type="text" class="form-control" id="nome" formControlName="nome" placeholder="Digite o nome da categoria">
                     <app-form-field-error [control]="resourceForm.get('nome')"></app-form-field-error>
                 </div>
 
-                <div class="form-group mb-3">
+                <div class="form-group mb-2">
                     <label class="f-16" for="modelo_categoria">Modelo da categoria<b> * </b></label>
                     <select class="form-select f-16" formControlName="modelo_categoria" id="modelo_categoria">
                         <option value="" disabled [selected]="true">Selecione uma opção</option>
@@ -103,14 +103,14 @@
                     <app-form-field-error [control]="resourceForm.get('nome')"></app-form-field-error>
                 </div>
     
-                <div class="form-group mb-3 col-md-6 col-sm-12">
+                <div class="form-group mb-2 col-md-6 col-sm-12">
                     <label class="f-16" for="nome">Ícone da categoria<b> * </b></label>
                     <img class=" mx-3 button-cursor" src="./assets/icones_category/{{imageSelected}}"
                     alt="" (click)="openGallery()">
                 </div>
         
     
-                <div class="form-group mb-3">
+                <div class="form-group mb-2">
                     <label class="f-16" for="tipo_categoria">Tipo da categoria <b> * </b></label>
                     <select class="form-select f-16" formControlName="tipo_categoria" id="tipo_categoria">
                         <option value="" disabled [selected]="true">Selecione fixa se os valores não mudam</option>

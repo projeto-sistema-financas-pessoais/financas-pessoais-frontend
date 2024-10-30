@@ -66,32 +66,32 @@
              
         <form [formGroup]="resourceForm" (submit)="openModalEdit?  editAllAccount(): addResource()" >
             <div class="row">
-                <div class="form-group mb-3 f-16">
+                <div class="form-group mb-2 f-16">
                     <label for="nome">Nome do cartão de crédito<b> * </b></label>
                     <input type="text" class="form-control" id="nome" formControlName="nome" placeholder="Digite o nome do cartão">
                     <app-form-field-error [control]="resourceForm.get('nome')"></app-form-field-error>
                 </div>
     
-                <div class="form-group mb-3 col-md-6 col-sm-12 f-16">
+                <div class="form-group mb-2 col-md-6 col-sm-12 f-16">
                     <label for="nome">Ícone do cartão de crédito<b> * </b></label>
                     <img class="icon mx-3 button-cursor" src="./assets/icons_user/{{imageSelected}}"
                     alt="" (click)="openGallery()">
                 </div>
         
     
-                <div class="form-group mb-3 f-16">
+                <div class="form-group mb-2 f-16">
                     <label for="limite">Limite <b> * </b></label>
                     <input type="number" class="form-control" id="limite" formControlName="limite" placeholder="Digite o limite do cartão">
                     <app-form-field-error [control]="resourceForm.get('limite')"></app-form-field-error>
                 </div>
 
-                <div class="form-group mb-3 f-16">
+                <div class="form-group mb-2 f-16">
                     <label for="dia_fechamento">Dia de Fechamento <b> * </b></label>
                     <input type="number" class="form-control" id="dia_fechamento" formControlName="dia_fechamento">
                     <app-form-field-error [control]="resourceForm.get('dia_fechamento')"></app-form-field-error>
                 </div>
 
-                <div class="form-group mb-3 f-16">
+                <div class="form-group mb-2 f-16">
                     <label for="dia_vencimento">Dia de Vencimento <b> * </b></label>
                     <input type="number" class="form-control" id="dia_vencimento" formControlName="dia_vencimento">
                     <app-form-field-error [control]="resourceForm.get('dia_vencimento')"></app-form-field-error>

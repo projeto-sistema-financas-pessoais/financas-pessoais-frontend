@@ -1,11 +1,15 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { CondicaoPagamento, FormaPagamento, TipoMovimentacao } from 'src/app/shared/models/enum.model';
 import { TransationFilter, TransationList } from 'src/app/features/pages/transaction/shared/models/transation-list.model';
 import { TransationService } from 'src/app/features/pages/transaction/shared/services/transation.service';
 import { Category } from 'src/app/features/pages/user/shared/models/category.model';
 import { CategoryService } from 'src/app/features/pages/user/shared/models/services/category.service';
+import { ModalComponent } from '../modal/modal.component';
+import { ModalConfig } from '../../models/moda-config.model';
+import { AlertModalService } from '../../services/alert-modal.service';
+import { TransationConsolidated } from 'src/app/features/pages/transaction/shared/models/transation.model';
 
 @Component({
   selector: 'app-transaction-list',
@@ -18,6 +22,11 @@ export class TransactionListComponent {
   @Input() type: 'transation' | 'member' | 'account' | 'credit' = 'transation'
   @Input() id_type?: number;
 
+  @ViewChild('modal_small') protected modalSmall!: ModalComponent;
+  modalConfig! : ModalConfig;
+
+  deleteItem!: TransationList;
+  openModalDelete: boolean = false;
 
   canOpenFilter: boolean = false;
 
@@ -49,8 +58,10 @@ export class TransactionListComponent {
  
 
 
-  constructor(private readonly transationService: TransationService,
-    private readonly categoryService: CategoryService){
+  constructor(
+    private readonly transationService: TransationService,
+    private readonly categoryService: CategoryService,
+    private readonly alertService: AlertModalService){
 
     this.enumMovimentacao = TipoMovimentacao;
     this.enumFormaPagamento = FormaPagamento;
@@ -146,6 +157,60 @@ export class TransactionListComponent {
 
   protected openDelete(item: TransationList){
 
+    this.openModalDelete = true;
+
+    this.deleteItem = item;
+    this.modalConfig = {
+      modalTitle: 'Excluir movimentação'
+    }
+
+    this.modalSmall.openSmall();
   }
 
+  deleteTransation(){
+    this.transationService.deleteTransation(this.deleteItem.id_movimentacao)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe({
+      next: (data: any) =>{
+
+        this.alertService.showAlertSuccess("Sucesso ao deletar!")
+
+        setTimeout(() =>{
+          window.location.reload();
+        }, 1000)
+        
+        console.log("delete transation success", data)
+      },
+      error: (error: HttpErrorResponse) =>{
+        console.log('error delete transation', error)
+      }
+    })
+  }
+
+  changeConsolidated(item: TransationList){
+
+    item.consolidado = !item.consolidado;
+
+    let consolidated: TransationConsolidated = {
+      id_movimentacao: item.id_movimentacao,
+      consolidado: item.consolidado
+    }
+    this.transationService.consolidatedTransation(consolidated)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe({
+      next: (data: any) =>{
+
+        this.alertService.showAlertSuccess(
+          item.consolidado ? 'Sucesso ao consolidar movimentação!' : 'Sucesso ao não consolidar movimentação!'
+         
+        )
+
+        
+        console.log("delete transation success", data)
+      },
+      error: (error: HttpErrorResponse) =>{
+        console.log('error delete transation', error)
+      }
+    })
+  }
 }

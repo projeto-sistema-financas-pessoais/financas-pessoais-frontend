@@ -5,7 +5,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { AccountService } from '../account/shared/services/account.service';
 import { Account } from '../account/shared/models/account.model';
-import { Subject, take, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CondicaoPagamento, FormaPagamento, TipoConta, TipoMovimentacao, TipoRecorrencia } from '../../../shared/models/enum.model';
 import { TransationService } from './shared/services/transation.service';
@@ -15,7 +15,6 @@ import { CreditCard } from '../credit-card/shared/models/credit-card.model';
 import { CreditCardService } from '../credit-card/shared/services/credit-card.service';
 import { FamilyMembersService } from '../family-members/shared/services/family-members.service';
 import { FamilyMembers } from '../family-members/shared/models/family-members.model';
-import { RegisterExpenseIncome } from './shared/models/transation.model';
 import { AuthService } from '../../auth/shared/services/auth.service';
 import { AlertModalService } from 'src/app/shared/services/alert-modal.service';
 
@@ -64,10 +63,13 @@ export class TransactionsComponent implements OnInit{
 
   // modals
   @ViewChild('modal_default') protected modalDefault!: ModalComponent;
+
   modalConfig! : ModalConfig;
   openModalTransfer: boolean = false;
   openModalIncome: boolean = false;
   openModalExpense: boolean = false;
+
+  nameUser!: string
 
   resourceFormTransfer!: FormGroup;
   resourceFormIncomeExpense!: FormGroup;
@@ -131,7 +133,8 @@ export class TransactionsComponent implements OnInit{
     private readonly categoryService: CategoryService,
     private readonly creditCardService: CreditCardService,
     private readonly memberService: FamilyMembersService,
-    private alertService: AlertModalService 
+    private alertService: AlertModalService,
+    private readonly authService: AuthService 
     ){
 
       this.enumTipoConta = TipoConta;
@@ -145,6 +148,9 @@ export class TransactionsComponent implements OnInit{
   }
 
   ngOnInit(): void {
+
+    this.nameUser = this.authService.GetUser().name || 'null'
+
     this.observer.observe(['(max-width: 1024px)']).subscribe((screenSize) => {
       if(screenSize.matches){
         this.isMobile = true;
@@ -153,8 +159,8 @@ export class TransactionsComponent implements OnInit{
       }
     });
 
-    this.buildFormTransfer();
-    this.buildFomrIncomeExpense()
+    // this.buildFormTransfer();
+    // this.buildFomrIncomeExpense()
   }
 
   ngOnDestroy(): void {
@@ -314,13 +320,19 @@ export class TransactionsComponent implements OnInit{
 
 
   setDivideMember(resource: any){
-    if(resource.quantity_member == "Somente eu")
-    // pegar o id real 
-    resource.divide_parente = [{
-      id_parente: 1,
-      valor_parente: resource.valor
-    }]
+    let member: FamilyMembers | undefined;
 
+    if(resource.quantity_member == "Somente eu"){
+      member = this.member.find(item => item.nome == this.nameUser)
+
+      if(member)
+        resource.divide_parente = [{
+          id_parente: member.id_parente,
+          valor_parente: resource.valor
+        }]
+    }
+
+  
     return resource
   }
 
@@ -393,6 +405,14 @@ export class TransactionsComponent implements OnInit{
     this.openModalExpense = false;
     this.openModalTransfer = false;
 
+    this.selectedPaymentName = null;
+    this.selectedPaymentIcon = null;
+    this.selectedCategoryName = null;
+    this.selectedCategoryIcon = null;
+
+    this.buildFomrIncomeExpense()
+
+
     this.modalConfig = {
       modalTitle: 'Criar nova receita'
     }
@@ -421,6 +441,8 @@ export class TransactionsComponent implements OnInit{
     this.selectedPaymentIcon = null;
     this.selectedCategoryName = null;
     this.selectedCategoryIcon = null;
+
+    this.buildFomrIncomeExpense()
 
     this.modalConfig = {
       modalTitle: 'Criar nova despesa'
@@ -452,6 +474,13 @@ export class TransactionsComponent implements OnInit{
     this.openModalExpense = false;
     this.openModalTransfer = true;
 
+    this.selectedAccontCurrentIcon = null;
+    this.selectedAccontCurrentName = null;
+    this.selectedAccontTransferIcon = null;
+    this.selectedAccontTransferName = null;
+
+    this.buildFormTransfer()
+
     this.modalConfig = {
       modalTitle: 'Criar nova transferência'
     }
@@ -470,7 +499,6 @@ export class TransactionsComponent implements OnInit{
   checkIfAccountTransf(){
     const atual = this.resourceFormTransfer.get('id_conta_atual')?.value
     const transf = this.resourceFormTransfer.get('id_conta_transferencia')?.value
-    console.log("account", atual, transf)
     return atual  == transf && atual!= null && transf !== null
   }
 

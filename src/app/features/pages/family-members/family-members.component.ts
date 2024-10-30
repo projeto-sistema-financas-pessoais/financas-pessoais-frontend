@@ -3,6 +3,7 @@ import { BaseFormComponent } from 'src/app/shared/components/base/base-form.comp
 import { FamilyMembers } from './shared/models/family-members.model';
 import { FamilyMembersService } from './shared/services/family-members.service';
 import { Validators } from '@angular/forms';
+import { AuthService } from '../../auth/shared/services/auth.service';
 
 @Component({
   selector: 'app-family-members',
@@ -14,10 +15,13 @@ export class FamilyMembersComponent extends BaseFormComponent<FamilyMembers>{
   constructor(
     protected readonly familyMembersService: FamilyMembersService,
     injector : Injector,
+    protected readonly authService: AuthService
 
      ){
     super(injector, new FamilyMembers({}), 'parente', 'Membros da Família', familyMembersService);
   }
+
+  nameUser!: string;
   
   protected override buildForm(): void {
     this.resourceForm = this.formBuilder.group({
@@ -27,4 +31,15 @@ export class FamilyMembersComponent extends BaseFormComponent<FamilyMembers>{
       ativo: [null],
     });
   }
+
+  override ngOnInit(): void {
+    this.images = this.imageListService.getImages();
+    this.imageSelected = this.images[0].fileName;
+
+    this.getAll(false);
+    this.buildForm();
+    this.nameUser = this.authService.GetUser().name || 'null'
+
+  }
+
 }

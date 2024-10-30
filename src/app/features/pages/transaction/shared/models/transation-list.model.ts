@@ -25,7 +25,7 @@ export class TransationList{
     condicao_pagamento!: CondicaoPagamento;
     datatime!: string;
     quantidade_parcelas!: number;
-    consolidado!: true;
+    consolidado!: boolean;
     tipo_recorrencia!: string;
     parcela_atual!: string;
     data_pagamento!: Date;

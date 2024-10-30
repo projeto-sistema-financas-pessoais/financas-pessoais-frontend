@@ -5,14 +5,14 @@
         <div class="card-body p-5">
           <h2 class="card-title text-center">Fazer Login</h2>
           <form [formGroup]="resourceForm" (submit)="submitForm()">
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
               <label for="email">Email<b> * </b></label>
               <input type="email" class="form-control" id="email" formControlName="email" placeholder="Digite seu email"
                 autocomplete="username">
               <app-form-field-error [control]="resourceForm.get('email')"></app-form-field-error>
             </div>
 
-            <div class="form-group mb-3 position-relative">
+            <div class="form-group mb-2 position-relative">
               <label for="senha">Senha<b> * </b></label>
               <div class="password-wrapper">
                 <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control" id="senha" formControlName="senha" placeholder="Digite sua senha"

@@ -77,6 +77,9 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
   protected async openAddModal(){
     this.openModalAdd = true;
     this.openMenuGallery = false;
+    this.buildForm()
+    this.imageSelected = this.images[0].fileName;
+
 
     this.modalConfig = {
       modalTitle: `Adicionar ${this.nameComplete}`,
@@ -97,6 +100,8 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
       modalTitle: `Editar ${this.nameComplete}`,
       canReturn: false
     }
+    this.buildForm()
+
     this.loadForm(item);
     await this.modalDefault.openDefault();
   }
