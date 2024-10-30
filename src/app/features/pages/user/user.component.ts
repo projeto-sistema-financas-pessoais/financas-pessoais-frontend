@@ -16,7 +16,7 @@ import { DatePipe } from '@angular/common';
 
 })
 export class UserComponent  extends BaseFormComponent<User>{
-
+  data_nascimento: string | null = null;
   userForm!: FormGroup;
   user!: User
 
@@ -38,10 +38,13 @@ export class UserComponent  extends BaseFormComponent<User>{
 
     this.user.nome_completo = this.authService.GetUser().name || 'null'
     this.user.email = this.authService.GetUser().email || 'null'
-    this.user.data_nascimento = new Date(this.authService.GetUser().date_user || 'null');
-    const formattedDate = this.datePipe.transform(this.user.data_nascimento, 'yyyy-MM-dd');
-    this.resourceForm.get('data_nascimento')?.setValue(formattedDate);
-    
+    const userData = this.authService.GetUser();
+    const date = userData.date_user ? new Date(userData.date_user) : null;
+    this.data_nascimento = date ? this.datePipe.transform(date, 'dd/MM/yyyy') : null;
+
+    this.resourceForm.patchValue({
+      data_nascimento: this.data_nascimento
+    });
   }
 
   protected buildForm(){
