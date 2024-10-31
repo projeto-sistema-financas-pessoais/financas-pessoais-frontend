@@ -78,7 +78,8 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
     this.openModalAdd = true;
     this.openMenuGallery = false;
     this.buildForm()
-    this.imageSelected = this.images[0].fileName;
+    if(this.images)
+      this.imageSelected = this.images[0].fileName;
 
 
     this.modalConfig = {
