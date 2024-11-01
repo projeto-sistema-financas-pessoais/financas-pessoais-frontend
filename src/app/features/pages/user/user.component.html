@@ -31,7 +31,7 @@
                           <div class="col-md-2 d-flex flex-column align-items-center">
                             <button type="button" class="btn btn-outline-success d-flex align-items-center justify-content-center text-center f-16 mb-2 w-100" (click)="navigateToPage()">Categorias</button>
                             <button type="button" class="btn btn-outline-success d-flex align-items-center justify-content-center text-center f-16 mb-2 w-100" (click)="openEdit(user)">Editar usuário</button>
-                            <button type="button" class="btn btn-outline-danger d-flex align-items-center justify-content-center text-center f-16 w-100" (click)="deleteResourceUser(user.email)">Deletar perfil</button>
+                            <button type="button" class="btn btn-outline-danger d-flex align-items-center justify-content-center text-center f-16 w-100" (click)="openDelete(user.email)">Deletar perfil</button>
                         </div>
                         
                     </div>
@@ -67,4 +67,21 @@
         </div>
 
     </div>
+</app-modal>
+
+<app-modal #modal_small [modalConfig]="modalConfig" >
+
+    <div modal-generic-content-small class="pt-3" *ngIf="openModalDelete">
+        <span class="color-light-1">
+            <p class="text-center">Tem certeza que deseja excluir seu perfil? <br> Todos os seus dados  serão excluídos permanentemente.</p>
+        </span>
+        
+        <div class="d-flex justify-content-evenly mt-4">
+            <button type="button" class="btn btn-outline-secondary f-16 flex-grow-1 mx-2" (click)="modalSmall.dismiss()">Cancelar</button>
+            <button type="button" class="btn btn-danger f-16 flex-grow-1 mx-2" (click)="deleteResourceUser(user.email)">Excluir</button>
+        </div>
+        
+
+    </div>
+
 </app-modal>

@@ -38,6 +38,9 @@ export abstract class BaseFormService<T extends BaseModel> {
     return this.http.delete<any>(`${environment.financas}/${this.apiPath}/deletar/${id}`, {headers: this.headers})
   }
 
+  deleteResourceUser(email: string): Observable<any> {
+    return this.http.delete<any>(`${environment.financas}/${this.apiPath}/deletar/${email}`, {headers: this.headers});
+}
 
   editResource(resource: T):Observable<T>{
     return this.http.put<T>(`${environment.financas}/${this.apiPath}/editar/${resource[`id_${this.name}`]}`, resource , {headers: this.headers})

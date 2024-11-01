@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from './shared/services/user.service'
 import { AuthService } from '../../auth/shared/services/auth.service';
@@ -6,6 +6,8 @@ import { User } from './shared/models/user.model'
 import { BaseFormComponent } from 'src/app/shared/components/base/base-form.component';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common'; 
+import { ModalConfig } from 'src/app/shared/models/moda-config.model';
+import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 
 
 @Component({
@@ -19,6 +21,11 @@ export class UserComponent  extends BaseFormComponent<User>{
   data_nascimento: string | null = null;
   userForm!: FormGroup;
   user!: User
+
+  @ViewChild('modal_small') protected modalSmall!: ModalComponent;
+
+  deleteItem!: User['email'];
+  openModalDelete: boolean = false;
 
   constructor(
     protected readonly userService: UserService,
@@ -58,5 +65,16 @@ export class UserComponent  extends BaseFormComponent<User>{
     this.router.navigate(['/configuracoes-de-usuario/categorias']);
   }
 
+  protected openDelete(email: User["email"]){
+
+    this.openModalDelete = true;
+
+    this.deleteItem = email;
+    this.modalConfig = {
+      modalTitle: 'Excluir perfil'
+    }
+
+    this.modalSmall.openSmall();
+  }
   
 }
