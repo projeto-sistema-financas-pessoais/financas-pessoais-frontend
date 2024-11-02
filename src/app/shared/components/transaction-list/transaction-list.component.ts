@@ -5,11 +5,11 @@ import { CondicaoPagamento, FormaPagamento, TipoMovimentacao } from 'src/app/sha
 import { TransationFilter, TransationList } from 'src/app/features/pages/transaction/shared/models/transation-list.model';
 import { TransationService } from 'src/app/features/pages/transaction/shared/services/transation.service';
 import { Category } from 'src/app/features/pages/user/shared/models/category.model';
-import { CategoryService } from 'src/app/features/pages/user/shared/models/services/category.service';
 import { ModalComponent } from '../modal/modal.component';
 import { ModalConfig } from '../../models/moda-config.model';
 import { AlertModalService } from '../../services/alert-modal.service';
 import { TransationConsolidated } from 'src/app/features/pages/transaction/shared/models/transation.model';
+import { CategoryService } from 'src/app/features/pages/user/shared/services/category.service';
 
 @Component({
   selector: 'app-transaction-list',

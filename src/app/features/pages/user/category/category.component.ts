@@ -1,7 +1,7 @@
 import { Component, Injector } from '@angular/core';
 import { BaseFormComponent } from 'src/app/shared/components/base/base-form.component';
 import { CreditCard } from '../../credit-card/shared/models/credit-card.model';
-import { CategoryService } from '../shared/models/services/category.service';
+import { CategoryService } from '../shared/services/category.service';
 import { Validators } from '@angular/forms';
 import { Category } from '../shared/models/category.model';
 import { takeUntil } from 'rxjs';

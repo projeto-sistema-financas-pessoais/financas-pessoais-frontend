@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CondicaoPagamento, FormaPagamento, TipoConta, TipoMovimentacao, TipoRecorrencia } from '../../../shared/models/enum.model';
 import { TransationService } from './shared/services/transation.service';
 import { Category } from '../user/shared/models/category.model';
-import { CategoryService } from '../user/shared/models/services/category.service';
+import { CategoryService } from '../user/shared/services/category.service';
 import { CreditCard } from '../credit-card/shared/models/credit-card.model';
 import { CreditCardService } from '../credit-card/shared/services/credit-card.service';
 import { FamilyMembersService } from '../family-members/shared/services/family-members.service';

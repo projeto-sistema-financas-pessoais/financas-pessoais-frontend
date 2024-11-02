@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { CreditCard } from 'src/app/features/pages/credit-card/shared/models/credit-card.model';
 import { BaseFormService } from 'src/app/shared/services/base/base-form.service';
-import { Category } from '../category.model';
+import { Category } from '../models/category.model';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 
