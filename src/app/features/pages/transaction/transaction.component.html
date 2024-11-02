@@ -92,7 +92,7 @@
                             {{ item.nome }}
                           </div>
                         </div>
-                        <app-form-field-error [control]="resourceFormIncomeExpense.get('id_conta_atual')"></app-form-field-error>
+                        <app-form-field-error [control]="resourceFormTransfer.get('id_conta_atual')"></app-form-field-error>
     
                     </div>
 
@@ -113,7 +113,7 @@
                             {{ item.nome }}
                           </div>
                         </div>
-                        <app-form-field-error [control]="resourceFormIncomeExpense.get('id_conta_transferencia')"></app-form-field-error>
+                        <app-form-field-error [control]="resourceFormTransfer.get('id_conta_transferencia')"></app-form-field-error>
                         <p class="text-danger"
                         *ngIf="checkIfAccountTransf()"
                         > Conta atual não pode ser igual a conta destino</p>
