@@ -17,4 +17,8 @@ export class UserService extends  BaseFormService<User>{
   updateUser(userData: User): Observable<User> {
     return this.http.put<User>(`${environment.financas}/${this.apiPath}/`, {headers: this.headers});
   }
+
+  deleteResourceUser(email: string): Observable<any> {
+    return this.http.delete<any>(`${environment.financas}/${this.apiPath}/deletar/${email}`, {headers: this.headers});
+}
 }

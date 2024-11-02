@@ -29,7 +29,7 @@
                             </div>
                         </div>  
                           <div class="col-md-2 d-flex flex-column align-items-center">
-                            <button type="button" class="btn btn-outline-success d-flex align-items-center justify-content-center text-center f-16 mb-2 w-100" (click)="navigateToPage()">Categorias</button>
+                            <button type="button" class="btn btn-outline-success d-flex align-items-center justify-content-center text-center f-16 mb-2 w-100" (click)="navigateToPage()">Categorias e Metas de gastos</button>
                             <button type="button" class="btn btn-outline-success d-flex align-items-center justify-content-center text-center f-16 mb-2 w-100" (click)="openEdit(user)">Editar usuário</button>
                             <button type="button" class="btn btn-outline-danger d-flex align-items-center justify-content-center text-center f-16 w-100" (click)="openDelete(user.email)">Deletar perfil</button>
                         </div>
@@ -54,10 +54,10 @@
                 </div>
    
                 <div class="form-group mb-2">
-                    <label for="email">Data de Nascimento</label>
+                    <label for="data_nascimento">Data de Nascimento</label>
                     <input type="text" class="form-control" id="date" formControlName="data_nascimento" placeholder="DD/MM/AAAA" mask="00/00/0000">
                     <app-form-field-error [control]="resourceForm.get('data_nascimento')"></app-form-field-error>
-                </div>
+                </div>                
                 </div>
                 <div class="d-flex justify-content-center py-2">
                     <button type="submit" [disabled]="this.resourceForm.invalid" class="btn btn-green btn-block btn-lg">{{openModalEdit? 'Editar': 'Adicionar'}}</button>

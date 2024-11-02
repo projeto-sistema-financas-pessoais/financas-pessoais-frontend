@@ -180,26 +180,6 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
     })
   }
 
-  protected deleteResourceUser(email: string){
-    this.baseService.deleteResourceUser(email)
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe({
-      next: () =>{
-        console.log("deletada!")
-        window.location.reload()
-      },
-      error: (error) => {
-
-        if(error.status == 400)
-          this.alertService.showAlertWarning(
-        "A exclusão não é permitida, pois existem movimentações associadas");
-        console.error(`error ao deletar ${this.nameComplete}`, error)
-
-      }
-    })
-  }
-
-
   protected deactivateResource(active: boolean, id: number){
     let resource: any = this.resource
     resource.ativo = !active;
