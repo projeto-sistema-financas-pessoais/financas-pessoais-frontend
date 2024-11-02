@@ -1,0 +1,75 @@
+@import 'src/styles.scss';
+
+// @import 'src/app/theme/_card-theme.scss';
+
+// .month-year{
+//     color: $color-green-2;
+//     font-weight: 700;
+// }
+
+// .form-select.filter{
+//     border: 1px solid $color-green-2;
+//     color: $color-light-3;
+// }
+
+.btn-transation{
+    background-color: white  !important;
+    border: 1px solid $color-light-2;
+    box-shadow: 0px 0px 15px 4px $color-light-2;
+    border-radius: 20px;
+
+}
+
+.btn-transation.expense{
+    color: $color-red;
+}
+
+.btn-transation.income{
+    background-color: $color-green-6;
+    color: $color-green-6;
+}
+
+.btn-transation.transfer{
+    color: gray;
+
+}
+
+.icon-size{
+    font-size: 25px;
+
+}
+
+
+
+.custom-dropdown {
+    position: relative;
+    // width: 100%;
+    cursor: pointer;
+}
+  
+
+.dropdown-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    border: 1px solid #ccc;
+    background-color: white;
+    z-index: 1000;
+}
+
+.dropdown-option {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.dropdown-option:hover {
+    background-color: #f0f0f0;
+}
+
+
+a{
+    color: $color-green-3;
+}

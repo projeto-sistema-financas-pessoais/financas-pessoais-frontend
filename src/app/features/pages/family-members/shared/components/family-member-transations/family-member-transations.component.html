@@ -1,0 +1,13 @@
+
+<div *ngIf="resourceData" class="container-fluid p-5 style-font">
+    <div class="d-flex justify-content-between">
+        <h4>Membro da Família 
+            <strong>{{resourceData.nome}}</strong>
+        </h4>
+
+    </div>
+
+    <app-transaction-list [type]="'member'" [id_type]="id"></app-transaction-list>
+
+</div>
+

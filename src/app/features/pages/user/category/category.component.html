@@ -1,6 +1,6 @@
 <div class="container-fluid p-5 style-font">
     <div class="d-flex justify-content-between">
-        <h4>Categorias</h4>
+        <h4>Categorias e Meta de Gastos</h4>
 
         <button type="button" class="btn btn btn-outline-success d-flex align-items-center text-center f-16 "
         (click)="openAddModal()">
@@ -44,20 +44,24 @@
                     <div class="d-flex justify-content-start align-items-center col-md-4">
                         <img class="icon-min" src="./assets/icones_category/{{item.nome_icone}}" (error)="item.nome_icone = 'book.svg'" alt="">
                         <div class="margin-l-min color-black-1 f-16 ">{{item.nome}}</div>
+
                     </div>
 
                     <div class="color-black-1 col-md-3 display-none">
-                        <span class="display-none  f-16"> Status: &nbsp; </span>
-                       <span class="color-light-1 f-16">{{item.ativo? 'Ativa': 'Desativada'}}</span>
+                        <div class="display-none  f-16"> Status &nbsp; </div>
+                       <div class="color-light-1 f-16">{{item.ativo? 'Ativa': 'Desativada'}}</div>
                     </div>
 
                     
-                    <div class="color-black-1 col-md-5"> 
-                        <span class="display-none f-16"> Tipo de categoria: &nbsp;</span>
-                         <span class="color-light-1 f-16">{{item.tipo_categoria }}</span>
+                    <div class="color-black-1 col-md-2"> 
+                        <div class="display-none f-16"> Tipo&nbsp;</div>
+                        <div class="color-light-1 f-16">{{item.tipo_categoria }}</div>
                     </div>
 
-
+                    <div *ngIf="item.modelo_categoria == 'Despesa'" class="display-none color-black-1 col-md-3"> 
+                        <div class="f-16"> Meta de gastos: &nbsp; </div>
+                        <div class="color-light-1 f-16">{{(item.valor_categoria | formatPrice) || 'Não definido'}}</div>
+                    </div>
                    
                     <div class="btn-group f-16">
                         <i class="menu-icon fa-solid fa-ellipsis-vertical button-cursor"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
@@ -69,6 +73,13 @@
                             <div *ngIf="item.nome !== 'Carteira'" class="dropdown-divider"></div>
                             <a *ngIf="item.nome !== 'Carteira'" class="dropdown-item button-cursor color-green-2" (click)="openEdit(item)" ><i class="fa-solid fa-pen-to-square" ></i> Editar</a>
                         </div>
+                    </div>
+                </div>
+
+                <div *ngIf="item.modelo_categoria == 'Despesa'"  class=" display-none-desktop d-flex justify-content-start align-items-center mt-2 ">
+                    <div class="display-none-desktop color-black-1 col-md-12 ">
+                        <span class="display-none-desktop f-16"> Meta de gastos: &nbsp; </span>
+                       <span class="display-none-desktop color-light-1 f-16">{{(item.valor_categoria | formatPrice) || 'Não definido'}}</span>
                     </div>
                 </div>
                                  
@@ -87,13 +98,13 @@
              
         <form [formGroup]="resourceForm" (submit)="openModalEdit?  editAllAccount(): addResource()" >
             <div class="row">
-                <div class="form-group mb-3">
+                <div class="form-group mb-2">
                     <label class="f-16" for="nome">Nome da categoria<b> * </b></label>
                     <input type="text" class="form-control" id="nome" formControlName="nome" placeholder="Digite o nome da categoria">
                     <app-form-field-error [control]="resourceForm.get('nome')"></app-form-field-error>
                 </div>
 
-                <div class="form-group mb-3">
+                <div class="form-group mb-2">
                     <label class="f-16" for="modelo_categoria">Modelo da categoria<b> * </b></label>
                     <select class="form-select f-16" formControlName="modelo_categoria" id="modelo_categoria">
                         <option value="" disabled [selected]="true">Selecione uma opção</option>
@@ -103,20 +114,26 @@
                     <app-form-field-error [control]="resourceForm.get('nome')"></app-form-field-error>
                 </div>
     
-                <div class="form-group mb-3 col-md-6 col-sm-12">
+                <div class="form-group mb-2 col-md-6 col-sm-12">
                     <label class="f-16" for="nome">Ícone da categoria<b> * </b></label>
                     <img class=" mx-3 button-cursor" src="./assets/icones_category/{{imageSelected}}"
                     alt="" (click)="openGallery()">
                 </div>
         
     
-                <div class="form-group mb-3">
+                <div class="form-group mb-2">
                     <label class="f-16" for="tipo_categoria">Tipo da categoria <b> * </b></label>
                     <select class="form-select f-16" formControlName="tipo_categoria" id="tipo_categoria">
                         <option value="" disabled [selected]="true">Selecione fixa se os valores não mudam</option>
                         <option *ngFor="let item of tipoCategoria" [value]="item">{{item}}</option>
     
                     </select>
+                    <app-form-field-error [control]="resourceForm.get('tipo_categoria')"></app-form-field-error>
+                </div>
+
+                <div *ngIf="resourceForm.get('modelo_categoria')?.value == 'Despesa'" class="form-group mb-2">
+                    <label class="f-16" for="valor_categoria">Meta de gastos da categoria</label>
+                    <input type="number" class="form-control" id="valor_categoria" formControlName="valor_categoria" placeholder="Meta de gastos">
                     <app-form-field-error [control]="resourceForm.get('tipo_categoria')"></app-form-field-error>
                 </div>
             </div>

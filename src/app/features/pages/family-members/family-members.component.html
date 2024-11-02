@@ -16,7 +16,7 @@
             <div class="item">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="color-green-2 f-16">  <strong>{{item.nome}}</strong> </div>
-                    <div class="btn-group f-16">
+                    <div class="btn-group f-16" *ngIf="nameUser != item.nome">
                         <i class="menu-icon fa-solid fa-ellipsis-vertical button-cursor"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                         <div class="dropdown-menu f-16" id="dropdownMenu">
                             <a *ngIf="item.nome !== 'Carteira'"  class="dropdown-item button-cursor color-green-2" (click)="deleteResource(item.id_parente)"> <i class="fa-solid fa-trash"></i> Excluir</a>
@@ -41,7 +41,8 @@
                     </div>
 
                     <div class="d-flex justify-content-end ">
-                        <button type="button" class="btn btn-outline-secondary f-16">Ver movimentações</button>
+                        <button type="button" class="btn btn-outline-secondary f-16"  [routerLink]="['movimentacoes-por-membro', item.id_parente]">
+                        Ver movimentações</button>
                     </div>
 
                 </div>
@@ -61,15 +62,18 @@
              
             <form [formGroup]="resourceForm" (submit)="openModalEdit?  editAllAccount(): addResource()" >
                 <div class="row">
-                    <div class="form-group mb-3">
+                    <div class="form-group mb-2">
                         <label class="f-16" for="nome">Nome do membro da família<b> * </b></label>
                         <input type="text" class="form-control" id="nome" formControlName="nome" placeholder="Digite o nome do membro">
                         <app-form-field-error [control]="resourceForm.get('nome')"></app-form-field-error>
                     </div>
-        
-            
-        
-                    <div class="form-group mb-3">
+                    <div class="form-group mb-2">
+                        <label class="f-16" for="email">Email do membro da família<b> * </b></label>
+                        <input type="text" class="form-control" id="email" formControlName="email" placeholder="Digite o email do membro">
+                        <app-form-field-error [control]="resourceForm.get('email')"></app-form-field-error>
+                    </div>
+                    
+                    <div class="form-group mb-2">
                         <label  class="f-16" for="descricao">Grau de parentesco</label>
                         <input type="text" class="form-control" id="nome" formControlName="grau_parentesco" placeholder="Informe o seu grau de parentesco">
                         <app-form-field-error [control]="resourceForm.get('grau_parentesco')"></app-form-field-error>

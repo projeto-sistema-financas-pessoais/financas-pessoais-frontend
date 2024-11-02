@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { Register } from '../models/register.model';
-import { Login, LoginResponse } from '../models/login.modal';
+import { Login, LoginResponse, UserInformation } from '../models/login.modal';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -65,13 +65,20 @@ export class AuthService {
     return true;
   }
 
-  public GetUser(): string | null {
-    return  JSON.parse(localStorage.getItem('user_name')!) as string;
+  public GetUser(): UserInformation {
+    let data :UserInformation = {
+      name: JSON.parse(localStorage.getItem('user_name')!) as string,
+      date_user: JSON.parse(localStorage.getItem('date_user')!) as string,
+      email: JSON.parse(localStorage.getItem('email')!) as string
+    }
+    return data;
   }
 
   logout() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('user_name');
+    localStorage.removeItem('date_user');
+    localStorage.removeItem('email');
     this.router.navigate(['/login']);
   }
 }

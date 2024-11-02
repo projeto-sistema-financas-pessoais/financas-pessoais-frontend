@@ -1,0 +1,205 @@
+<div class="container d-flex justify-content-center mt-2">
+    <div class="text-center month-year">
+        <i *ngIf="type == 'transation'" class="me-5 fa-solid fa-filter button-cursor" (click)="openFilter()" 
+        [ngClass]="canOpenFilter ? 'color-light-3' : ''"
+        ></i>
+
+        <i class="fa-solid fa-circle-chevron-left button-cursor" style="font-size: 20px;" (click)="changeMonth(false)"></i>
+        <span class="color-light-3 mx-5 f-20 button-cursor">{{month[transationFilter.mes -1]}} {{transationFilter.ano}}</span>
+        <i class="fa-solid fa-circle-chevron-right button-cursor" style="font-size: 20px;" (click)="changeMonth(true)"></i>
+
+    </div>
+     
+</div>
+
+<div *ngIf="type == 'transation'" class="container d-flex justify-content-center flex-row mt-3 align-items-center" >
+
+
+    <ng-container *ngIf="canOpenFilter">
+
+        <div class="col-2">
+            <select class="form-select filter f-16" [(ngModel)]="transationFilter.tipo_movimentacao" (ngModelChange)="chargeList()"  id="tipo_movimentacao">
+                <option [ngValue]="null"   [selected]="true">Movimentação(todas)</option>
+                <option *ngFor="let value of Object.values(enumMovimentacao)" [value]="value">
+                    {{ value }}
+                </option>
+            </select>  
+        </div>
+
+        <div class="col-2">
+            <select class="form-select filter f-16" [(ngModel)]="transationFilter.id_categoria" (ngModelChange)="chargeList()"  id="modelo_categoria">
+                <option [ngValue]="null"  [selected]="true">Categorias(todas)</option>
+                <option *ngFor="let item of category" [value]="item.id_categoria">{{item.nome}}</option>
+    
+            </select>  
+        </div>
+
+        <div class="col-2">
+            <select class="form-select filter f-16" [(ngModel)]="transationFilter.forma_pagamento" (ngModelChange)="chargeList()"  id="forma_pagamento">
+                <option [ngValue]="null"   [selected]="true">Formas de pgto.(todas)</option>
+                <option *ngFor="let value of Object.values(enumFormaPagamento)" [value]="value">
+                    {{ value }}
+                </option>
+            </select>  
+        </div>
+
+        <div class="col-2">
+            <select class="form-select filter f-16" [(ngModel)]="transationFilter.consolidado" (ngModelChange)="chargeList()"  id="consolidado">
+                <option [ngValue]="null" [selected]="true">Consolidadas e não </option>
+                <option [ngValue]="true">Consolidado</option>
+                <option [ngValue]="false">Não Consolidado</option>
+
+            </select>  
+        </div>
+ 
+    </ng-container>
+    
+
+    
+</div>
+
+<div class="container container-custom mt-5" >
+
+   
+
+    <ng-container *ngFor="let item of transationList; let i = index;"> 
+        <div class="d-flex justify-content-between align-items-center flex-row">
+
+            <div class="mx-2 color-light-1 f-16 ">{{item.data_pagamento | formatday }}</div>
+
+            <div class="item">
+                <div class="d-flex justify-content-between align-items-center">
+
+
+                    <div class="d-flex justify-content-start align-items-center col-md-5">
+                        
+                        <img *ngIf="item.tipoMovimentacao != enumMovimentacao.TRANSFERENCIA" class="icon-min" src="./assets/icones_category/{{item.nome_icone_categoria}}" (error)="item.nome_icone_categoria = 'book.svg'" alt="">
+                        <img *ngIf="item.tipoMovimentacao == enumMovimentacao.TRANSFERENCIA" class="icon-min" src="./assets/icons/transfer.svg" (error)="item.nome_icone_categoria = 'book.svg'" alt="">
+
+                        <div class="text-start">
+                            <div class="ms-3 color-black-1 f-16  display-none">{{item.descricao || 'Outros'}}</div>
+                            <div class="ms-3 color-light-3 display-none" style="font-size: 12px;">
+                                <span *ngIf="item.condicao_pagamento === enumCondicaoPagamento.PARCELADO" > {{ item.parcela_atual+ '/' + item.quantidade_parcelas}} </span>
+                                <span *ngIf="item.condicao_pagamento === enumCondicaoPagamento.RECORRENTE">
+                                    <i  class="fa-solid fa-rotate"
+                                     tooltip="Movimentação recorrente" container="body" placement="bottom" [delay]="800"></i>
+                                     <span > {{item.tipo_recorrencia }}</span>
+                                    
+                                </span>
+                                <span *ngIf="item.tipoMovimentacao == enumMovimentacao.TRANSFERENCIA" > Transferência para {{item.nome_conta_destino}}</span>
+
+                            </div>
+                        </div>
+      
+                       
+                    </div>
+
+                    <div class="col-md-3 col-sm-12 display-none">
+
+                        <span class="color-light-1 f-16 d-flex align-items-center ">
+                                <mat-icon *ngIf="item.forma_pagamento == enumFormaPagamento.CREDITO" class="">credit_card</mat-icon>
+                                <mat-icon *ngIf="item.forma_pagamento !== enumFormaPagamento.CREDITO" class="">account_balance</mat-icon>
+                                
+                                <span class="ms-2 "> {{item.nome_conta || item.nome_cartao_credito}}</span>
+                        </span>
+                    </div>
+
+                    
+                    <div class="color-black-1 col-md-2 f-16 d-flex justify-content-end"> 
+                        
+
+                        <span *ngIf="item.tipoMovimentacao == enumMovimentacao.DESPESA" class="text-danger"> R$ -{{item.valor  | formatPrice}}</span>
+                        <span *ngIf="item.tipoMovimentacao == enumMovimentacao.RECEITA" class="text-success"> R$ +{{item.valor  | formatPrice}}</span>
+                        <span *ngIf="item.tipoMovimentacao == enumMovimentacao.TRANSFERENCIA" class="color-light-1"> R$ {{item.valor  | formatPrice}}</span>
+                    </div> 
+
+                    <div *ngIf="item.tipoMovimentacao !== enumMovimentacao.TRANSFERENCIA && !item.id_fatura"
+                     (click)="changeConsolidated(item)" class="button-cursor">
+                        <i *ngIf="item.consolidado" class="color-green-4 fa-solid fa-circle-check "></i>
+                        <i *ngIf="!item.consolidado" class="color-light-3 fa-solid fa-circle-check"></i>
+                        
+
+                    </div>
+
+                    <div *ngIf="item.tipoMovimentacao === enumMovimentacao.TRANSFERENCIA || item.id_fatura" class="cursor-blocked"> 
+                        <i 
+                        tooltip="Fatura do cartão aberta" container="body" placement="bottom" [delay]="800"
+                        *ngIf="!item.consolidado && item.id_fatura" class="color-light-2 fa-solid fa-circle-check button-cursor"></i>
+                        <i [tooltip]="item.id_fatura ? 'Não é possível alterar de uma fatura paga': 'Não é possível alterar de uma transferência'" container="body" placement="bottom" [delay]="800"
+                        *ngIf="item.consolidado" class=" fa-solid fa-circle-check" style="color: #0BFA9F33;"></i>
+                    </div>
+
+                
+                    <div class="btn-group f-16">
+                        <i class="menu-icon fa-solid fa-ellipsis-vertical button-cursor"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                        <div class="dropdown-menu" id="dropdownMenu">
+                            <a  class="dropdown-item button-cursor color-green-2" > <i class="fa-regular fa-window-maximize"></i> Ver detalhes</a>
+                            <a  class="dropdown-item button-cursor color-green-2" (click)="openDelete(item)"> <i class="fa-solid fa-trash"></i> Excluir</a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="d-flex justify-content-between align-items-center flex-row  display-none-desktop">
+                    
+                    <div class="col-sm-12 justify-content-start align-items-center display-none-desktop mt-1">
+
+                        <div class="color-black-1 f-16 display-none-desktop">{{item.descricao || 'Outros'}}</div>
+                        
+                    </div>
+
+                    
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center flex-row display-none-desktop">
+                    
+                    <div class="col-sm-6 display-none-desktop mt-1">
+
+                        <span class="color-light-1 f-16 d-flex align-items-center ">
+                             <span class=""> {{item.nome_conta || item.nome_cartao_credito}}</span>
+                        </span>
+
+                        
+                    </div>
+
+                    <div class="col-sm-6 display-none-desktop">
+                        <div class="ms-2 color-light-3">
+                            <span *ngIf="item.condicao_pagamento === enumCondicaoPagamento.PARCELADO" > {{ item.parcela_atual+ '/' + item.quantidade_parcelas}} </span>
+                            <i  *ngIf="item.condicao_pagamento === enumCondicaoPagamento.RECORRENTE" class="fa-solid fa-rotate"
+                            tooltip="Movimentação recorrente" container="body" placement="bottom" [delay]="800"></i>
+                        </div>
+                    </div>
+                </div>
+
+                             
+            </div>
+        </div>
+
+    </ng-container>
+
+</div>
+
+
+<app-modal #modal_small [modalConfig]="modalConfig" >
+
+    <div modal-generic-content-small class="pt-3" *ngIf="openModalDelete">
+        <span class="color-light-1">
+            <p class="text-center">Tem certeza que deseja excluir a movimentação?
+                {{deleteItem.id_repeticao ? 'Essa e as movimentações seguintes associadas serão deletadas.': ''}}
+            </p>
+            <span class="d-flex justify-content-center"> Descrição: &nbsp; <strong>{{deleteItem.descricao}}</strong></span>
+            <span class="d-flex justify-content-center">  Data de pagamento: &nbsp; <strong>{{deleteItem.data_pagamento}}</strong></span>
+            <span class="d-flex justify-content-center">  Condição de pagamento: &nbsp; <strong>{{deleteItem.condicao_pagamento}}</strong></span>
+
+        </span>
+        
+        <div class="d-flex justify-content-evenly mt-4">
+
+            <button type="button" class="btn btn-outline-secondary f-16" (click)="modalSmall.dismiss()" >Cancelar</button>
+            <button type="button" class="btn btn-danger  f-16" (click)="deleteTransation()">Remover</button>
+
+        </div>
+
+    </div>
+
+</app-modal>

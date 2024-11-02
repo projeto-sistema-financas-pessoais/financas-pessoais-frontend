@@ -3,6 +3,7 @@ import { AccountService } from './shared/services/account.service';
 import { Account } from './shared/models/account.model';
 import { Validators } from '@angular/forms';
 import { BaseFormComponent } from 'src/app/shared/components/base/base-form.component';
+import { TipoConta } from 'src/app/shared/models/enum.model';
 
 @Component({
   selector: 'app-account',
@@ -19,12 +20,18 @@ export class AccountComponent extends BaseFormComponent<Account> {
     "Conta Salário"
   ]
 
+  enumTipoConta!: typeof TipoConta
+  Object = Object;
+
+
   constructor(
     protected readonly accountService: AccountService,
     injector : Injector,
 
      ){
     super(injector, new Account({}), 'conta', 'Conta', accountService);
+    this.enumTipoConta = TipoConta;
+
   }
   
   protected buildForm(){

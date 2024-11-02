@@ -50,7 +50,7 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
     this.images = this.imageListService.getImages();
     this.imageSelected = this.images[0].fileName;
 
-    this.getAll();
+    this.getAll(false);
     this.buildForm();
 
   }
@@ -60,8 +60,8 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
     this.ngUnsubscribe.complete();
   }
 
-  protected getAll(){
-    this.baseService.getAll()
+  protected getAll(somenteAtivo: boolean){
+    this.baseService.getAll(somenteAtivo)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe({
       next: (data)=>{
@@ -77,6 +77,10 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
   protected async openAddModal(){
     this.openModalAdd = true;
     this.openMenuGallery = false;
+    this.buildForm()
+    if(this.images)
+      this.imageSelected = this.images[0].fileName;
+
 
     this.modalConfig = {
       modalTitle: `Adicionar ${this.nameComplete}`,
@@ -97,6 +101,8 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
       modalTitle: `Editar ${this.nameComplete}`,
       canReturn: false
     }
+    this.buildForm()
+
     this.loadForm(item);
     await this.modalDefault.openDefault();
   }
@@ -145,6 +151,9 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
         if(error.status == 406)
           this.alertService.showAlertDanger(`Já existe um registro com esse nome. Por favor, escolha um nome diferente!"`)
 
+        if(error.status == 400)
+          this.alertService.showAlertDanger(`O dia do vencimento da fatura não pode ser maior que o dia do fechamento"`)
+
         console.error(`error ao criar ${this.nameComplete}`, error, resource)
 
       }
@@ -170,7 +179,6 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
       }
     })
   }
-
 
   protected deactivateResource(active: boolean, id: number){
     let resource: any = this.resource

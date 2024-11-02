@@ -64,6 +64,9 @@ b{
 
 
 
+.cursor-blocked{
+  cursor: not-allowed;
+}
 
 .button-cursor{
   cursor: pointer;
@@ -105,9 +108,13 @@ body {
 }
 
 
-
-
 .form-control:focus
+{
+    box-shadow: 0 0 0 0.05rem $color-green-5 ;
+    border-color:$color-green-5 ;
+}
+
+.form-select:focus, .form-select:hover
 {
     box-shadow: 0 0 0 0.05rem $color-green-5 ;
     border-color:$color-green-5 ;
@@ -119,8 +126,31 @@ body {
     padding: 1rem !important;
   }
 
+  .mt-5{
+    margin-top: 1rem !important;
+
+  }
+
   .m-5{
     margin: 1rem !important;
+  }
+  .me-5{
+    margin-right: 1rem !important;
+
+  }
+
+  .ms-5{
+    margin-left: 1rem !important;
+
+  }
+
+  .mx-5{
+    margin: 0 1rem !important;
+
+  }
+
+  .mb-2{
+    margin-bottom: 0.5rem !important;
   }
 }
 
@@ -143,5 +173,13 @@ body {
   .margin-l-min{
     margin-left: 5px;
   }
+
+}
+
+@media (min-width: 802px) {
+  .display-none-desktop {
+    display: none !important;
+  }
+
 
 }

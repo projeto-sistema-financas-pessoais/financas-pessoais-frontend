@@ -1,0 +1,61 @@
+@import 'src/styles.scss';
+
+@import 'src/app/theme/_card-theme.scss';
+
+
+.month-year{
+    color: $color-green-2;
+    font-weight: 700;
+}
+
+.form-select.filter{
+    border: 1px solid $color-green-2;
+    color: $color-light-3;
+}
+
+
+
+.item {
+
+
+
+    // flex: 1 1 900px;
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    width: 950px;
+
+
+    @media  screen and (max-width: 1024px) {
+        max-width: 800px;
+
+    }
+
+    @media  screen and (max-width: 801px) {
+        width: 500px;
+        max-width: 500px;
+
+    }
+
+    @media  screen and (max-width: 425px) {
+        width: 250px;
+        max-width: 250px;
+
+    }
+
+    max-width: 950px;
+
+
+     
+
+
+
+}
+
+
+.container-custom{
+    display: flex;
+    justify-content: center;
+}

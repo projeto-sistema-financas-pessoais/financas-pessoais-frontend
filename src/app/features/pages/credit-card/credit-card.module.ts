@@ -4,12 +4,14 @@ import { CreditCardComponent } from './credit-card.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CreditCardRoutingModule } from './credit-card-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CreditCardStatementComponent } from './shared/components/credit-card-statement/credit-card-statement.component';
 
 
 
 @NgModule({
   declarations: [
-    CreditCardComponent
+    CreditCardComponent,
+    CreditCardStatementComponent
   ],
   imports: [
     SharedModule,

@@ -12,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import { SidebarComponent } from './features/sidebar/sidebar.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +29,8 @@ import { SidebarComponent } from './features/sidebar/sidebar.component';
     MatButtonModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+
 
   ],
   exports: [

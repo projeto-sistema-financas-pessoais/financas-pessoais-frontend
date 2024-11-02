@@ -26,7 +26,8 @@ export class CreditCardComponent  extends BaseFormComponent<CreditCard>{
       limite: [null, [Validators.required]],
       nome_icone: [this.imageSelected, [Validators.required]],
       ativo: [true],
-
+      dia_fechamento: [null, [Validators.required, Validators.min(1), Validators.max(30)]], 
+      dia_vencimento: [null, [Validators.required, Validators.min(1), Validators.max(30)]], 
     });
   }
 }

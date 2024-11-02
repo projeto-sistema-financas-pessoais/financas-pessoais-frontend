@@ -16,7 +16,7 @@ import { Location } from '@angular/common';
 })
 export class CategoryComponent extends BaseFormComponent<Category>{
  
-  income: boolean = true;
+  income: boolean = false;
   icons: IconCategory[] = [];
 
   tipoCategoria: string[] = [
@@ -99,8 +99,24 @@ export class CategoryComponent extends BaseFormComponent<Category>{
   }
   
 
+  protected override  async openAddModal(){
+    this.openModalAdd = true;
+    this.openMenuGallery = false;
+    this.buildForm()
+    this.imageSelected = this.icons[0].fileName;
+
+
+    this.modalConfig = {
+      modalTitle: `Adicionar ${this.nameComplete}`,
+      canReturn: false
+
+    }
+
+    await this.modalDefault.openDefault();
+  }
+
   protected getAllIncome(){
-    this.categoryService.getAllIncome()
+    this.categoryService.getAllIncome(false)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe({
       next: (data)=>{
@@ -114,7 +130,7 @@ export class CategoryComponent extends BaseFormComponent<Category>{
   }
 
   protected getAllExpense(){
-    this.categoryService.getAllExpense()
+    this.categoryService.getAllExpense(false)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe({
       next: (data)=>{

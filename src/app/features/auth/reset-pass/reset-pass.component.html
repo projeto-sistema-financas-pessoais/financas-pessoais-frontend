@@ -5,18 +5,17 @@
                 <div class="card-body p-5">
                     <h2 class="card-title text-center">Redefinir Senha</h2>
                     <form [formGroup]="resourceForm" (submit)="submitForm()">
-                        <!-- Campo de Nova Senha -->
-                        <div class="form-group mb-3 position-relative">
+                        <div class="form-group mb-2 position-relative">
                             <label for="novaSenha">Nova Senha<b> * </b></label>
-                            <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="novaSenha" formControlName="novaSenha" placeholder="Digite sua nova senha">
+                            <div class="Password-wrapper">
                             <button type="button" class="btn-eye" (click)="togglePasswordVisibility('password')">
                                 <i class="fa" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
                             </button>
+                            </div>
                             <app-form-field-error [control]="resourceForm.get('novaSenha')"></app-form-field-error>
                         </div>
 
-                        <!-- Campo de Confirmação de Senha -->
-                        <div class="form-group mb-3 position-relative">
+                        <div class="form-group mb-2 position-relative">
                             <label for="confirmPassword">Confirme a Senha<b> * </b></label>
                             <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirme sua nova senha">
                             <button type="button" class="btn-eye" (click)="togglePasswordVisibility('confirmPassword')">

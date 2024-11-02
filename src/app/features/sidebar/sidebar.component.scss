@@ -44,3 +44,30 @@ mat-sidenav-content{
 }
 
 
+.min-width-screen-login-collapse{
+    min-width: 95vw !important;
+
+    @media screen and (max-width: 1025px ) {
+        min-width: 100vw !important;
+    }
+
+    @media screen and (min-width: 2000px) {
+        min-width: 97vw !important;
+    }
+}
+
+.min-width-screen{
+    min-width: 85vw !important;
+    @media screen and (max-width: 1441px) {
+        min-width: 80vw !important;
+    }
+
+    @media screen and (max-width: 1025px) {
+        min-width: 100vw !important;
+    }
+
+    
+    @media screen and (min-width: 2000px) {
+        min-width: 90vw !important;
+    }
+}

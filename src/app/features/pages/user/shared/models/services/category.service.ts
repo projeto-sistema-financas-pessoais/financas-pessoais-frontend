@@ -14,11 +14,11 @@ export class CategoryService extends  BaseFormService<Category>{
     super('categorias', 'categoria', injector) 
   }
 
-  getAllIncome(): Observable<Category[]>{
-    return this.http.get<Category[]>(`${environment.financas}/${this.apiPath}/listar/receita`, {headers: this.headers})
+  getAllIncome(somenteAtivo: boolean): Observable<Category[]>{
+    return this.http.get<Category[]>(`${environment.financas}/${this.apiPath}/listar/receita/${somenteAtivo}`, {headers: this.headers})
   }
 
-  getAllExpense(): Observable<Category[]>{
-    return this.http.get<Category[]>(`${environment.financas}/${this.apiPath}/listar/despesa`, {headers: this.headers})
+  getAllExpense(somenteAtivo: boolean): Observable<Category[]>{
+    return this.http.get<Category[]>(`${environment.financas}/${this.apiPath}/listar/despesa/${somenteAtivo}`, {headers: this.headers})
   }
 }

@@ -15,7 +15,7 @@ export class LandingPageComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    this.name_user = this.authService.GetUser() || 'null'
+    this.name_user = this.authService.GetUser().name || 'null'
   }
 
 }
