@@ -18,7 +18,6 @@ import { FamilyMembers } from '../family-members/shared/models/family-members.mo
 import { AuthService } from '../../auth/shared/services/auth.service';
 import { AlertModalService } from 'src/app/shared/services/alert-modal.service';
 
-
 function divideParentValidator(): ValidatorFn {
   return (formGroup: AbstractControl): { [key: string]: any } | null => {
     const valueTotal = formGroup.get('valor')?.value;
@@ -134,7 +133,8 @@ export class TransactionsComponent implements OnInit{
     private readonly creditCardService: CreditCardService,
     private readonly memberService: FamilyMembersService,
     private alertService: AlertModalService,
-    private readonly authService: AuthService 
+    private readonly authService: AuthService,
+
     ){
 
       this.enumTipoConta = TipoConta;
@@ -322,7 +322,8 @@ export class TransactionsComponent implements OnInit{
   setDivideMember(resource: any){
     let member: FamilyMembers | undefined;
 
-    if(resource.quantity_member == "Somente eu"){
+    if(resource.quantity_member == "Somente eu" || isNaN(Number(resource.quantity_member))){
+      
       member = this.member.find(item => item.nome == this.nameUser)
 
       if(member)
@@ -424,6 +425,9 @@ export class TransactionsComponent implements OnInit{
     if(this.account.length == 0)
       this.getAccount();
 
+
+    if(this.member.length == 0)
+      this.getMember()
    
 
     await this.modalDefault.openDefault()
