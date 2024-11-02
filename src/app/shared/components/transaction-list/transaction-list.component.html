@@ -187,8 +187,11 @@
             <p class="text-center">Tem certeza que deseja excluir a movimentação?
                 {{deleteItem.id_repeticao ? 'Essa e as movimentações seguintes associadas serão deletadas.': ''}}
             </p>
-            <span class="d-flex justify-content-center"> Descrição: &nbsp; <strong>{{deleteItem.descricao}}</strong></span>
-            <span class="d-flex justify-content-center">  Data de pagamento: &nbsp; <strong>{{deleteItem.data_pagamento}}</strong></span>
+            <span class="d-flex justify-content-center"> Descrição: &nbsp; <strong>{{deleteItem.descricao || 'Sem descrição'}}</strong></span>
+            <span class="d-flex justify-content-center">
+                Data de pagamento: &nbsp;
+                <strong>{{ deleteItem.data_pagamento ? (deleteItem.data_pagamento | date: 'dd/MM/yyyy') : null }}</strong>
+              </span>
             <span class="d-flex justify-content-center">  Condição de pagamento: &nbsp; <strong>{{deleteItem.condicao_pagamento}}</strong></span>
 
         </span>
