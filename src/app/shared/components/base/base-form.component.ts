@@ -206,7 +206,7 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
   }
 
 
-  protected editAllAccount(){
+  protected editAll(){
     let resource: any = Object.assign({}, this.resourceForm.value);
     resource[`id_${this.nameId}`]  = this.idEdit;
     this.editResource(resource)

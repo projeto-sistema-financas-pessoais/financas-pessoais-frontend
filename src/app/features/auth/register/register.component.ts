@@ -6,43 +6,6 @@ import { Subject, takeUntil } from 'rxjs';
 import { AlertModalService } from 'src/app/shared/services/alert-modal.service';
 
 
-export function dataNascimentoValidator(): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    if (!control.value) {
-      return null; 
-    }
-
-    const day = Number(control.value.substring(0, 2));
-    const month = Number(control.value.substring(2, 4));
-    const year = Number(control.value.substring(4, 8));
-
-    const isValidDate = day >= 1 && day <= 31 &&
-                        month >= 1 && month <= 12 &&
-                        year >= 1900 && year <= new Date().getFullYear();
-
-    if (!isValidDate) {
-      return { 'dateInvalid': { value: control.value } }; 
-    }
-
-    let maxDaysInMonth = 31;
-    if (month !== 2) {
-      maxDaysInMonth = new Date(year, month, 0).getDate();
-    } else {
-      if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
-        maxDaysInMonth = 29;
-      } else {
-        maxDaysInMonth = 28;
-      }
-    }
-
-    // console.log("maxDaysIn", maxDaysInMonth)
-    if (day < 1 || day > maxDaysInMonth) {
-      return { 'dateInvalid': { value: control.value } }; 
-    }
-
-    return null; 
-  };
-}
 
 @Component({
   selector: 'app-register',
@@ -74,7 +37,7 @@ export class RegisterComponent implements OnInit, OnDestroy{
   protected buildResourceForm(): void {
     this.resourceForm = this.formBuilder.group({
       nome_completo: [null, [Validators.required, Validators.minLength(3)]],
-      data_nascimento: [null, [Validators.required, dataNascimentoValidator()]],
+      data_nascimento: [null, [Validators.required ]],
       email: [null, [Validators.required, Validators.email]],
       senha: [null, [Validators.required, Validators.minLength(6)]],
     });
@@ -93,10 +56,6 @@ export class RegisterComponent implements OnInit, OnDestroy{
 
   submitForm(){
     let valueSubmit: Register = Object.assign(new Register(), this.resourceForm.value);
-    if(valueSubmit.data_nascimento != null){
-      const dataNascimentoTimonthtamp =this.formateDate(this.resourceForm.value.data_nascimento).toISOString()
-      valueSubmit.data_nascimento = dataNascimentoTimonthtamp
-    }
 
     console.log("data,",  valueSubmit.data_nascimento, valueSubmit)
     this.authService.register(valueSubmit)

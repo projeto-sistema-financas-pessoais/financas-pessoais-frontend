@@ -5,7 +5,7 @@ import { AbstractControl, FormControl } from "@angular/forms";
     selector: 'app-form-field-error',
     template: `
       <p class="text-danger">
-      {{errorMessage}}
+      {{errorMessage}}<ng-content></ng-content>
       </p>
     `,
   })
@@ -26,6 +26,8 @@ import { AbstractControl, FormControl } from "@angular/forms";
     }
   
     private getErrorMessage(){
+      // console.log("control", this.control)
+ 
       if(this.control?.errors?.['required'])
         return "Campo obrigatório";
       else if(this.control?.errors?.['email'])
@@ -42,8 +44,6 @@ import { AbstractControl, FormControl } from "@angular/forms";
         return `Deve ter no mínimo ${requiredLenght} caracteres`
       }else if(this.control?.errors?.['formatInvalid']){
         return 'Formato de data inválida';
-      }else if(this.control?.errors?.['dateInvalid']){
-        return 'Data inválida';
       }
       else if (this.control?.errors?.['max']){
         const requiredLenght = this.control.errors?.['max'].max;

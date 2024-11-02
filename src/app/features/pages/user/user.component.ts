@@ -6,7 +6,7 @@ import { User } from './shared/models/user.model'
 import { BaseFormComponent } from 'src/app/shared/components/base/base-form.component';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common'; 
-import { takeUntil } from "rxjs";
+import { take, takeUntil } from "rxjs";
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 
 
@@ -18,7 +18,6 @@ import { ModalComponent } from 'src/app/shared/components/modal/modal.component'
 
 })
 export class UserComponent  extends BaseFormComponent<User>{
-  data_nascimento: string | null = null;
   userForm!: FormGroup;
   user!: User
 
@@ -40,22 +39,35 @@ export class UserComponent  extends BaseFormComponent<User>{
   }
 
  override ngOnInit(): void {
-
-    this.user.nome_completo = this.authService.GetUser().name || 'null'
-    this.user.email = this.authService.GetUser().email || 'null'
-
-    const userData = this.authService.GetUser();
-    const date = userData.date_user ? new Date(userData.date_user) : null;
-    this.data_nascimento = date ? this.datePipe.transform(date, 'dd/MM/yyyy') : null;
-
+    this.getUser()
     this.buildForm();
   }
 
   protected buildForm(){
     this.resourceForm = this.formBuilder.group({
       nome_completo: [this.user.nome_completo, [Validators.required, Validators.minLength(3)]],
-      data_nascimento: [this.data_nascimento, [Validators.required]],
+      data_nascimento: [this.user.data_nascimento, [Validators.required]],
     });
+  }
+
+  private getUser(){
+    this.userService.getUser()
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe({
+      next: (data: User) =>{
+        this.user.nome_completo = data.nome_completo;
+        this.user.data_nascimento = data.data_nascimento 
+
+        this.user.email = this.authService.GetUser().email || 'null'
+        console.log("data", data, this.user)
+
+        this.buildForm();
+
+      },
+      error: () =>{
+
+      }
+    })
   }
 
   navigateToPage() {
@@ -74,13 +86,44 @@ export class UserComponent  extends BaseFormComponent<User>{
     this.modalSmall.openSmall();
   }
 
-  protected deleteResourceUser(email: string){
-    this.userService.deleteResourceUser(email)
+  protected editUser(){
+    let resource: any = Object.assign({}, this.resourceForm.value);
+
+    localStorage.setItem('user_name', JSON.stringify(resource.nome_completo));
+
+
+    this.userService.editUser(resource)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe({
       next: () =>{
-        console.log("deletada!")
-        window.location.reload()
+        this.alertService.showAlertSuccess("Sucesso ao editar usuário!")
+
+        setTimeout( () => {
+          window.location.reload()
+        },1000)
+
+      },
+      error: (error) => {
+
+        if(error.status == 400)
+          this.alertService.showAlertWarning(
+        "A exclusão não é permitida, pois existem movimentações associadas");
+        console.error(`error ao deletar ${this.nameComplete}`, error)
+
+      }
+    })
+  }
+
+  protected deleteResourceUser(){
+    this.userService.deleteResourceUser()
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe({
+      next: () =>{
+        this.alertService.showAlertSuccess("Sucesso ao deletar!")
+
+        setTimeout( () => {
+          window.location.href= '/login';
+        },1000)
       },
       error: (error) => {
 

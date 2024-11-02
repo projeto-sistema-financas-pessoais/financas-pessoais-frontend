@@ -5,7 +5,6 @@ export class Login {
 
 export class UserInformation{
     name!: string;
-    date_user!: string
     email!: string
 }
 
