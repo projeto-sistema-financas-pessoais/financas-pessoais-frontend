@@ -68,7 +68,6 @@ export class AuthService {
   public GetUser(): UserInformation {
     let data :UserInformation = {
       name: JSON.parse(localStorage.getItem('user_name')!) as string,
-      date_user: JSON.parse(localStorage.getItem('date_user')!) as string,
       email: JSON.parse(localStorage.getItem('email')!) as string
     }
     return data;

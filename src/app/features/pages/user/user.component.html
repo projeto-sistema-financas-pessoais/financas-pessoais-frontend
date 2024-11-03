@@ -22,7 +22,7 @@
                                 <div class="form-group mb-2 f-16">
                                     <label for="data_nascimento" class="form-label">Data de Nascimento</label>
                                     <div class="form-control">
-                                        {{ data_nascimento }}
+                                        {{ user.data_nascimento | date: 'dd/MM/yyyy'}}
                                     </div>
                                     
                                 </div>
@@ -45,7 +45,7 @@
     <div modal-generic-content class="pt-3">
 
         <div class="d-flex justify-content-center">
-            <form [formGroup]="resourceForm" (submit)="openModalEdit?  editAllAccount(): addResource()" >
+            <form [formGroup]="resourceForm" (submit)="editUser()" >
                 <div class="row">
                 <div class="form-group mb-2">
                     <label for="nome">Nome</label>
@@ -55,8 +55,11 @@
    
                 <div class="form-group mb-2">
                     <label for="data_nascimento">Data de Nascimento</label>
-                    <input type="text" class="form-control" id="date" formControlName="data_nascimento" placeholder="DD/MM/AAAA" mask="00/00/0000">
-                    <app-form-field-error [control]="resourceForm.get('data_nascimento')"></app-form-field-error>
+                    <input type="date" class="form-control" id="date" formControlName="data_nascimento">
+                    <app-form-field-error [control]="resourceForm.get('data_nascimento')">
+                        <span *ngIf="resourceForm.get('data_nascimento')?.invalid && resourceForm.get('data_nascimento')?.touched">. A data é inválida
+                        </span>
+                    </app-form-field-error>
                 </div>                
                 </div>
                 <div class="d-flex justify-content-center py-2">
@@ -78,7 +81,7 @@
         
         <div class="d-flex justify-content-evenly mt-4">
             <button type="button" class="btn btn-outline-secondary f-16 flex-grow-1 mx-2" (click)="modalSmall.dismiss()">Cancelar</button>
-            <button type="button" class="btn btn-danger f-16 flex-grow-1 mx-2" (click)="deleteResourceUser(user.email)">Excluir</button>
+            <button type="button" class="btn btn-danger f-16 flex-grow-1 mx-2" (click)="deleteResourceUser()">Excluir</button>
         </div>
         
 

@@ -296,7 +296,10 @@
                         <div class="form-group mb-2 col-md-6 col-sm-6">
                             <label  class="f-16" for="data_pagamento">Data de Pagamento <b> * </b></label>
                             <input type="date" class="form-control" id="data_pagamento" formControlName="data_pagamento" >
-                            <app-form-field-error [control]="resourceFormIncomeExpense.get('data_pagamento')"></app-form-field-error>
+                            <app-form-field-error [control]="resourceFormIncomeExpense.get('data_pagamento')">
+                                <span *ngIf="resourceFormIncomeExpense.get('data_pagamento')?.invalid && resourceFormIncomeExpense.get('data_pagamento')?.touched">. A data é inválida
+                                </span>
+                            </app-form-field-error>
                         </div>
     
                         <div *ngIf=" resourceFormIncomeExpense.get('forma_pagamento')?.value !== enumFormaPagamento.CREDITO" 

@@ -64,7 +64,7 @@
 
         <ng-container *ngIf="!openMenuGallery; else gallery">
              
-        <form [formGroup]="resourceForm" (submit)="openModalEdit?  editAllAccount(): addResource()" >
+        <form [formGroup]="resourceForm" (submit)="openModalEdit?  editAll(): addResource()" >
             <div class="row">
                 <div class="form-group mb-2 f-16">
                     <label for="nome">Nome do cartão de crédito<b> * </b></label>

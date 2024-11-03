@@ -14,9 +14,12 @@
                 </div>
    
                 <div class="form-group mb-2">
-                    <label for="email">Data de Nascimento<b> * </b></label>
-                    <input type="text" class="form-control" id="date" formControlName="data_nascimento" placeholder="DD/MM/AAAA" mask="00/00/0000">
-                    <app-form-field-error [control]="resourceForm.get('data_nascimento')"></app-form-field-error>
+                    <label for="date">Data de Nascimento<b> * </b></label>
+                    <input type="date" class="form-control" id="date" formControlName="data_nascimento">
+                    <app-form-field-error [control]="resourceForm.get('data_nascimento')">
+                        <span *ngIf="resourceForm.get('data_nascimento')?.invalid && resourceForm.get('data_nascimento')?.touched">. A data é inválida
+                        </span>
+                    </app-form-field-error>
 
                 </div>
                 <div class="form-group mb-2">
