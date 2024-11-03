@@ -7,22 +7,34 @@
                     <form [formGroup]="resourceForm" (submit)="submitForm()">
                         <div class="form-group mb-2 position-relative">
                             <label for="novaSenha">Nova Senha<b> * </b></label>
-                            <div class="Password-wrapper">
-                            <button type="button" class="btn-eye" (click)="togglePasswordVisibility('password')">
+                            <div class="password-wrapper">
+                            <input [type]="showPassword ? 'text' : 'password'" 
+                                   class="form-control pr-5" 
+                                   id="novaSenha" 
+                                   formControlName="novaSenha" 
+                                   placeholder="Digite sua nova senha">
+                            <button type="button" class="btn-eye position-absolute" (click)="togglePasswordVisibility('password')">
                                 <i class="fa" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
                             </button>
                             </div>
                             <app-form-field-error [control]="resourceForm.get('novaSenha')"></app-form-field-error>
                         </div>
-
+                        
                         <div class="form-group mb-2 position-relative">
                             <label for="confirmPassword">Confirme a Senha<b> * </b></label>
-                            <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirme sua nova senha">
-                            <button type="button" class="btn-eye" (click)="togglePasswordVisibility('confirmPassword')">
+                            <div class="password-wrapper">
+                            <input [type]="showConfirmPassword ? 'text' : 'password'" 
+                                   class="form-control pr-5" 
+                                   id="confirmPassword" 
+                                   formControlName="confirmPassword" 
+                                   placeholder="Confirme sua nova senha">
+                            <button type="button" class="btn-eye position-absolute" (click)="togglePasswordVisibility('confirmPassword')">
                                 <i class="fa" [ngClass]="showConfirmPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
                             </button>
+                            </div>
                             <app-form-field-error [control]="resourceForm.get('confirmPassword')"></app-form-field-error>
                         </div>
+                        
 
                         <!-- Botão de Salvar -->
                         <div class="d-flex justify-content-center py-2">
