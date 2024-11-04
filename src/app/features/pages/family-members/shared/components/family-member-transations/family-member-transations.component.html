@@ -1,13 +1,26 @@
 
 <div *ngIf="resourceData" class="container-fluid p-5 style-font">
     <div class="d-flex justify-content-between">
-        <h4>Membro da Família 
+    
+        <h4>
+            <span class="me-2 button-cursor">
+                <i  class="fa-solid fa-chevron-left button-cursor  color-green-2" [routerLink]="'/cartao-de-credito'"></i>
+
+            </span>
+         
+            <span>  Membro da Família  </span>
+
             <strong>{{resourceData.nome}}</strong>
+           
         </h4>
 
     </div>
 
-    <app-transaction-list [type]="'member'" [id_type]="id"></app-transaction-list>
 
+    <div class="d-flex  justify-content-evenly flex-wrap">
+
+
+        <app-transaction-list [type]="'member'" [id_type]="id"></app-transaction-list>
+    </div>
 </div>
 
