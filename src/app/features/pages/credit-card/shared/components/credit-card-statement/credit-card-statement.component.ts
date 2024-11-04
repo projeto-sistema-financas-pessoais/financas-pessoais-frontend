@@ -38,6 +38,7 @@ export class CreditCardStatementComponent extends BaseGetIdComponent<CreditCard>
 
   valueConsolidated!: number
   valueTotal!: number;
+  valueTotalConfirmed!: number
 
   month = [
     "Janeiro",
