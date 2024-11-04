@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
 import { AlertModalService } from 'src/app/shared/services/alert-modal.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset-pass',
@@ -17,12 +18,17 @@ export class ResetPassComponent implements OnInit {
   showConfirmPassword: boolean = false;
 
   constructor(
+    private readonly route: ActivatedRoute,
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
     private readonly alertModalService: AlertModalService
   ) {}
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.token = params.get('token');
+    })
+
     this.buildResourceForm();
   }
 
@@ -38,15 +44,21 @@ export class ResetPassComponent implements OnInit {
       const resource = {
         password: this.resourceForm.get('novaSenha')?.value
       };
-      this.authService.resetPassword(this.token!, resource).subscribe({
-        next: (response) => {
-          this.alertModalService.showAlertSuccess("Senha atualizada com sucesso!");
-        },
-        error: (error) => {
-          console.log("Erro ao atualizar a senha:", error);
-          this.alertModalService.showAlertDanger("Erro ao atualizar a senha.");
-        }
-      });
+      console.log("token: ",this.token)
+      if (this.token){
+        this.authService.resetPassword(this.token, resource).subscribe({
+          next: (response) => {
+            this.alertModalService.showAlertSuccess("Senha atualizada com sucesso!");
+            setTimeout(()=> {
+              window.location.href = '/login'
+            },1000)
+          },
+          error: (error) => {
+            console.log("Erro ao atualizar a senha:", error);
+            this.alertModalService.showAlertDanger("Erro ao atualizar a senha.");
+          }
+        });
+      }
     } else {
       this.alertModalService.showAlertDanger("As senhas não coincidem ou o formulário é inválido.");
     }

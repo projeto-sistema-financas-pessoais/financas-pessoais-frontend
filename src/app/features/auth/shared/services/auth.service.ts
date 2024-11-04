@@ -37,7 +37,7 @@ export class AuthService {
   }
 
   resetPassword(token: string, requestData: { password: string }): Observable<any> {
-    return this.http.post<any>(`${environment.financas}/reset-password/${token}`, requestData);
+    return this.http.post<any>(`${environment.financas}/usuarios/reset-password/${token}`, requestData);
   }
 
   sendRecoveryEmail(data: { email: string }): Observable<any> {
