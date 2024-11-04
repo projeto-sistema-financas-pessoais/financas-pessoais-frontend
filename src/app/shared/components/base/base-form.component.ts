@@ -149,11 +149,21 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
       },
       error: (error: HttpErrorResponse) => {
         if(error.status == 406)
-          this.alertService.showAlertDanger(`Já existe um registro com esse nome. Por favor, escolha um nome diferente!"`)
+          this.alertService.showAlertDanger(`Já existe um registro com esse nome. Por favor, escolha um nome diferente!`)
 
-        if(error.status == 400)
-          this.alertService.showAlertDanger(`O dia do vencimento da fatura não pode ser maior que o dia do fechamento"`)
+        if(error.status == 400){
+          if(this.nameComplete == "Cartão de Crédito" ){
+            this.alertService.showAlertDanger(`O dia do vencimento da fatura não pode ser maior que o dia do fechamento"`)
 
+          }else if(this.nameComplete == "Membros da Família"){
+            this.alertService.showAlertDanger(`Já existe um parente com o mesmo  nome ou email. Por favor, escolha um diferente!`)
+
+          }
+
+
+        }
+        
+         
         console.error(`error ao criar ${this.nameComplete}`, error, resource)
 
       }
