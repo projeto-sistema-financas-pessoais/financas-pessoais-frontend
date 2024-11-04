@@ -80,14 +80,14 @@
 
             <div class="d-flex justify-content-between">
                 <span class="color-black-1">
-                    Total:
+                    Total confirmado:
 
                 </span>
 
                 <span class="color-light-1 text-center d-flex ajust-items-center justify-content-center">
                     
                     <mat-icon class="color-green-4 ms-2 f-16 ">credit_score</mat-icon>
-                    R$ {{itemStatement.fatura_info?.fatura_gastos | formatPrice}}
+                    R$ {{valueTotalConfirmed | formatPrice}}
 
                 </span>
 
@@ -113,7 +113,7 @@
                 <span class="text-danger text-center d-flex ajust-items-center justify-content-center">
                     
                     <mat-icon class="color-green-4 ms-2 f-16 ">credit_score</mat-icon>
-                    R${{((itemStatement.fatura_info?.fatura_gastos || 0) - valueConsolidated)  | formatPrice}}
+                    R${{(itemStatement.fatura_info?.fatura_gastos || 0) | formatPrice}}
                 </span>
 
             </div>
@@ -143,6 +143,7 @@
             (itemStatement)="addStatement($event)"
             (valueConsolidated)="valueConsolidated = $event"
             (valuetotal)="valueTotal = $event"
+            (valueTotalConfirmed)="valueTotalConfirmed = $event"
             ></app-transaction-list>
         </div>
         
