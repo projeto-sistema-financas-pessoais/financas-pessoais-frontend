@@ -50,7 +50,7 @@
                             </span>
                         </div>
                         <div class="text-start color-black-1 pb-1">Saldo da conta:  &nbsp;
-                            <span   [ngClass]="item.saldo && item.saldo < 0 ? 'text-danger' : 'text-success'"> <strong>R$ {{item.saldo || 0 | formatPrice}}</strong></span>
+                            <span   [ngClass]="item.saldo && item.saldo < 0 ? 'text-danger' : 'text-success'">R$ {{item.saldo || 0 | formatPrice}}</span>
 
                             
                         </div>

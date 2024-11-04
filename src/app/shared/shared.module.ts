@@ -42,7 +42,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     FormatPricePipe,
     FormatDayDate,
     ReactiveFormsModule,
-    TransactionListComponent
+    TransactionListComponent,
+
 
 
   ],

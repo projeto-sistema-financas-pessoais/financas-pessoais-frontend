@@ -16,9 +16,9 @@ export class TransationFilter{
 }
 
 
-export class TransationList{
+export class TransactionList{
     
-    valor!: string;
+    valor!: number;
     descricao!: string;
     tipoMovimentacao!: TipoMovimentacao;
     forma_pagamento!: FormaPagamento;
@@ -40,6 +40,7 @@ export class TransationList{
     id_conta_destino!: number;
     nome_conta_destino!: string
     divide_parente!: DivideMember[]
+    participa_limite_fatura_gastos!: boolean | null;
     fatura_info?: FaturaInfo
 }
 
@@ -49,4 +50,5 @@ export class FaturaInfo{
     data_pagamento!: string
     id_cartao_credito!: number;
     id_conta!: number
+    fatura_gastos!: number
 }

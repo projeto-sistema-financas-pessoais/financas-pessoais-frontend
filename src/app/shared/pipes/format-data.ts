@@ -4,10 +4,11 @@ import { Pipe, PipeTransform } from "@angular/core";
     name: 'formatday'
   })
   export class FormatDayDate implements PipeTransform {
-    transform(value: string | Date): number {
-    
+    transform(value: string | Date): string {
       const date = new Date(value);
       date.setUTCHours(0, 0, 0, 0);
-      return date.getUTCDate();
+  
+      const day = date.getUTCDate();
+      return day.toString().padStart(2, '0');
     }
   }
