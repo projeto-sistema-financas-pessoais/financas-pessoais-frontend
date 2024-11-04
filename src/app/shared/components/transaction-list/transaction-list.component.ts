@@ -24,6 +24,7 @@ export class TransactionListComponent {
   @Output() itemStatement: EventEmitter<TransactionList | undefined> = new EventEmitter;
   @Output() valueConsolidated: EventEmitter<number> = new EventEmitter;
   @Output() valuetotal: EventEmitter<number> = new EventEmitter
+  @Output() valueTotalConfirmed: EventEmitter<number> = new EventEmitter
 
 
   @ViewChild('modal_small') protected modalSmall!: ModalComponent;
@@ -110,17 +111,24 @@ export class TransactionListComponent {
           
           if(this.type == 'credit'){
 
-            let somaTotal: number = 0;
-            let somaConsolidado: number = 0;
+            let sumTotal: number = 0;
+            let sumConsolidated: number = 0;
+            let sumTotalConfirmed: number = 0
             this.transactionList.forEach(item => {
-              somaTotal += Number(item.valor);
+              sumTotal += Number(item.valor);
               if (item.consolidado) {
-                somaConsolidado +=  Number(item.valor);
+                sumConsolidated +=  Number(item.valor);
+              }
+              if(item.participa_limite_fatura_gastos){
+                sumTotalConfirmed +=  Number(item.valor);
+
               }
             });
 
-            this.valuetotal.emit(somaTotal)
-            this.valueConsolidated.emit(somaConsolidado)
+            this.valuetotal.emit(sumTotal)
+            this.valueConsolidated.emit(sumConsolidated)
+            this.valueTotalConfirmed.emit(sumTotalConfirmed)
+
             this.itemStatement.emit(this.transactionList[0] || undefined)
 
             
