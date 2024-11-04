@@ -1,8 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { CondicaoPagamento, FormaPagamento, TipoMovimentacao } from 'src/app/shared/models/enum.model';
-import { TransationFilter, TransationList } from 'src/app/features/pages/transaction/shared/models/transation-list.model';
+import { TransationFilter, TransactionList } from 'src/app/features/pages/transaction/shared/models/transation-list.model';
 import { TransationService } from 'src/app/features/pages/transaction/shared/services/transation.service';
 import { Category } from 'src/app/features/pages/user/shared/models/category.model';
 import { ModalComponent } from '../modal/modal.component';
@@ -21,11 +21,15 @@ export class TransactionListComponent {
 
   @Input() type: 'transation' | 'member' | 'account' | 'credit' = 'transation'
   @Input() id_type?: number;
+  @Output() itemStatement: EventEmitter<TransactionList | undefined> = new EventEmitter;
+  @Output() valueConsolidated: EventEmitter<number> = new EventEmitter;
+  @Output() valuetotal: EventEmitter<number> = new EventEmitter
+
 
   @ViewChild('modal_small') protected modalSmall!: ModalComponent;
   modalConfig! : ModalConfig;
 
-  deleteItem!: TransationList;
+  deleteItem!: TransactionList;
   openModalDelete: boolean = false;
 
   canOpenFilter: boolean = false;
@@ -50,7 +54,7 @@ export class TransactionListComponent {
   enumCondicaoPagamento!: typeof CondicaoPagamento
   Object = Object;
 
-  transationList: TransationList[] = [];
+  transactionList: TransactionList[] = [];
   transationFilter!: TransationFilter;
 
   category!: Category[]
@@ -71,6 +75,7 @@ export class TransactionListComponent {
     this.transationFilter = new TransationFilter()
     this.transationFilter.ano = new Date().getFullYear();
     this.transationFilter.mes = new Date().getMonth() + 1;
+    
   }
 
   ngOnInit(): void {
@@ -99,14 +104,33 @@ export class TransactionListComponent {
     this.transationService.getAllByFilter(this.transationFilter)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe({
-      next: (data: TransationList[]) => {
-          this.transationList = data;
-          console.log(this.transationList)
+      next: (data: TransactionList[]) => {
+          this.transactionList = data;
+
+          
+          if(this.type == 'credit'){
+
+            let somaTotal: number = 0;
+            let somaConsolidado: number = 0;
+            this.transactionList.forEach(item => {
+              somaTotal += Number(item.valor);
+              if (item.consolidado) {
+                somaConsolidado +=  Number(item.valor);
+              }
+            });
+
+            this.valuetotal.emit(somaTotal)
+            this.valueConsolidated.emit(somaConsolidado)
+            this.itemStatement.emit(this.transactionList[0] || undefined)
+
+            
+          }
+          console.log(this.transactionList)
       }, 
       error: (error: HttpErrorResponse) => {
         
         if(error.status == 404){
-          this.transationList = []
+          this.transactionList = []
         }
         console.error("error to get list of transations", error)
       }
@@ -155,7 +179,7 @@ export class TransactionListComponent {
     this.chargeList();
   }
 
-  protected openDelete(item: TransationList){
+  protected openDelete(item: TransactionList){
 
     this.openModalDelete = true;
 
@@ -187,7 +211,7 @@ export class TransactionListComponent {
     })
   }
 
-  changeConsolidated(item: TransationList){
+  changeConsolidated(item: TransactionList){
 
     item.consolidado = !item.consolidado;
 
@@ -205,6 +229,37 @@ export class TransactionListComponent {
          
         )
 
+        if(this.type == 'account'){
+          setTimeout(() =>{
+            window.location.reload();
+          }, 1000)
+        }
+        
+        console.log("delete transation success", data)
+      },
+      error: (error: HttpErrorResponse) =>{
+        console.log('error delete transation', error)
+      }
+    })
+  }
+
+  changeLimitAndExchange(item: TransactionList){
+
+    item.participa_limite_fatura_gastos = !item.participa_limite_fatura_gastos;
+
+    this.transationService.changeLimitAndExpense(item.id_movimentacao, item.participa_limite_fatura_gastos)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe({
+      next: (data: any) =>{
+
+        this.alertService.showAlertSuccess(
+          item.participa_limite_fatura_gastos ? 'Sucesso ao contalizar no limite e gastos da fatura!' : 'Sucesso ao retirar do  limite e gastos da fatura!'
+        )
+        if(this.type == 'credit'){
+          setTimeout(() =>{
+            window.location.reload();
+          }, 1000)
+        }
         
         console.log("delete transation success", data)
       },

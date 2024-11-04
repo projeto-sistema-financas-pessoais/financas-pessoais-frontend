@@ -4,7 +4,7 @@ export class CreditCard{
     nome!: string;
     nome_icone!: string
     ativo!: boolean
-    limite_disponivel?: number;
+    limite_disponivel!: number;
     fatura_gastos?: number 
     dia_vencimento?: number
     dia_fechamento?: number
@@ -12,4 +12,9 @@ export class CreditCard{
     constructor(data: any){
         Object.assign(this, data);
     }
+}
+
+export class StatementSend{
+    id_fatura!: number;
+    id_conta!: number;
 }

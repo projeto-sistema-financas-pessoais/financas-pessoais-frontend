@@ -5,6 +5,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CreditCardRoutingModule } from './credit-card-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CreditCardStatementComponent } from './shared/components/credit-card-statement/credit-card-statement.component';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 
 
@@ -16,7 +17,8 @@ import { CreditCardStatementComponent } from './shared/components/credit-card-st
   imports: [
     SharedModule,
     CreditCardRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TooltipModule.forRoot(),
   ]
 })
 export class CreditCardModule { }

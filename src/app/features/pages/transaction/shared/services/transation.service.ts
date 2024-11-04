@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/features/auth/shared/services/auth.service';
-import { TransationFilter, TransationList } from '../models/transation-list.model';
+import { TransationFilter, TransactionList } from '../models/transation-list.model';
 import { environment } from 'src/environments/environment.development';
 import { RegisterExpenseIncome, RegisterTransfer, TransationConsolidated } from '../models/transation.model';
 
@@ -23,8 +23,8 @@ export class TransationService  {
     this.headers = this.auth.GetToken();
   }
 
-  getAllByFilter(filter: TransationFilter): Observable<TransationList[]>{
-    return this.http.post<TransationList[]>(`${environment.financas}/movimentacao/listar/filtro`, filter ,{headers: this.headers})
+  getAllByFilter(filter: TransationFilter): Observable<TransactionList[]>{
+    return this.http.post<TransactionList[]>(`${environment.financas}/movimentacao/listar/filtro`, filter ,{headers: this.headers})
   }
 
   addTransfer(resource: RegisterTransfer): Observable<RegisterTransfer>{
@@ -45,6 +45,10 @@ export class TransationService  {
 
   consolidatedTransation(transationConsolidated: TransationConsolidated): Observable<any>{
     return this.http.post<any>(`${environment.financas}/movimentacao/consolidar` , transationConsolidated, {headers: this.headers})
+  }
+
+  changeLimitAndExpense(idMovimentacao: number, change: Boolean): Observable<any>{
+    return this.http.post<any>(`${environment.financas}/movimentacao/participa_limite_faturas_gastos?id_movimentacao=${idMovimentacao}&participa_limite_fatura_gastos=${change}` ,null, {headers: this.headers})
   }
 
 

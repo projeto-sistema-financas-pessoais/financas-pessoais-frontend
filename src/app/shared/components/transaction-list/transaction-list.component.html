@@ -62,7 +62,7 @@
 
    
 
-    <ng-container *ngFor="let item of transationList; let i = index;"> 
+    <ng-container *ngFor="let item of transactionList; let i = index;"> 
         <div class="d-flex justify-content-between align-items-center flex-row">
 
             <div class="mx-2 color-light-1 f-16 ">{{item.data_pagamento | formatday }}</div>
@@ -113,21 +113,35 @@
                         <span *ngIf="item.tipoMovimentacao == enumMovimentacao.TRANSFERENCIA" class="color-light-1"> R$ {{item.valor  | formatPrice}}</span>
                     </div> 
 
-                    <div *ngIf="item.tipoMovimentacao !== enumMovimentacao.TRANSFERENCIA && !item.id_fatura"
-                     (click)="changeConsolidated(item)" class="button-cursor">
-                        <i *ngIf="item.consolidado" class="color-green-4 fa-solid fa-circle-check "></i>
-                        <i *ngIf="!item.consolidado" class="color-light-3 fa-solid fa-circle-check"></i>
+
+                    
+                    
+                    <div class="col-md-2 d-flex justify-content-center gap-3">
+                        <div *ngIf="item.tipoMovimentacao !== enumMovimentacao.TRANSFERENCIA && !item.id_fatura"
+                        (click)="changeConsolidated(item)" class="button-cursor">
+                            <i *ngIf="item.consolidado" class="color-green-4 fa-solid fa-circle-check "></i>
+                            <i *ngIf="!item.consolidado" class="color-light-3 fa-solid fa-circle-check"></i>
+                            
+
+                        </div>
+
+                        <div *ngIf="item.tipoMovimentacao === enumMovimentacao.TRANSFERENCIA || item.id_fatura" class="cursor-blocked"> 
+                            <i 
+                            tooltip="Fatura do cartão aberta" container="body" placement="bottom" [delay]="800"
+                            *ngIf="!item.consolidado && item.id_fatura" class="color-light-2 fa-solid fa-circle-check"></i>
+                            <i [tooltip]="item.id_fatura ? 'Não é possível alterar de uma fatura paga': 'Não é possível alterar de uma transferência'" container="body" placement="bottom" [delay]="600"
+                            *ngIf="item.consolidado" class=" fa-solid fa-circle-check" style="color: #0BFA9F33;"></i>
+                        </div> 
+
+                        <div *ngIf="item.forma_pagamento == enumFormaPagamento.CREDITO" class="f-16 button-cursor" (click)="changeLimitAndExchange(item)"
+                        [tooltip]="item.participa_limite_fatura_gastos ? 'Remover movimentação do limite e total confirmado': 'Adicionar movimentação do limite e total confirmado'" container="body" placement="bottom" [delay]="600"> 
+                            <mat-icon  class="d-flex align-items-center  text-center f-16"
+                            [ngClass]="item.participa_limite_fatura_gastos ? 'color-green-4': 'color-light-3'">credit_score</mat-icon>
+    
+                        </div>
                         
-
                     </div>
-
-                    <div *ngIf="item.tipoMovimentacao === enumMovimentacao.TRANSFERENCIA || item.id_fatura" class="cursor-blocked"> 
-                        <i 
-                        tooltip="Fatura do cartão aberta" container="body" placement="bottom" [delay]="800"
-                        *ngIf="!item.consolidado && item.id_fatura" class="color-light-2 fa-solid fa-circle-check button-cursor"></i>
-                        <i [tooltip]="item.id_fatura ? 'Não é possível alterar de uma fatura paga': 'Não é possível alterar de uma transferência'" container="body" placement="bottom" [delay]="800"
-                        *ngIf="item.consolidado" class=" fa-solid fa-circle-check" style="color: #0BFA9F33;"></i>
-                    </div>
+                                   
 
                 
                     <div class="btn-group f-16">

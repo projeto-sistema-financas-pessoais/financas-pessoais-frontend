@@ -1,13 +1,233 @@
 
 <div *ngIf="resourceData" class="container-fluid p-5 style-font">
     <div class="d-flex justify-content-between">
-        <h4>Fatura do Cartão de Crédito 
-            <strong>{{resourceData.nome}}</strong>
-        </h4>
+
+        <div class="d-flex ajust-items-center text-center ">
+            <h4>
+                <span class="me-2 button-cursor">
+                    <i  class="fa-solid fa-chevron-left button-cursor  color-green-2" [routerLink]="'/cartao-de-credito'"></i>
+
+                </span>
+                <span>
+                    <img class="icon" src="./assets/icons_user/{{resourceData.nome_icone}}" (error)="resourceData.nome_icone = '5_wallet.svg'" alt="">
+
+                </span>
+                <span>  Fatura do Cartão de Crédito </span>
+
+                <strong>{{resourceData.nome}}</strong>
+               
+            </h4>
+         
+
+        </div>
+        
 
     </div>
 
-    <app-transaction-list [type]="'credit'" [id_type]="id"></app-transaction-list>
+
+    <div class="d-flex  justify-content-evenly flex-wrap">
+
+        <div *ngIf="itemStatement" class="statement my-4">
+
+            <div class="d-flex justify-content-between">
+                <span class="color-black-1">Limite do cartão: </span>
+                <span class="color-light-1">R$ {{resourceData.limite | formatPrice}}</span>
+
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <span class="color-black-1">Limite disponível: </span>
+                <span class="text-success">R$ {{resourceData.limite_disponivel | formatPrice}}</span>
+
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <span class="color-black-1">Limite total utilizado: </span>
+                <span class="text-danger">R$ {{resourceData.limite - resourceData.limite_disponivel | formatPrice}}</span>
+
+            </div>
+
+            <div class="d-flex justify-content-center">
+                <div class="line my-3"></div>
+
+            </div>
+
+            <div class="color-green-2 py-3">
+                Fatura {{this.dateMonth}}
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <span class="color-black-1">Fechamento: </span>
+                <span class="color-light-1">{{itemStatement.fatura_info?.data_fechamento | date: 'dd/MM/yyyy'}}</span>
+
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <span class="color-black-1">Vencimento: </span>
+                <span class="color-light-1">{{itemStatement.fatura_info?.data_vencimento | date: 'dd/MM/yyyy'}}</span>
+
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <span class="color-black-1">
+                    {{ datePayment < dateFechamento ? 'Data da antecipação de pagamento:' : 'Data de pagamento:'}}
+                    
+                </span>
+
+                <span class="color-light-1">{{(itemStatement.fatura_info?.data_pagamento | date: 'dd/MM/yyyy') || 'Não pago'}}</span>
+
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <span class="color-black-1">
+                    Total:
+
+                </span>
+
+                <span class="color-light-1 text-center d-flex ajust-items-center justify-content-center">
+                    
+                    <mat-icon class="color-green-4 ms-2 f-16 ">credit_score</mat-icon>
+                    R$ {{itemStatement.fatura_info?.fatura_gastos | formatPrice}}
+
+                </span>
+
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <span class="color-black-1">Total: </span>
+                <span class="color-light-1">R$ {{valueTotal | formatPrice}}</span>
+
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <span class="color-black-1">Total pago: </span>
+                <span class="text-success">R$ {{valueConsolidated | formatPrice}}</span>
+
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <span class="color-black-1">
+                   A pagar confirmado:
+                </span>
+
+                <span class="text-danger text-center d-flex ajust-items-center justify-content-center">
+                    
+                    <mat-icon class="color-green-4 ms-2 f-16 ">credit_score</mat-icon>
+                    R${{((itemStatement.fatura_info?.fatura_gastos || 0) - valueConsolidated)  | formatPrice}}
+                </span>
+
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <span class="color-black-1">A pagar final: </span>
+                <span class="text-danger">R${{(valueTotal - valueConsolidated)  | formatPrice}}</span>
+
+            </div>
+
+            <div class="py-3">
+                <button type="button" [disabled]="isButtonDisabled()"
+                (click)="openCloseCardStatement()"
+                class="btn btn-outline-secondary f-16">
+                    {{datePayment < dateToday || (dateToday.getMonth() !== datePayment.getMonth()) ? 'Antecipar pagamento' : 'Fechar fatura'}}
+                </button>
+
+            </div>
+
+            
+        </div>
+
+
+        <div>
+            <app-transaction-list 
+            [type]="'credit'" [id_type]="id"
+            (itemStatement)="addStatement($event)"
+            (valueConsolidated)="valueConsolidated = $event"
+            (valuetotal)="valueTotal = $event"
+            ></app-transaction-list>
+        </div>
+        
+
+
+    </div>
+   
 
 </div>
 
+
+<app-modal #modal_small [modalConfig]="modalConfig" >
+
+    <div modal-generic-content-small class="pt-3" *ngIf="openModalCloseStatement">
+
+        <ng-container *ngIf="((itemStatement?.fatura_info?.fatura_gastos || 0) - valueConsolidated) !== 0; else notCloseStatement">
+
+            <span class="color-light-1">
+
+                <p class="text-center">
+                    Tem certeza que pagar todas as movimentações confirmadas 
+
+                    <span class="text-center d-flex ajust-items-center justify-content-center">
+                        <mat-icon class="color-green-4 me-2">credit_score</mat-icon>
+                     até agora?
+                    </span>
+                        
+                    
+
+                </p>
+
+                <div class="mb-2 custom-dropdown">
+                                
+
+                    <label class="f-16 d-flex align-items-center" for="id_carteira">
+                        <mat-icon class="color-light-1 me-1" >account_balance</mat-icon>Conta &nbsp;<b> * </b>
+                    </label> 
+                    <div class="form-select" (click)="toggleDropdownAccountCurrent()">
+                    <img *ngIf="selectedAccontCurrentIcon" [src]="'./assets/icons_user/' + selectedAccontCurrentIcon" alt="Ícone" style="width: 20px; margin-right: 8px;">
+                    {{ selectedAccontCurrentName || 'Selecione uma opção' }}
+                    </div>
+                    <div *ngIf="dropdownOpenAccountCurrent" class="dropdown-options">
+                    <div class="dropdown-option" *ngFor="let item of account" (click)="selectAccountCurrent(item)">
+                        <img [src]="'./assets/icons_user/' + item.nome_icone" alt="{{item.nome}}" style="width: 20px; margin-right: 8px;">
+                        {{ item.nome }}
+                    </div>
+                    </div>
+                </div>
+
+            </span>
+
+            <div class="d-flex justify-content-evenly mt-4">
+
+                <button type="button" class="btn btn-outline-secondary f-16" (click)="modalSmall.dismiss()" >Cancelar</button>
+                <button type="button" class="btn btn-green f-16" [disabled]="!statementSend.id_conta" (click)="closeCardStatement()">Pagar</button>
+            </div>
+        </ng-container>
+        
+        <ng-template #notCloseStatement>
+            <span class="color-light-1">
+
+                <p class="text-center">
+                    
+                    
+                    <span class="text-center d-flex ajust-items-center justify-content-center">
+                        Você não tem valor a pagar confirmado
+                        <mat-icon class="color-green-4 ms-2">credit_score</mat-icon>
+
+                    </span>
+                    
+                    ainda. Edite as movimentações primeiro
+                </p>
+
+                
+
+            </span>
+
+            <div class="d-flex justify-content-evenly mt-4">
+
+                <button type="button" class="btn btn-outline-secondary f-16" (click)="modalSmall.dismiss()" >Sair</button>
+            </div>
+
+        </ng-template>
+        
+
+    </div>
+
+</app-modal>
