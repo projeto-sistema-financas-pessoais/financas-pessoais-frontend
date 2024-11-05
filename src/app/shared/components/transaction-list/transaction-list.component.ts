@@ -22,9 +22,18 @@ export class TransactionListComponent {
   @Input() type: 'transation' | 'member' | 'account' | 'credit' = 'transation'
   @Input() id_type?: number;
   @Output() itemStatement: EventEmitter<TransactionList | undefined> = new EventEmitter;
-  @Output() valueConsolidated: EventEmitter<number> = new EventEmitter;
-  @Output() valuetotal: EventEmitter<number> = new EventEmitter
-  @Output() valueTotalConfirmed: EventEmitter<number> = new EventEmitter
+  @Output() valueConsolidated: EventEmitter<number> = new EventEmitter<number>();
+  @Output() valuetotal: EventEmitter<number> = new EventEmitter<number>();
+
+  @Output() valueTotalIncome: EventEmitter<number> = new EventEmitter<number>();
+  @Output() valueTotalExpense: EventEmitter<number> = new EventEmitter<number>();
+  @Output() valueConsolidatedIncome: EventEmitter<number> = new EventEmitter<number>();
+  @Output() valueConsolidatedExpense: EventEmitter<number> = new EventEmitter<number>();
+
+  @Output() valueTotalConfirmed: EventEmitter<number> = new EventEmitter<number>();
+
+  @Output() valuetotalMemberExpense: EventEmitter<number> = new EventEmitter<number>();
+  @Output() valueTotalTotalConsolidatedMemberExpense: EventEmitter<number> = new EventEmitter<number>();
 
 
   @ViewChild('modal_small') protected modalSmall!: ModalComponent;
@@ -107,32 +116,8 @@ export class TransactionListComponent {
     .subscribe({
       next: (data: TransactionList[]) => {
           this.transactionList = data;
+          this.sendOutput()
 
-          
-          if(this.type == 'credit'){
-
-            let sumTotal: number = 0;
-            let sumConsolidated: number = 0;
-            let sumTotalConfirmed: number = 0
-            this.transactionList.forEach(item => {
-              sumTotal += Number(item.valor);
-              if (item.consolidado) {
-                sumConsolidated +=  Number(item.valor);
-              }
-              if(item.participa_limite_fatura_gastos){
-                sumTotalConfirmed +=  Number(item.valor);
-
-              }
-            });
-
-            this.valuetotal.emit(sumTotal)
-            this.valueConsolidated.emit(sumConsolidated)
-            this.valueTotalConfirmed.emit(sumTotalConfirmed)
-
-            this.itemStatement.emit(this.transactionList[0] || undefined)
-
-            
-          }
           console.log(this.transactionList)
       }, 
       error: (error: HttpErrorResponse) => {
@@ -144,6 +129,84 @@ export class TransactionListComponent {
       }
     })
   }
+
+  sendOutput(){
+    let sumTotal: number = 0;
+    let sumTotalIncome: number = 0;
+    let sumTotalExpense: number = 0;
+    let sumTotalConsolidatedExpense: number = 0;
+    let sumTotalConsolidatedIncome: number = 0;
+
+    let sumConsolidated: number = 0;
+    let sumTotalConfirmed: number = 0
+    let sumTotalMemberExpense: number = 0
+    let sumTotalMemberConsolidatedExpense: number = 0;
+
+    this.transactionList.forEach(item => {
+
+      
+      sumTotal += Number(item.valor);
+
+      if(item.tipoMovimentacao == this.enumMovimentacao.RECEITA){
+        sumTotalIncome += Number(item.valor)
+        if(item.consolidado){
+          sumTotalConsolidatedIncome += Number(item.valor)
+        }
+      }else if(item.tipoMovimentacao == this.enumMovimentacao.DESPESA){
+        sumTotalExpense += Number(item.valor)
+        if(item.consolidado){
+          sumTotalConsolidatedExpense += Number(item.valor)
+        }
+      }
+
+      if (item.consolidado) {
+
+        sumConsolidated +=  Number(item.valor);
+      }
+      if(item.participa_limite_fatura_gastos){
+        sumTotalConfirmed +=  Number(item.valor);
+
+      }
+
+      if(this.type == 'member'){
+        const member =  item.divide_parente.find(item => item.id_parente == this.transationFilter.id_parente)
+        if(item.tipoMovimentacao == this.enumMovimentacao.DESPESA){
+          sumTotalMemberExpense += Number(member?.valor_parente) || 0;
+
+          if(item.consolidado){
+            sumTotalMemberConsolidatedExpense += Number(member?.valor_parente) || 0;
+          }
+        }
+          
+      }
+      
+    });
+    
+    
+    this.itemStatement.emit(this.transactionList[0] || undefined)
+
+    if(this.type== 'member' || this.type == 'account'){
+      this.valueConsolidatedIncome.emit(sumTotalConsolidatedIncome)
+      this.valueConsolidatedExpense.emit(sumTotalConsolidatedExpense)
+      this.valueTotalExpense.emit(Number(sumTotalExpense));
+      this.valueTotalIncome.emit(sumTotalIncome);
+    }
+
+    if(this.type == 'credit'){
+      this.valuetotal.emit(sumTotal);
+      this.valueConsolidated.emit(sumConsolidated);
+      this.valueTotalConfirmed.emit(sumTotalConfirmed)
+
+
+      
+    }else if(this.type == 'member'){
+      
+      this.valueTotalTotalConsolidatedMemberExpense.emit(sumTotalMemberConsolidatedExpense)
+      this.valuetotalMemberExpense.emit(sumTotalMemberExpense);
+
+    }
+  }
+
 
   private getCategory(){
     this.categoryService.getAll(false)
