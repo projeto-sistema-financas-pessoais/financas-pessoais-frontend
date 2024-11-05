@@ -8,14 +8,14 @@ import { AuthService } from '../../auth/shared/services/auth.service';
 })
 export class LandingPageComponent implements OnInit {
 
-  name_user!: string;
+  nameUser!: string;
 
   constructor(
     protected authService: AuthService,
   ){}
 
   ngOnInit(): void {
-    this.name_user = this.authService.GetUser().name || 'null'
+    this.nameUser = this.authService.GetUser().name || 'null'
   }
 
 }

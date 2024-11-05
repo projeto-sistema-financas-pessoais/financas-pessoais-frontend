@@ -110,7 +110,7 @@
 
                         <span *ngIf="item.tipoMovimentacao == enumMovimentacao.DESPESA" class="text-danger"> R$ -{{item.valor  | formatPrice}}</span>
                         <span *ngIf="item.tipoMovimentacao == enumMovimentacao.RECEITA" class="text-success"> R$ +{{item.valor  | formatPrice}}</span>
-                        <span *ngIf="item.tipoMovimentacao == enumMovimentacao.TRANSFERENCIA" class="color-light-1"> R$ {{item.valor  | formatPrice}}</span>
+                        <span *ngIf="item.tipoMovimentacao == enumMovimentacao.TRANSFERENCIA" [ngClass]="item.id_conta == this.transationFilter.id_conta ? 'text-danger' : 'text-success'"> R$ {{item.valor  | formatPrice}}</span>
                     </div> 
 
 
@@ -160,11 +160,12 @@
                         </div>
                     </div>
                 </div>
-
-
+                
+               
+                  
                 <div class="d-flex justify-content-between align-items-center flex-row  display-none-desktop">
                     
-                    <div class="col-sm-12 justify-content-start align-items-center display-none-desktop mt-1">
+                    <div class="col-sm-12  d-flex justify-content-start align-items-center display-none-desktop mt-1">
 
                         <div class="color-black-1 f-16 display-none-desktop">{{item.descricao || 'Outros'}}</div>
                         
@@ -184,15 +185,30 @@
                         
                     </div>
 
-                    <div class="col-sm-6 display-none-desktop">
-                        <div class="ms-2 color-light-3">
+                    <div class="col-sm-6 display-none-desktop d-flex justify-content-end">
+                        <div class="ms-2 color-light-3 f-14">
                             <span *ngIf="item.condicao_pagamento === enumCondicaoPagamento.PARCELADO" > {{ item.parcela_atual+ '/' + item.quantidade_parcelas}} </span>
                             <i  *ngIf="item.condicao_pagamento === enumCondicaoPagamento.RECORRENTE" class="fa-solid fa-rotate"
                             tooltip="Movimentação recorrente" container="body" placement="bottom" [delay]="800"></i>
+                            <span  *ngIf="item.condicao_pagamento === enumCondicaoPagamento.RECORRENTE" > {{item.tipo_recorrencia }}</span>
+
                         </div>
                     </div>
                 </div>
 
+                
+                <div *ngIf="divideMember(item)" class="d-flex justify-content-between align-items-center pt-1 my-0 flex-wrap">
+                    <mat-icon class="color-light-1 display-none-desktop me-2">groups</mat-icon>
+
+                    <div class="color-light-1 f-14 d-flex align-items-center flex-grow-1 flex-wrap"> 
+                        <mat-icon class="me-2 display-none">groups</mat-icon>
+
+                        <span *ngFor="let parente of item.divide_parente">
+                            {{parente.nome_parente | firstTwoWords}} (R$ {{parente.valor_parente | formatPrice}})
+                             &nbsp; &nbsp;
+                        </span>
+                    </div>
+                </div>
                              
             </div>
         </div>

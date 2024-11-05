@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormatDayDate } from './pipes/format-data';
 import { TransactionListComponent } from './components/transaction-list/transaction-list.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { FirstTwoWordsPipe } from './pipes/format-name.pipe';
 
 
 
@@ -21,6 +22,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     FormatPricePipeInt,
     FormatPricePipe,
     FormatDayDate,
+    FirstTwoWordsPipe,
     TransactionListComponent
   ],
   imports: [
@@ -43,6 +45,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     FormatDayDate,
     ReactiveFormsModule,
     TransactionListComponent,
+    FirstTwoWordsPipe,
 
 
 

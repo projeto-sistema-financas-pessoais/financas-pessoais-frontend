@@ -10,6 +10,7 @@ import { ModalConfig } from '../../models/moda-config.model';
 import { AlertModalService } from '../../services/alert-modal.service';
 import { TransationConsolidated } from 'src/app/features/pages/transaction/shared/models/transation.model';
 import { CategoryService } from 'src/app/features/pages/user/shared/services/category.service';
+import { AuthService } from 'src/app/features/auth/shared/services/auth.service';
 
 @Component({
   selector: 'app-transaction-list',
@@ -22,16 +23,21 @@ export class TransactionListComponent {
   @Input() type: 'transation' | 'member' | 'account' | 'credit' = 'transation'
   @Input() id_type?: number;
   @Output() itemStatement: EventEmitter<TransactionList | undefined> = new EventEmitter;
-  @Output() valueConsolidated: EventEmitter<number> = new EventEmitter<number>();
-  @Output() valuetotal: EventEmitter<number> = new EventEmitter<number>();
+  
 
+  // member and account
   @Output() valueTotalIncome: EventEmitter<number> = new EventEmitter<number>();
   @Output() valueTotalExpense: EventEmitter<number> = new EventEmitter<number>();
   @Output() valueConsolidatedIncome: EventEmitter<number> = new EventEmitter<number>();
   @Output() valueConsolidatedExpense: EventEmitter<number> = new EventEmitter<number>();
+  @Output() valueTotalTransferReceived: EventEmitter<number> = new EventEmitter<number>();
+  @Output() valueTotalTransferSend: EventEmitter<number> = new EventEmitter<number>();
 
+  // credit
   @Output() valueTotalConfirmed: EventEmitter<number> = new EventEmitter<number>();
-
+  @Output() valueConsolidated: EventEmitter<number> = new EventEmitter<number>();
+  @Output() valuetotal: EventEmitter<number> = new EventEmitter<number>();
+  // member
   @Output() valuetotalMemberExpense: EventEmitter<number> = new EventEmitter<number>();
   @Output() valueTotalTotalConsolidatedMemberExpense: EventEmitter<number> = new EventEmitter<number>();
 
@@ -69,13 +75,15 @@ export class TransactionListComponent {
 
   category!: Category[]
 
+  nameUser!: string
  
 
 
   constructor(
     private readonly transationService: TransationService,
     private readonly categoryService: CategoryService,
-    private readonly alertService: AlertModalService){
+    private readonly alertService: AlertModalService,
+    private readonly authService: AuthService){
 
     this.enumMovimentacao = TipoMovimentacao;
     this.enumFormaPagamento = FormaPagamento;
@@ -89,6 +97,7 @@ export class TransactionListComponent {
   }
 
   ngOnInit(): void {
+    this.nameUser = this.authService.GetUser().name || 'null'
 
     if(this.id_type){
       if(this.type == 'member'){
@@ -131,14 +140,24 @@ export class TransactionListComponent {
   }
 
   sendOutput(){
+
+    // credit 
+
     let sumTotal: number = 0;
+    let sumConsolidated: number = 0;
+    let sumTotalConfirmed: number = 0;
+
+    // member and account
     let sumTotalIncome: number = 0;
     let sumTotalExpense: number = 0;
+    let sumTotalTransferReceived: number = 0;
+    let sumTotalTransferSend: number = 0;
     let sumTotalConsolidatedExpense: number = 0;
     let sumTotalConsolidatedIncome: number = 0;
 
-    let sumConsolidated: number = 0;
-    let sumTotalConfirmed: number = 0
+   
+
+    // member
     let sumTotalMemberExpense: number = 0
     let sumTotalMemberConsolidatedExpense: number = 0;
 
@@ -156,6 +175,15 @@ export class TransactionListComponent {
         sumTotalExpense += Number(item.valor)
         if(item.consolidado){
           sumTotalConsolidatedExpense += Number(item.valor)
+        }
+      }
+      else if (item.tipoMovimentacao == this.enumMovimentacao.TRANSFERENCIA){
+        if(item.id_conta == this.transationFilter.id_conta){
+          sumTotalTransferSend += Number(item.valor)
+        }
+        else{
+          sumTotalTransferReceived += Number(item.valor)
+
         }
       }
 
@@ -190,6 +218,9 @@ export class TransactionListComponent {
       this.valueConsolidatedExpense.emit(sumTotalConsolidatedExpense)
       this.valueTotalExpense.emit(Number(sumTotalExpense));
       this.valueTotalIncome.emit(sumTotalIncome);
+      this.valueTotalTransferReceived.emit(sumTotalTransferReceived);
+      this.valueTotalTransferSend.emit(sumTotalTransferSend);
+
     }
 
     if(this.type == 'credit'){
@@ -221,6 +252,12 @@ export class TransactionListComponent {
     })
   }
 
+
+  divideMember(item: TransactionList): boolean {
+    return item.divide_parente.length > 1 || 
+           (item.divide_parente.length === 1 && item.divide_parente[0].nome_parente !== this.nameUser);
+  }
+  
 
   protected openFilter(){
     this.canOpenFilter = !this.canOpenFilter

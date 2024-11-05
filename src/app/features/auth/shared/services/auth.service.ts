@@ -78,6 +78,6 @@ export class AuthService {
     localStorage.removeItem('user_name');
     localStorage.removeItem('date_user');
     localStorage.removeItem('email');
-    this.router.navigate(['/login']);
+    window.location.href = '/login';
   }
 }

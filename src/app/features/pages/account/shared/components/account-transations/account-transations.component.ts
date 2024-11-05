@@ -18,7 +18,8 @@ export class AccountTransationsComponent extends BaseGetIdComponent<Account>{
 
   valueTotalExpense!: number;
   valueTotalIncome!: number;
-  
+  valueTotalTransferReceived!: number;
+  valueTotalTransferSend!: number;
   
   dateMonth!: string;
   month = [
