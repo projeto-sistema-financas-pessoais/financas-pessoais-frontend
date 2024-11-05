@@ -44,8 +44,15 @@ function divideParentValidator(): ValidatorFn {
       .map(control => control.get('valor_parente')?.value || 0)
       .reduce((acc, curr) => acc + curr, 0);
 
-    return somaValores === valueTotal ? null : { invalidSum: true };
-  };
+      const somaArredondada = Math.round(somaValores * 100) / 100;
+      const valorTotalArredondado = Math.round(valueTotal * 100) / 100;
+  
+      // if (somaArredondada !== valorTotalArredondado) {
+      //   console.log("Soma membros deu ", somaArredondada, valorTotalArredondado);
+      // }
+  
+      return somaArredondada === valorTotalArredondado ? null : { invalidSum: true };
+    };
 }
 
 

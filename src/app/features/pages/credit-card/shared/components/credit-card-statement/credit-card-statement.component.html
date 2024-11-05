@@ -106,6 +106,12 @@
             </div>
 
             <div class="d-flex justify-content-between">
+                <span class="color-black-1">Conta pagamento: </span>
+                <span class="color-light-1">{{(itemStatement.fatura_info?.nome_conta | firstTwoWords) || 'Não pago'}}</span>
+
+            </div>
+
+            <div class="d-flex justify-content-between">
                 <span class="color-black-1">
                    A pagar confirmado:
                 </span>

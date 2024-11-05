@@ -33,7 +33,7 @@ export class FamilyMemberTransationsComponent extends BaseGetIdComponent<FamilyM
   valueTotalTotalConsolidatedMemberExpense!: number;
 
 
-  name_user!: string
+  nameUser!: string
 
   dateMonth!: string;
 
@@ -68,7 +68,7 @@ export class FamilyMemberTransationsComponent extends BaseGetIdComponent<FamilyM
 
   override ngOnInit(): void {
 
-    this.name_user = this.authService.GetUser().name || 'null'
+    this.nameUser = this.authService.GetUser().name || 'null'
 
     this.route.paramMap.subscribe(params => {
       this.id = Number(params.get('id'));
@@ -97,7 +97,7 @@ export class FamilyMemberTransationsComponent extends BaseGetIdComponent<FamilyM
   async openSendEmail(){
     this.openModalSendEmail = true;
     this.modalConfig = {
-      modalTitle: this.resourceData.nome == this.name_user ? 'Enviar e-mail para lembrar movimentações não pagas' : 'Enviar e-mail de cobrança não pagas'
+      modalTitle: this.resourceData.nome == this.nameUser ? 'Enviar e-mail para lembrar movimentações não pagas' : 'Enviar e-mail de cobrança não pagas'
     }
 
   

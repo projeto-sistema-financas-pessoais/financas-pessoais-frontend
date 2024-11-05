@@ -11,7 +11,7 @@
             <span>  Membro da Família  </span>
 
             <strong>{{resourceData.nome}}
-                <span *ngIf="resourceData.nome == name_user" class="color-green-2">(Eu) </span>
+                <span *ngIf="resourceData.nome == nameUser" class="color-green-2">(Eu) </span>
             </strong>
            
         </h4>
@@ -34,7 +34,7 @@
             </div>
 
 
-            <div *ngIf="resourceData.nome == name_user" class="d-flex justify-content-between">
+            <div *ngIf="resourceData.nome == nameUser" class="d-flex justify-content-between">
                 
                 <span class="color-black-1">Receitas: </span>
                 <span class="color-light-1">R$ {{valueTotalIncome | formatPrice}}</span>
@@ -58,7 +58,7 @@
             </div>
 
 
-            <div *ngIf="resourceData.nome == name_user" class="d-flex justify-content-between">
+            <div *ngIf="resourceData.nome == nameUser" class="d-flex justify-content-between">
                 <span class="color-black-1">Receitas: </span>
                 <span class="text-success">R$ {{valueConsolidatedIncome | formatPrice}}</span>
 
@@ -98,7 +98,7 @@
                 <button type="button" [disabled]="valuetotalMemberExpense - valueTotalTotalConsolidatedMemberExpense == 0"
                 (click)="openSendEmail()"
                 class="btn btn-outline-secondary f-16">
-                {{resourceData.nome !== name_user ? 'Cobrar ' + resourceData.nome : 'Enviar meus gastos'}}
+                {{resourceData.nome !== nameUser ? 'Cobrar ' + resourceData.nome : 'Enviar meus gastos'}}
                 </button>
 
             </div>
@@ -133,7 +133,7 @@
             <p class="text-center">
                 
                 <span class="text-center d-flex ajust-items-center justify-content-center">
-                    {{resourceData.nome == name_user ? 'Deseja enviar um e-mail a si mesmo?' : 'Deseja enviar um e-mail de cobrança para ' + resourceData.nome + '?'}}
+                    {{resourceData.nome == nameUser ? 'Deseja enviar um e-mail a si mesmo?' : 'Deseja enviar um e-mail de cobrança para ' + resourceData.nome + '?'}}
                     
                 </span>
             </p>
