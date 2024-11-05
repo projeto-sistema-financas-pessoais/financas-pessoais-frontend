@@ -8,3 +8,11 @@ export class FamilyMembers{
         Object.assign(this, data);
     }
 }
+
+
+export class MemberSendEmail{
+    mes!: number
+    ano!: number
+    id_parente!: number
+}
+    
