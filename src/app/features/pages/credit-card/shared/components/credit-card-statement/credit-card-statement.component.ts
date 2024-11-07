@@ -36,8 +36,8 @@ export class CreditCardStatementComponent extends BaseGetIdComponent<CreditCard>
   datePayment!: Date;
   dateToday!: Date;
 
-  valueConsolidated!: number
-  valueTotal!: number;
+  valueConsolidatedExpense!: number
+  valueTotalExpense!: number;
   valueTotalConfirmed!: number
 
   month = [
@@ -77,7 +77,7 @@ export class CreditCardStatementComponent extends BaseGetIdComponent<CreditCard>
       this.itemStatement = evt;
   
       this.dateFechamento =  new Date(this.itemStatement.fatura_info?.data_fechamento || '')
-      console.log("itemStatement", this.itemStatement, this.valueTotal,  "teste",this.valueConsolidated)
+      console.log("itemStatement", this.itemStatement, this.valueTotalExpense,  "teste",this.valueConsolidatedExpense)
   
   
     }else {
