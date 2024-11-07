@@ -94,14 +94,15 @@
 
             </div>
 
-            <div  class="py-3">
-                <button type="button" [disabled]="valuetotalMemberExpense - valueTotalTotalConsolidatedMemberExpense == 0"
-                (click)="openSendEmail()"
-                class="btn btn-outline-secondary f-16">
-                {{resourceData.nome !== nameUser ? 'Cobrar ' + resourceData.nome : 'Enviar meus gastos'}}
+            <div class="py-3">
+              
+                <button type="button" 
+                        (click)="openSendEmail()"
+                        class="btn btn-outline-secondary f-16">
+                    {{resourceData.nome !== nameUser ? 'Cobrar ' + resourceData.nome : 'Enviar meus gastos'}}
                 </button>
-
             </div>
+            
 
         </div>
 
@@ -122,34 +123,34 @@
     </div>
 </div>
 
-<app-modal #modal_small [modalConfig]="modalConfig" >
-
+<app-modal #modal_small [modalConfig]="modalConfig">
     <div modal-generic-content-small class="pt-3" *ngIf="openModalSendEmail">
-
-            
-        
         <span class="color-light-1">
-
             <p class="text-center">
-                
-                <span class="text-center d-flex ajust-items-center justify-content-center">
-                    {{resourceData.nome == nameUser ? 'Deseja enviar um e-mail a si mesmo?' : 'Deseja enviar um e-mail de cobrança para ' + resourceData.nome + '?'}}
-                    
-                </span>
+                <ng-container *ngIf="!resourceData.email; else checkMovements">
+                    <span class="text-center d-flex align-items-center justify-content-center">
+                        O parente {{resourceData.nome}} não possui um e-mail cadastrado. Não é possível enviar a cobrança.
+                    </span>
+                </ng-container>
+                <ng-template #checkMovements>
+                    <ng-container *ngIf="valuetotalMemberExpense - valueTotalTotalConsolidatedMemberExpense == 0; else sendEmailOption">
+                        <span class="text-center d-flex align-items-center justify-content-center">
+                            O parente {{resourceData.nome}} não possui movimentações não consolidadas. Não é possível enviar a cobrança.
+                        </span>
+                    </ng-container>
+                    <ng-template #sendEmailOption>
+                        <span class="text-center d-flex align-items-center justify-content-center">
+                            {{resourceData.nome == nameUser ? 'Deseja enviar um e-mail a si mesmo?' : 'Deseja enviar um e-mail de cobrança para ' + resourceData.nome + '?'}}
+                        </span>
+                    </ng-template>
+                </ng-template>
             </p>
-
-        
         </span>
 
-
         <div class="d-flex justify-content-evenly mt-4">
-
-            <button type="button" class="btn btn-outline-secondary f-16" (click)="modalSmall.dismiss()" >Cancelar</button>
-            <button type="button" class="btn btn-green f-16"  (click)="sendEmail()">Enviar</button>
+            <button type="button" class="btn btn-outline-secondary f-16" (click)="modalSmall.dismiss()">Cancelar</button>
+            <button type="button" class="btn btn-green f-16" (click)="sendEmail()" *ngIf="resourceData.email && valuetotalMemberExpense - valueTotalTotalConsolidatedMemberExpense !== 0">Enviar</button>
         </div>
-
-        
-
     </div>
-
 </app-modal>
+
