@@ -25,19 +25,26 @@ export class TransactionListComponent {
   @Output() itemStatement: EventEmitter<TransactionList | undefined> = new EventEmitter;
   
 
+  // !== transatiotn
+  @Output() valueTotalExpense: EventEmitter<number> = new EventEmitter<number>();
+  @Output() valueConsolidatedExpense: EventEmitter<number> = new EventEmitter<number>();
+
+
   // member and account
   @Output() valueTotalIncome: EventEmitter<number> = new EventEmitter<number>();
-  @Output() valueTotalExpense: EventEmitter<number> = new EventEmitter<number>();
   @Output() valueConsolidatedIncome: EventEmitter<number> = new EventEmitter<number>();
-  @Output() valueConsolidatedExpense: EventEmitter<number> = new EventEmitter<number>();
   @Output() valueTotalTransferReceived: EventEmitter<number> = new EventEmitter<number>();
   @Output() valueTotalTransferSend: EventEmitter<number> = new EventEmitter<number>();
 
+
   // credit
   @Output() valueTotalConfirmed: EventEmitter<number> = new EventEmitter<number>();
-  @Output() valueConsolidated: EventEmitter<number> = new EventEmitter<number>();
-  @Output() valuetotal: EventEmitter<number> = new EventEmitter<number>();
+  // @Output() valueConsolidated: EventEmitter<number> = new EventEmitter<number>();
+  // @Output() valuetotal: EventEmitter<number> = new EventEmitter<number>();
   // member
+
+
+  //member 
   @Output() valuetotalMemberExpense: EventEmitter<number> = new EventEmitter<number>();
   @Output() valueTotalTotalConsolidatedMemberExpense: EventEmitter<number> = new EventEmitter<number>();
 
@@ -112,6 +119,9 @@ export class TransactionListComponent {
         this.getCategory();
 
       }
+    }else{
+      this.getCategory();
+
     }
 
     this.chargeList();
@@ -143,8 +153,8 @@ export class TransactionListComponent {
 
     // credit 
 
-    let sumTotal: number = 0;
-    let sumConsolidated: number = 0;
+    // let sumTotal: number = 0;
+    // let sumConsolidated: number = 0;
     let sumTotalConfirmed: number = 0;
 
     // member and account
@@ -164,7 +174,7 @@ export class TransactionListComponent {
     this.transactionList.forEach(item => {
 
       
-      sumTotal += Number(item.valor);
+      // sumTotal += Number(item.valor);
 
       if(item.tipoMovimentacao == this.enumMovimentacao.RECEITA){
         sumTotalIncome += Number(item.valor)
@@ -187,10 +197,10 @@ export class TransactionListComponent {
         }
       }
 
-      if (item.consolidado) {
+      // if (item.consolidado) {
 
-        sumConsolidated +=  Number(item.valor);
-      }
+      //   sumConsolidated +=  Number(item.valor);
+      // }
       if(item.participa_limite_fatura_gastos){
         sumTotalConfirmed +=  Number(item.valor);
 
@@ -210,13 +220,17 @@ export class TransactionListComponent {
       
     });
     
+
+    if(this.type !== 'transation'){  // credit, account or member
+      this.itemStatement.emit(this.transactionList[0] || undefined)
+      this.valueTotalExpense.emit(Number(sumTotalExpense));
+      this.valueConsolidatedExpense.emit(sumTotalConsolidatedExpense)
+
+    }
     
-    this.itemStatement.emit(this.transactionList[0] || undefined)
 
     if(this.type== 'member' || this.type == 'account'){
       this.valueConsolidatedIncome.emit(sumTotalConsolidatedIncome)
-      this.valueConsolidatedExpense.emit(sumTotalConsolidatedExpense)
-      this.valueTotalExpense.emit(Number(sumTotalExpense));
       this.valueTotalIncome.emit(sumTotalIncome);
       this.valueTotalTransferReceived.emit(sumTotalTransferReceived);
       this.valueTotalTransferSend.emit(sumTotalTransferSend);
@@ -224,8 +238,8 @@ export class TransactionListComponent {
     }
 
     if(this.type == 'credit'){
-      this.valuetotal.emit(sumTotal);
-      this.valueConsolidated.emit(sumConsolidated);
+      // this.valuetotal.emit(sumTotal);
+      // this.valueConsolidated.emit(sumConsolidated);
       this.valueTotalConfirmed.emit(sumTotalConfirmed)
 
 
@@ -240,14 +254,16 @@ export class TransactionListComponent {
 
 
   private getCategory(){
+    console.log("teste category", this.category)
     this.categoryService.getAll(false)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe({
       next: (data: Category[]) => {
         this.category = data;
+        console.log("category", this.category)
       },
       error: (error: HttpErrorResponse) =>{
-
+        console.log("error get category", error)
       }
     })
   }
@@ -337,7 +353,7 @@ export class TransactionListComponent {
          
         )
 
-        if(this.type == 'account'){
+        if(this.type == 'account'  || this.type == 'member'){
           setTimeout(() =>{
             window.location.reload();
           }, 1000)

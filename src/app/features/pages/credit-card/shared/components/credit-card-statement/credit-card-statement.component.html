@@ -95,13 +95,13 @@
 
             <div class="d-flex justify-content-between">
                 <span class="color-black-1">Total: </span>
-                <span class="color-light-1">R$ {{valueTotal | formatPrice}}</span>
+                <span class="color-light-1">R$ {{valueTotalExpense | formatPrice}}</span>
 
             </div>
 
             <div class="d-flex justify-content-between">
                 <span class="color-black-1">Total consolidado: </span>
-                <span class="text-success">R$ {{valueConsolidated | formatPrice}}</span>
+                <span class="text-success">R$ {{valueConsolidatedExpense | formatPrice}}</span>
 
             </div>
 
@@ -126,7 +126,7 @@
 
             <div class="d-flex justify-content-between">
                 <span class="color-black-1">A pagar final: </span>
-                <span class="text-danger">R${{(valueTotal - valueConsolidated)  | formatPrice}}</span>
+                <span class="text-danger">R${{(valueTotalExpense - valueConsolidatedExpense)  | formatPrice}}</span>
 
             </div>
 
@@ -147,8 +147,8 @@
             <app-transaction-list 
             [type]="'credit'" [id_type]="id"
             (itemStatement)="addStatement($event)"
-            (valueConsolidated)="valueConsolidated = $event"
-            (valuetotal)="valueTotal = $event"
+            (valueConsolidatedExpense)="valueConsolidatedExpense = $event"
+            (valueTotalExpense)="valueTotalExpense = $event"
             (valueTotalConfirmed)="valueTotalConfirmed = $event"
             ></app-transaction-list>
         </div>
@@ -165,7 +165,7 @@
 
     <div modal-generic-content-small class="pt-3" *ngIf="openModalCloseStatement">
 
-        <ng-container *ngIf="((itemStatement?.fatura_info?.fatura_gastos || 0) - valueConsolidated) !== 0; else notCloseStatement">
+        <ng-container *ngIf="((itemStatement?.fatura_info?.fatura_gastos || 0) - valueConsolidatedExpense) !== 0; else notCloseStatement">
 
             <span class="color-light-1">
 
@@ -174,7 +174,7 @@
 
                     <span class="text-center d-flex ajust-items-center justify-content-center">
                         <mat-icon class="color-green-4 me-2">credit_score</mat-icon>
-                     até agora?
+                     até agora? Você não poderá excluir essas movimentações depois de consolidadas.
                     </span>
                         
                     
@@ -209,6 +209,8 @@
         </ng-container>
         
         <ng-template #notCloseStatement>
+
+
             <span class="color-light-1">
 
                 <p class="text-center">
