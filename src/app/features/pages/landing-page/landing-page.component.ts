@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/shared/services/auth.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-landing-page',
@@ -8,7 +9,13 @@ import { AuthService } from '../../auth/shared/services/auth.service';
 })
 export class LandingPageComponent implements OnInit {
 
+
   nameUser!: string;
+  dateMonthYear: string = ''
+  monthly : boolean = true
+  economy: boolean = true
+  expense : boolean = true
+  income : boolean = true
 
   constructor(
     protected authService: AuthService,
@@ -16,6 +23,9 @@ export class LandingPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.nameUser = this.authService.GetUser().name || 'null'
+    let date =  new Date();
+    this.dateMonthYear =  `${(date.getMonth() +1)}-${date.getFullYear()}`
+
   }
 
 }

@@ -43,7 +43,7 @@
 
             <div class="d-flex justify-content-between">
                 <span class="color-black-1">Limite total utilizado: </span>
-                <span class="text-danger">R$ {{resourceData.limite - resourceData.limite_disponivel | formatPrice}}</span>
+                <span class="text-danger">R$ {{(resourceData.limite - resourceData.limite_disponivel) | formatPrice}}</span>
 
             </div>
 

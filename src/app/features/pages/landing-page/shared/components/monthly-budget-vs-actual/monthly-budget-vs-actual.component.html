@@ -1,0 +1,21 @@
+<div class="f-20 color-black-1"> Orçamento mensal</div>
+<div class="f-14 color-light-1">
+  <span>Orçamento total: R$ {{mothBudgetTotal | formatPrice}}</span>
+  <span class="ms-3 pt-1">Despesa total mensal: R$ {{expenseTotal | formatPrice}}</span>
+
+</div>
+
+<div id="chart">
+    <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [dataLabels]="chartOptions.dataLabels"
+      [plotOptions]="chartOptions.plotOptions"
+      [yaxis]="chartOptions.yaxis"
+      [legend]="chartOptions.legend"
+      [fill]="chartOptions.fill"
+      [stroke]="chartOptions.stroke"
+      [tooltip]="chartOptions.tooltip"
+      [xaxis]="chartOptions.xaxis"
+    ></apx-chart>
+</div>
