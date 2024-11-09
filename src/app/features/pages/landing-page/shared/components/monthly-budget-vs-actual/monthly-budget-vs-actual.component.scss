@@ -1,0 +1,9 @@
+@import 'src/styles.scss';
+
+#chart {
+    @media  screen and (max-width: 801px) {
+        max-width: 280px;
+        margin: 5px;
+    }
+}
+  

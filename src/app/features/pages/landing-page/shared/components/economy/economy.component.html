@@ -1,0 +1,19 @@
+<div class="f-20 color-black-1"> Economia em relação aos meses anteriores</div>
+<div class="f-14 color-light-1">
+    <span>Veja o quanto você gastou nos últimos 12 meses </span>  
+</div>
+  
+<div id="chart">
+    <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [xaxis]="chartOptions.xaxis"
+      [dataLabels]="chartOptions.dataLabels"
+      [grid]="chartOptions.grid"
+      [stroke]="chartOptions.stroke"
+      [tooltip]="chartOptions.tooltip"
+      [yaxis]="chartOptions.yaxis"
+      [title]="chartOptions.title"
+    ></apx-chart>
+  </div>
+  

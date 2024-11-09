@@ -1,0 +1,20 @@
+<div class="f-20 color-black-1"> {{ type? 'Receitas do mês' : 'Despesas do mês'}}</div>
+<div class="f-14 color-light-1">
+    <span *ngIf="type">Veja o quanto você ganhou por categoria </span>  
+    <span *ngIf="!type">Veja o quanto você gastou por categoria </span>  
+
+</div>
+
+<div id="chart">
+    <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [labels]="chartOptions.labels"
+      [tooltip]="chartOptions.tooltip"
+
+      [responsive]="chartOptions.responsive"
+      [colors]="chartOptions.colors" 
+
+    ></apx-chart>
+ </div>
+  
