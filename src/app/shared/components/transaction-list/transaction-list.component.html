@@ -153,12 +153,15 @@
 
                 
                     <div class="btn-group f-16">
-                        <i class="menu-icon fa-solid fa-ellipsis-vertical button-cursor"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                        <i class="menu-icon fa-solid fa-ellipsis-vertical button-cursor" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                         <div class="dropdown-menu" id="dropdownMenu">
-                            <a  class="dropdown-item button-cursor color-green-2" > <i class="fa-regular fa-window-maximize"></i> Ver detalhes</a>
-                            <a  class="dropdown-item button-cursor color-green-2" (click)="openDelete(item)"> <i class="fa-solid fa-trash"></i> Excluir</a>
+                            <a class="dropdown-item button-cursor color-green-2" (click)="openDelete(item)">
+                                <i class="fa-solid fa-trash"></i> Excluir
+                            </a>
                         </div>
                     </div>
+                    
+                    
                 </div>
                 
                
@@ -218,29 +221,35 @@
 </div>
 
 
-<app-modal #modal_small [modalConfig]="modalConfig" >
-
+<app-modal #modal_small [modalConfig]="modalConfig">
     <div modal-generic-content-small class="pt-3" *ngIf="openModalDelete">
-        <span class="color-light-1">
-            <p class="text-center">Tem certeza que deseja excluir a movimentação?
-                {{deleteItem.id_repeticao ? 'Essa e as movimentações seguintes associadas serão deletadas.': ''}}
-            </p>
-            <span class="d-flex justify-content-center"> Descrição: &nbsp; <strong>{{deleteItem.descricao || 'Sem descrição'}}</strong></span>
-            <span class="d-flex justify-content-center">
-                Data de pagamento: &nbsp;
-                <strong>{{ deleteItem.data_pagamento ? (deleteItem.data_pagamento | date: 'dd/MM/yyyy') : null }}</strong>
-              </span>
-            <span class="d-flex justify-content-center">  Condição de pagamento: &nbsp; <strong>{{deleteItem.condicao_pagamento}}</strong></span>
+        <ng-container *ngIf="deleteItem.consolidado && deleteItem.id_fatura; else defaultContent">
+            <span class="color-light-1">
+                <p class="text-center">Não é possível deletar uma movimentação pertencente a uma fatura consolidada.</p>
+            </span>
 
-        </span>
-        
-        <div class="d-flex justify-content-evenly mt-4">
+            <div class="d-flex justify-content-center mt-4">
+                <button type="button" class="btn btn-outline-secondary f-16" (click)="modalSmall.dismiss()">Cancelar</button>
+            </div>
+        </ng-container>
 
-            <button type="button" class="btn btn-outline-secondary f-16" (click)="modalSmall.dismiss()" >Cancelar</button>
-            <button type="button" class="btn btn-danger  f-16" (click)="deleteTransation()">Remover</button>
-
-        </div>
-
+        <ng-template #defaultContent>
+            <span class="color-light-1">
+                <p class="text-center">Tem certeza que deseja excluir a movimentação?
+                    {{deleteItem.id_repeticao ? 'Essa e as movimentações seguintes associadas serão deletadas.' : ''}}
+                </p>
+                <span class="d-flex justify-content-center"> Descrição: &nbsp; <strong>{{deleteItem.descricao || 'Sem descrição'}}</strong></span>
+                <span class="d-flex justify-content-center">
+                    Data de pagamento: &nbsp;
+                    <strong>{{ deleteItem.data_pagamento ? (deleteItem.data_pagamento | date: 'dd/MM/yyyy') : null }}</strong>
+                </span>
+                <span class="d-flex justify-content-center"> Condição de pagamento: &nbsp; <strong>{{deleteItem.condicao_pagamento}}</strong></span>
+            </span>
+            
+            <div class="d-flex justify-content-evenly mt-4">
+                <button type="button" class="btn btn-outline-secondary f-16" (click)="modalSmall.dismiss()">Cancelar</button>
+                <button type="button" class="btn btn-danger f-16" (click)="deleteTransation()">Remover</button>
+            </div>
+        </ng-template>
     </div>
-
 </app-modal>
