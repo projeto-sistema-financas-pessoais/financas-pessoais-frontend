@@ -8,22 +8,10 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "heroku-postbuild": "npm install --legacy-peer-deps"
-
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "^18.2.11",
-    "@angular/cdk": "^16.2.14",
-    "@angular/common": "^17.3.12",
-    "@angular/compiler": "^17.3.12",
-    "@angular/core": "^17.3.12",
-    "@angular/forms": "^17.3.12",
-    "@angular/material": "^16.2.14",
-    "@angular/platform-browser": "^17.3.12",
-    "@angular/platform-browser-dynamic": "^17.3.12",
-    "@angular/router": "^17.3.12",
-    "@ng-bootstrap/ng-bootstrap": "^15.1.2",
-    "@angular/animations": "^17.3.12",
     "@angular/cdk": "^18.2.12",
     "@angular/common": "^18.2.11",
     "@angular/compiler": "^18.2.11",
