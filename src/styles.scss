@@ -81,8 +81,17 @@ For more information: https://material.angular.io/guide/theming
 // @include mat.all-component-themes($financas-theme);
 
 /* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
 @import 'src/app/theme/_variables.scss';
 @import 'src/app/theme/_font-and-colors.scss';
+
+
+// @use '@angular/material' as mat;
+// @include mat.core();
+// @include mat.typography();
+// @include mat.theme($theme); // substitua $theme pelo seu tema definido
+
 
 
 b{
@@ -258,4 +267,5 @@ body {
 
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
