@@ -14,6 +14,7 @@ import { MatListModule } from '@angular/material/list';
 import { SidebarComponent } from './features/sidebar/sidebar.component';
 import { InterceptorService } from './core/guards/interceptor.service';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,
       multi: true
-    }
+    }, provideAnimationsAsync()
   ]
 })
 export class AppModule { }
