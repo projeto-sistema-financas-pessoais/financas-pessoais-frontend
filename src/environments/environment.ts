@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    financas: 'http://localhost:9000'
+    financas: 'http://204.48.28.39/api/v1'
 };
