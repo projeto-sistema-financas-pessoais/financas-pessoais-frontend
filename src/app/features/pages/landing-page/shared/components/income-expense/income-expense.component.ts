@@ -27,7 +27,7 @@ export type ChartOptions = {
 export class IncomeExpenseComponent implements OnChanges{
 
   @ViewChild("chart") chart!: ChartComponent ;
-  @Input() type!: boolean;
+  @Input() type: boolean = true;
   @Input() onlyUser!: boolean;
 
   protected ngUnsubscribe = new Subject<void>();
@@ -37,6 +37,7 @@ export class IncomeExpenseComponent implements OnChanges{
 
   nameCategory: string[] = [];
   expensecategory: number[] = [];
+  valueTotal: number = 0;
 
   icons: IconCategory[] = [];
   colorCategory: string[] = [];
@@ -50,7 +51,7 @@ export class IncomeExpenseComponent implements OnChanges{
     this.icons = this.imageIconCategoryService.getImages();
     this.nameCategory = [];
     this.expensecategory = [];
-    this.colorCategory =[]
+    this.colorCategory =[];
     this.getIncomeExpense();  
   }
  
@@ -72,6 +73,7 @@ export class IncomeExpenseComponent implements OnChanges{
 
   private chargeVariables(data : IncomeExpense ){
 
+    this.valueTotal = data.valor_total;
  
     data.valor_categoria.forEach((item) => {
       this.nameCategory.push(item.nome_categoria)

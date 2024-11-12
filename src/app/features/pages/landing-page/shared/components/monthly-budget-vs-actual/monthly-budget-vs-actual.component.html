@@ -5,7 +5,8 @@
 
 </div>
 
-<div id="chart">
+@if(mothBudgetTotal != 0){
+  <div id="chart">
     <apx-chart
       [series]="chartOptions.series"
       [chart]="chartOptions.chart"
@@ -19,3 +20,16 @@
       [xaxis]="chartOptions.xaxis"
     ></apx-chart>
 </div>
+
+}@else {
+  <div class="f-14 color-light-1 py-5 text-center">
+    <div>Não foi cadastrado nenhuma meta de gastos por categoria. </div>  
+    <div> 
+      <a [routerLink]="'/configuracoes-de-usuario/categorias/'">Edite</a>
+      
+       uma categoria para adicionar uma meta nova.
+
+    </div>
+  </div>
+}
+

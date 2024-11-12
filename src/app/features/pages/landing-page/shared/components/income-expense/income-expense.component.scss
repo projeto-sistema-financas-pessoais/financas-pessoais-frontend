@@ -1,3 +1,6 @@
+
+@import 'src/styles.scss';
+
 #chart {
     @media  screen and (max-width: 801px) {
         max-width: 280px;
@@ -5,3 +8,6 @@
     }
 }
   
+a {
+    color: $color-green-3;
+}
