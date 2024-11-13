@@ -15,6 +15,7 @@ export class AccountTransationsComponent extends BaseGetIdComponent<Account>{
 
   valueConsolidatedIncome!: number;
   valueConsolidatedExpense!: number;
+  valueTotalStatementConsolidated!: number
 
   valueTotalExpense!: number;
   valueTotalIncome!: number;

@@ -20,7 +20,8 @@ export enum FormaPagamento {
 export enum TipoMovimentacao {
     DESPESA = "Despesa",
     RECEITA = "Receita",
-    TRANSFERENCIA = "Transferencia"
+    TRANSFERENCIA = "Transferencia",
+    FATURA= "Fatura"
 }
 
 export enum TipoConta{
