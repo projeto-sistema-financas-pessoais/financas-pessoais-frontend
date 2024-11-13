@@ -25,6 +25,7 @@ export class FamilyMemberTransationsComponent extends BaseGetIdComponent<FamilyM
   
   valueConsolidatedIncome!: number;
   valueConsolidatedExpense!: number;
+  valueTotalStatementConsolidated!:number
 
   valueTotalExpense!: number;
   valueTotalIncome!: number 

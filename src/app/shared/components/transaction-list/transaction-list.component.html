@@ -75,9 +75,17 @@
         
                             <div class="d-flex justify-content-start align-items-center col-md-5">
                                 
-                                <img *ngIf="item.tipoMovimentacao != enumMovimentacao.TRANSFERENCIA" class="icon-min" src="./assets/icones_category/{{item.nome_icone_categoria}}" (error)="item.nome_icone_categoria = 'book.svg'" alt="">
-                                <img *ngIf="item.tipoMovimentacao == enumMovimentacao.TRANSFERENCIA" class="icon-min" src="./assets/icons/transfer.svg" (error)="item.nome_icone_categoria = 'book.svg'" alt="">
-        
+                                @if(item.tipoMovimentacao == enumMovimentacao.TRANSFERENCIA){
+                                    <img  class="icon-min" src="./assets/icons/transfer.svg" (error)="item.nome_icone_categoria = 'book.svg'" alt="">
+
+                                }@else if (item.tipoMovimentacao == enumMovimentacao.FATURA){
+                                    <img  class="icon-min" src="./assets/icons/credit_card_payment.svg" (error)="item.nome_icone_categoria = 'book.svg'" alt="">
+
+                                }@else {
+                                    <img class="icon-min" src="./assets/icones_category/{{item.nome_icone_categoria}}" (error)="item.nome_icone_categoria = 'book.svg'" alt="">
+
+                                }
+                               
                                 <div class="text-start">
                                     <div class="ms-3 color-black-1 f-16  display-none">{{item.descricao || 'Outros'}}</div>
                                     <div class="ms-3 color-light-3 display-none" style="font-size: 12px;">
@@ -110,7 +118,7 @@
                             <div class="color-black-1 col-md-2 f-16 d-flex justify-content-end"> 
                                 
         
-                                <span *ngIf="item.tipoMovimentacao == enumMovimentacao.DESPESA" class="text-danger"> R$ -{{item.valor  | formatPrice}}</span>
+                                <span *ngIf="item.tipoMovimentacao == enumMovimentacao.DESPESA  || item.tipoMovimentacao == enumMovimentacao.FATURA" class="text-danger"> R$ -{{item.valor  | formatPrice}}</span>
                                 <span *ngIf="item.tipoMovimentacao == enumMovimentacao.RECEITA" class="text-success"> R$ +{{item.valor  | formatPrice}}</span>
                                 <span *ngIf="item.tipoMovimentacao == enumMovimentacao.TRANSFERENCIA" [ngClass]="item.id_conta == this.transationFilter.id_conta ? 'text-danger' : 'text-success'"> R$ {{item.valor  | formatPrice}}</span>
                             </div> 
@@ -119,7 +127,7 @@
                             
                             
                             <div class="col-md-2 d-flex justify-content-center gap-3">
-                                <div *ngIf="item.tipoMovimentacao !== enumMovimentacao.TRANSFERENCIA && !item.id_fatura"
+                                <div *ngIf="item.tipoMovimentacao !== enumMovimentacao.TRANSFERENCIA && !item.id_fatura && item.tipoMovimentacao !== enumMovimentacao.FATURA"
                                 (click)="changeConsolidated(item)" class="button-cursor">
                                     <i *ngIf="item.consolidado" class="color-green-4 fa-solid fa-circle-check "></i>
                                     <i *ngIf="!item.consolidado" class="color-light-3 fa-solid fa-circle-check"></i>
@@ -127,7 +135,7 @@
         
                                 </div>
         
-                                <div *ngIf="item.tipoMovimentacao === enumMovimentacao.TRANSFERENCIA || item.id_fatura" class="cursor-blocked"> 
+                                <div *ngIf="item.tipoMovimentacao === enumMovimentacao.TRANSFERENCIA || item.id_fatura || item.tipoMovimentacao === enumMovimentacao.FATURA" class="cursor-blocked"> 
                                     <i 
                                     tooltip="Fatura do cartão aberta" container="body" placement="bottom" [delay]="800"
                                     *ngIf="!item.consolidado && item.id_fatura" class="color-light-2 fa-solid fa-circle-check"></i>

@@ -35,13 +35,11 @@ export class TransactionListComponent {
   @Output() valueConsolidatedIncome: EventEmitter<number> = new EventEmitter<number>();
   @Output() valueTotalTransferReceived: EventEmitter<number> = new EventEmitter<number>();
   @Output() valueTotalTransferSend: EventEmitter<number> = new EventEmitter<number>();
+  @Output() valueTotalStatementConsolidated: EventEmitter<number> = new EventEmitter<number>();
 
 
   // credit
   @Output() valueTotalConfirmed: EventEmitter<number> = new EventEmitter<number>();
-  // @Output() valueConsolidated: EventEmitter<number> = new EventEmitter<number>();
-  // @Output() valuetotal: EventEmitter<number> = new EventEmitter<number>();
-  // member
 
 
   //member 
@@ -153,9 +151,9 @@ export class TransactionListComponent {
 
     // credit 
 
-    // let sumTotal: number = 0;
-    // let sumConsolidated: number = 0;
     let sumTotalConfirmed: number = 0;
+    let sumStatementConsolidated: number = 0;
+    
 
     // member and account
     let sumTotalIncome: number = 0;
@@ -196,6 +194,13 @@ export class TransactionListComponent {
 
         }
       }
+      else if (item.tipoMovimentacao == this.enumMovimentacao.FATURA){
+        if(item.consolidado){
+          sumStatementConsolidated += Number(item.valor)
+        }
+        
+      }
+
 
       // if (item.consolidado) {
 
@@ -225,7 +230,7 @@ export class TransactionListComponent {
       this.itemStatement.emit(this.transactionList[0] || undefined)
       this.valueTotalExpense.emit(Number(sumTotalExpense));
       this.valueConsolidatedExpense.emit(sumTotalConsolidatedExpense)
-
+      this.valueTotalStatementConsolidated.emit(sumStatementConsolidated)
     }
     
 

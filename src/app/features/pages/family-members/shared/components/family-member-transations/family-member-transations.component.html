@@ -76,6 +76,12 @@
 
             </div>
 
+            <div *ngIf="resourceData.nome == nameUser" class="d-flex justify-content-between">
+                <span class="color-black-1">Fatura paga: </span>
+                <span class="text-success">R$ {{valueTotalStatementConsolidated | formatPrice}}</span>
+
+            </div>
+
 
             <div class="color-light-3 py-2">
                 A pagar
@@ -116,7 +122,8 @@
             (valuetotalMemberExpense)="valuetotalMemberExpense = $event"
             (valueTotalTotalConsolidatedMemberExpense)="valueTotalTotalConsolidatedMemberExpense = $event"
             (valueTotalIncome)="valueTotalIncome = $event"
-            (valueTotalExpense)="valueTotalExpense = $event">
+            (valueTotalExpense)="valueTotalExpense = $event"
+            (valueTotalStatementConsolidated)="valueTotalStatementConsolidated = $event">
             </app-transaction-list>
         </div>
         
