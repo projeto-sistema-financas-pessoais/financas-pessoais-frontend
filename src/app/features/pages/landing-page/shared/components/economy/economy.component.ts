@@ -45,6 +45,8 @@ export class EconomyComponent  implements OnChanges{
 
   monthYear: string[] = [];
   expenseMonth: number[] = [];
+  empty: boolean = true;
+
 
   constructor(protected readonly reportService: ReportService) {
   }
@@ -74,6 +76,9 @@ export class EconomyComponent  implements OnChanges{
 
  
     data.reverse().forEach((item) => {
+      if(item.valor_despesa != 0){
+        this.empty = false;
+      }
       this.monthYear.push(`${item.mes}/${item.ano}`);
       this.expenseMonth.push(item.valor_despesa);
     });

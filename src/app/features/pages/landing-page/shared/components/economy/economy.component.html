@@ -3,7 +3,8 @@
     <span>Veja o quanto você gastou nos últimos 12 meses </span>  
 </div>
   
-<div id="chart">
+@if(!empty){
+  <div id="chart">
     <apx-chart
       [series]="chartOptions.series"
       [chart]="chartOptions.chart"
@@ -15,5 +16,13 @@
       [yaxis]="chartOptions.yaxis"
       [title]="chartOptions.title"
     ></apx-chart>
-  </div>
+</div>
   
+}@else{
+  <div class="f-14 color-light-1 py-5 d-flex justify-content-center">
+    <span >Nenhuma movimentação registrada ainda.  
+      <a [routerLink]="'/movimentacoes'">Crie uma nova</a>
+      </span>  
+
+  </div>
+}

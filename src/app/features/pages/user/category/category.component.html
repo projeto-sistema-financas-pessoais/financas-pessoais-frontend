@@ -32,61 +32,73 @@
 
 
 
-    <div class="container mt-5 container-custom">
+    @if(resources.length !== 0){
+        <div class="container mt-5 container-custom">
 
        
 
-        <ng-container *ngFor="let item of resources; let i = index;"> 
-            <div class="item">
-                <div class="d-flex justify-content-between align-items-center">
-
-
-                    <div class="d-flex justify-content-start align-items-center col-md-4">
-                        <img class="icon-min" src="./assets/icones_category/{{item.nome_icone}}" (error)="item.nome_icone = 'book.svg'" alt="">
-                        <div class="margin-l-min color-black-1 f-16 ">{{item.nome}}</div>
-
-                    </div>
-
-                    <div class="color-black-1 col-md-3 display-none">
-                        <div class="display-none  f-16"> Status &nbsp; </div>
-                       <div class="color-light-1 f-16">{{item.ativo? 'Ativa': 'Desativada'}}</div>
-                    </div>
-
-                    
-                    <div class="color-black-1 col-md-2"> 
-                        <div class="display-none f-16"> Tipo&nbsp;</div>
-                        <div class="color-light-1 f-16">{{item.tipo_categoria }}</div>
-                    </div>
-
-                    <div *ngIf="item.modelo_categoria == 'Despesa'" class="display-none color-black-1 col-md-3"> 
-                        <div class="f-16"> Meta de gastos: &nbsp; </div>
-                        <div class="color-light-1 f-16">{{(item.valor_categoria | formatPrice) || 'Não definido'}}</div>
-                    </div>
-                   
-                    <div class="btn-group f-16">
-                        <i class="menu-icon fa-solid fa-ellipsis-vertical button-cursor"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-                        <div class="dropdown-menu" id="dropdownMenu">
-                            <a *ngIf="item.nome !== 'Carteira'"  class="dropdown-item button-cursor color-green-2" (click)="deleteResource(item.id_categoria)"> <i class="fa-solid fa-trash"></i> Excluir</a>
-                            <a class="dropdown-item button-cursor color-green-2" (click)="deactivateResourceCategory(item)"> <i class="fa-regular fa-rectangle-xmark"></i>
-                                {{item.ativo ? 'Desativar': 'Ativar'}}
-                            </a>
-                            <div *ngIf="item.nome !== 'Carteira'" class="dropdown-divider"></div>
-                            <a *ngIf="item.nome !== 'Carteira'" class="dropdown-item button-cursor color-green-2" (click)="openEdit(item)" ><i class="fa-solid fa-pen-to-square" ></i> Editar</a>
+            <ng-container *ngFor="let item of resources; let i = index;"> 
+                <div class="item">
+                    <div class="d-flex justify-content-between align-items-center">
+    
+    
+                        <div class="d-flex justify-content-start align-items-center col-md-4">
+                            <img class="icon-min" src="./assets/icones_category/{{item.nome_icone}}" (error)="item.nome_icone = 'book.svg'" alt="">
+                            <div class="margin-l-min color-black-1 f-16 ">{{item.nome}}</div>
+    
+                        </div>
+    
+                        <div class="color-black-1 col-md-3 display-none">
+                            <div class="display-none  f-16"> Status &nbsp; </div>
+                           <div class="color-light-1 f-16">{{item.ativo? 'Ativa': 'Desativada'}}</div>
+                        </div>
+    
+                        
+                        <div class="color-black-1 col-md-2"> 
+                            <div class="display-none f-16"> Tipo&nbsp;</div>
+                            <div class="color-light-1 f-16">{{item.tipo_categoria }}</div>
+                        </div>
+    
+                        <div *ngIf="item.modelo_categoria == 'Despesa'" class="display-none color-black-1 col-md-3"> 
+                            <div class="f-16"> Meta de gastos: &nbsp; </div>
+                            <div class="color-light-1 f-16">{{(item.valor_categoria | formatPrice) || 'Não definido'}}</div>
+                        </div>
+                       
+                        <div class="btn-group f-16">
+                            <i class="menu-icon fa-solid fa-ellipsis-vertical button-cursor"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                            <div class="dropdown-menu" id="dropdownMenu">
+                                <a *ngIf="item.nome !== 'Carteira'"  class="dropdown-item button-cursor color-green-2" (click)="deleteResource(item.id_categoria)"> <i class="fa-solid fa-trash"></i> Excluir</a>
+                                <a class="dropdown-item button-cursor color-green-2" (click)="deactivateResourceCategory(item)"> <i class="fa-regular fa-rectangle-xmark"></i>
+                                    {{item.ativo ? 'Desativar': 'Ativar'}}
+                                </a>
+                                <div *ngIf="item.nome !== 'Carteira'" class="dropdown-divider"></div>
+                                <a *ngIf="item.nome !== 'Carteira'" class="dropdown-item button-cursor color-green-2" (click)="openEdit(item)" ><i class="fa-solid fa-pen-to-square" ></i> Editar</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div *ngIf="item.modelo_categoria == 'Despesa'"  class=" display-none-desktop d-flex justify-content-start align-items-center mt-2 ">
-                    <div class="display-none-desktop color-black-1 col-md-12 ">
-                        <span class="display-none-desktop f-16"> Meta de gastos: &nbsp; </span>
-                       <span class="display-none-desktop color-light-1 f-16">{{(item.valor_categoria | formatPrice) || 'Não definido'}}</span>
-                    </div>
-                </div>
-                                 
-            </div>
-        </ng-container>
     
-    </div>
+                    <div *ngIf="item.modelo_categoria == 'Despesa'"  class=" display-none-desktop d-flex justify-content-start align-items-center mt-2 ">
+                        <div class="display-none-desktop color-black-1 col-md-12 ">
+                            <span class="display-none-desktop f-16"> Meta de gastos: &nbsp; </span>
+                           <span class="display-none-desktop color-light-1 f-16">{{(item.valor_categoria | formatPrice) || 'Não definido'}}</span>
+                        </div>
+                    </div>
+                                     
+                </div>
+            </ng-container>
+        
+        </div>
+    
+    }@else {
+        <div class="container-d-flex justify-content-center py-5">
+            <div class="text-center">
+                <img src="./assets/images/data.png" height="250" width="250">
+                <div  class="color-light-1 pt-1">Você não possui categoria do tipo {{income ? 'receita' : 'despesa'}}. Cadastre uma nova!</div>
+            </div>
+        </div>
+    }
+   
+
 </div>
 
 
