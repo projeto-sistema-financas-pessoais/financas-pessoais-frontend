@@ -22,6 +22,9 @@ export class TransactionListComponent {
 
   @Input() type: 'transation' | 'member' | 'account' | 'credit' = 'transation'
   @Input() id_type?: number;
+  @Input() data_fechamento: number  = 0;
+  // @Input() mes_fechamento: number  = 0;
+
   @Output() itemStatement: EventEmitter<TransactionList | undefined> = new EventEmitter;
   
 
@@ -112,7 +115,15 @@ export class TransactionListComponent {
         this.transationFilter.id_conta = this.id_type
       }
       else if (this.type == 'credit'){
-        this.transationFilter.id_cartao_credito = this.id_type
+        this.transationFilter.id_cartao_credito = this.id_type;
+
+
+        const [year, month, day] = String(this.data_fechamento).split('-').map(Number);
+        this.transationFilter.dia_fechamento = day;
+
+        this.transationFilter.ano = year;
+        this.transationFilter.mes = month;
+
       }else {
         this.getCategory();
 

@@ -6,7 +6,7 @@
             ></i>
     
             <i class="fa-solid fa-circle-chevron-left button-cursor" style="font-size: 20px;" (click)="changeMonth(false)"></i>
-            <span class="color-light-3 mx-5 f-20 button-cursor">{{month[transationFilter.mes -1]}} {{transationFilter.ano}}</span>
+            <span class="color-light-3 mx-5 f-20 button-cursor"> {{type== 'credit' ? 'Fatura' : ''}}   {{month[transationFilter.mes -1]}} {{transationFilter.ano}}</span>
             <i class="fa-solid fa-circle-chevron-right button-cursor" style="font-size: 20px;" (click)="changeMonth(true)"></i>
     
         </div>
@@ -67,7 +67,7 @@
             <ng-container *ngFor="let item of transactionList; let i = index;"> 
                 <div class="d-flex justify-content-between align-items-center flex-row">
         
-                    <div class="mx-2 color-light-1 f-16 ">{{item.data_pagamento | formatday }}</div>
+                    <div class="mx-2 color-light-1 f-16 ">{{item.data_pagamento  | formatday}}</div>
         
                     <div class="item">
                         <div class="d-flex justify-content-between align-items-center">

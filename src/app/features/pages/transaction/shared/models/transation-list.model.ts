@@ -13,6 +13,7 @@ export class TransationFilter{
     // id_fatura: number | null = null;;
     id_cartao_credito: number | null = null;
     id_parente: number | null = null;  
+    dia_fechamento: number | null = null;
 }
 
 

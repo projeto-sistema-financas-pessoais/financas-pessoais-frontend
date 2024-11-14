@@ -9,6 +9,7 @@ import { Pipe, PipeTransform } from "@angular/core";
       date.setUTCHours(0, 0, 0, 0);
   
       const day = date.getUTCDate();
-      return day.toString().padStart(2, '0');
+      const month = date.getUTCMonth() +1
+      return day.toString().padStart(2, '0') + '/' + month ;
     }
   }
