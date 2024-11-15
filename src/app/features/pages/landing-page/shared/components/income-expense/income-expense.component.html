@@ -8,6 +8,15 @@
 </div>
 
 
+<div *ngIf="!type" class="f-14 color-light-1">
+  <span class="text-danger">Despesa total: R$ {{valueTotal | formatPrice}}</span>
+
+</div>
+
+<div *ngIf="type" class="f-14 color-light-1">
+  <span class="text-success">Receita total: R$ {{valueTotal | formatPrice}}</span>
+
+</div>
   
 
 @if (valueTotal !== 0) {

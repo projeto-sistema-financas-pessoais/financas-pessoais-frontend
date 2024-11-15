@@ -53,4 +53,5 @@ export class FaturaInfo{
     id_conta!: number
     fatura_gastos!: number
     nome_conta!: string
+    nome_cartao?: string
 }

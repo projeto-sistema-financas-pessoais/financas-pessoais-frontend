@@ -125,7 +125,7 @@ export class IncomeExpenseComponent implements OnChanges{
           breakpoint: 480,
           options: {
             chart: {
-              width: 200
+              width: 250
             },
             legend: {
               position: "bottom"

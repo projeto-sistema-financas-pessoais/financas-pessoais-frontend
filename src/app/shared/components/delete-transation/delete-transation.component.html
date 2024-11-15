@@ -1,0 +1,28 @@
+<ng-container *ngIf="deleteItem.consolidado && deleteItem.id_fatura; else defaultContent">
+  <span class="color-light-1">
+      <p class="text-center">Não é possível deletar uma movimentação pertencente a uma fatura consolidada.</p>
+  </span>
+
+  <div class="d-flex justify-content-center mt-4">
+      <button type="button" class="btn btn-outline-secondary f-16" (click)="dismiss.emit()">Cancelar</button>
+  </div>
+</ng-container>
+
+<ng-template #defaultContent>
+  <span class="color-light-1">
+      <p class="text-center">Tem certeza que deseja excluir a movimentação?
+          {{deleteItem.id_repeticao ? 'Essa e as movimentações seguintes associadas serão deletadas.' : ''}}
+      </p>
+      <span class="d-flex justify-content-center"> Descrição: &nbsp; <strong>{{deleteItem.descricao || 'Sem descrição'}}</strong></span>
+      <span class="d-flex justify-content-center">
+          Data de pagamento: &nbsp;
+          <strong>{{ deleteItem.data_pagamento ? (deleteItem.data_pagamento | date: 'dd/MM/yyyy') : null }}</strong>
+      </span>
+      <span class="d-flex justify-content-center"> Condição de pagamento: &nbsp; <strong>{{deleteItem.condicao_pagamento}}</strong></span>
+  </span>
+  
+  <div class="d-flex justify-content-evenly mt-4">
+      <button type="button" class="btn btn-outline-secondary f-16" (click)="dismiss.emit()">Cancelar</button>
+      <button type="button" class="btn btn-danger f-16" (click)="delete.emit()">Remover</button>
+  </div>
+</ng-template>

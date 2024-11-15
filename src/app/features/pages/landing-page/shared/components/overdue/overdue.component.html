@@ -1,0 +1,132 @@
+<div class="f-20 color-black-1"> {{!type ? 'Contas a pagar atrasadas' : 'Contas a receber atrasadas'}}</div>
+
+@if(transactionList.length !=0){
+  <div class="overflow  scroll pt-3">
+    <ng-container *ngFor="let item of transactionList; let i = index;" >
+
+      <div class="d-flex justify-content-between align-items-center flex-row pt-1">
+    
+    
+        <div class="d-flex justify-content-start align-items-center col-md-5">
+          
+          <img class="" src="./assets/icones_category/{{item.nome_icone_categoria}}" (error)="item.nome_icone_categoria = 'book.svg'" alt="">
+          
+          <div class="text-start">
+            <div class="ms-3 color-black-1 f-16 ellipsis">{{item.descricao || 'Outros'}}</div>
+            <div class="ms-3 color-light-1 f-16 ">{{item.data_pagamento  | formatday}}</div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="col-md-3 display-none-1024 ">
+          <div class="ms-3 color-light-1 f-16 d-flex align-items-center display-none-1024">
+            <mat-icon  class="display-none-1024">account_balance</mat-icon>
+            
+            <span class="mx-2 display-none-1024"> {{item.nome_conta || item.nome_cartao_credito}}</span>
+          </div>
+        </div>
+          
+        <div class="color-black-1 col-md-2 f-16 d-flex justify-content-end"> 
+                                    
+            
+          <span *ngIf="item.tipoMovimentacao == enumMovimentacao.DESPESA " class="text-danger mx-2 text-nowrap"> R$ -{{item.valor  | formatPrice}}</span>
+          <span *ngIf="item.tipoMovimentacao == enumMovimentacao.RECEITA" class="text-success mx-2 text-nowrap"> R$ +{{item.valor  | formatPrice}}</span>
+        </div> 
+    
+        <div class="col-md-2 d-flex justify-content-center  align-items-center gap-3">
+          <div *ngIf="!item.id_fatura"
+          (click)="changeConsolidated(item, 'overdue')" class="button-cursor text-center">
+              <i *ngIf="item.consolidado" class="color-green-4 fa-solid fa-circle-check "></i>
+              <i *ngIf="!item.consolidado" class="color-light-3 fa-solid fa-circle-check"></i>
+              
+    
+          </div>
+    
+          <div class="btn-group f-16 text-center">
+            <i class="menu-icon fa-solid fa-ellipsis-vertical button-cursor" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a class="dropdown-item button-cursor color-green-2" (click)="openDelete(item)">
+                    <i class="fa-solid fa-trash"></i> Excluir
+                </a>
+            </div>
+        </div>
+          
+          
+      </div>
+    
+  
+        
+      </div>
+    
+    <div *ngIf="i !== transactionList.length -1" class="line mt-2"></div>
+
+    
+    </ng-container>
+
+
+    <ng-container *ngFor="let item of faturaInfo; let i = index;" >
+      <div class="d-flex justify-content-between align-items-center flex-row pt-1">
+    
+    
+        <div class="d-flex justify-content-start align-items-center col-md-5">
+          
+          <img class="" src="./assets/icons/credit_card_payment.svg" alt="">
+          
+          <div class="text-start">
+            <div class="ms-3 color-black-1 f-16 ellipsis">Fatura de {{getMonth(item.data_fechamento)}}</div>
+            <div class="ms-3 color-light-1 f-16 ">{{item.data_fechamento  | formatday}}</div>
+    
+          </div>
+    
+        </div>
+    
+      
+        <div class="col-md-3 display-none-1024 ">
+          <div class="ms-3 color-light-1 f-16 d-flex align-items-center display-none-1024">
+            <mat-icon class="display-none-1024">credit_card</mat-icon>
+            
+            <span class="mx-2 display-none-1024"> {{item.nome_cartao}}</span>
+          </div>
+        </div>
+          
+        <div class="color-black-1 col-md-2 f-16 d-flex justify-content-end"> 
+                                    
+          <span  class="text-danger mx-2 text-nowrap"> R$ {{item.fatura_gastos| formatPrice}}</span>
+        </div> 
+
+        <div class="col-md-2 d-flex justify-content-center  align-items-center gap-3">
+          <i class="color-green-2 f-16  ms-2 button-cursor fa-solid fa-arrow-up-right-from-square" 
+          (click)="setQuery(item)"
+         ></i>
+
+        </div>        
+      </div>
+    
+    <div *ngIf="i !== transactionList.length -1" class="line mt-2"></div>
+
+    
+    </ng-container>
+
+  
+  </div>
+
+}@else {
+
+  <div class="f-14 color-light-1 py-4 d-flex justify-content-center">
+    <span >Você não possui {{type? 'receitas': 'despesas'}} atrasadas.  
+    
+    </span>  
+
+  </div>
+}
+
+
+
+<app-modal #modal_small [modalConfig]="modalConfig">
+  <div modal-generic-content-small class="pt-3" *ngIf="openModalDelete">
+
+      <app-delete-transation  [deleteItem]="deleteItem" (dismiss)="modalSmall.dismiss()" (delete)="deleteTransation()"></app-delete-transation>
+     
+  </div>
+</app-modal>

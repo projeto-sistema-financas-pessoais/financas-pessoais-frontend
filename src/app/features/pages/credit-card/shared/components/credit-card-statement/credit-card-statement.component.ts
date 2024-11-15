@@ -78,9 +78,9 @@ export class CreditCardStatementComponent extends BaseGetIdComponent<CreditCard>
     if(evt){
 
 
-      const [year, month, day] = String(evt.data_pagamento).split('-').map(Number);
+      const [year, month, day] = String(evt.fatura_info?.data_fechamento).split('-').map(Number);
 
-      this.dateMonth = this.month[month] + " " + year
+      this.dateMonth = this.month[month-1] + " " + year
 
       this.itemStatement = evt;
 
@@ -111,13 +111,6 @@ export class CreditCardStatementComponent extends BaseGetIdComponent<CreditCard>
               }
           }
       }
-
-    // if(value){
-    //   console.log("1 =>",isDate1Less, year1, month1, day1, date1)
-    //   console.log("2 => ",isDate1Less, year2, month2, day2, date2)
-    // }
-
-    
 
 
     return isDate1Less
