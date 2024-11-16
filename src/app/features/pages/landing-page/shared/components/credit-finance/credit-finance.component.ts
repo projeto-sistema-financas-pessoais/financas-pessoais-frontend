@@ -55,11 +55,16 @@ export class CreditFinanceComponent implements OnInit {
         console.log("data", data)
         this.creditCard = data;
 
-        const [year1, month1, day1] = String(data[0].data_fechamento).split('-').map(Number);
+        if(data[0] && data[0].data_fechamento){
+          const [year1, month1, day1] = String(data[0].data_fechamento).split('-').map(Number);
 
-        this.monthStatement = this.month[month1 -1]
+          this.monthStatement = this.month[month1 -1]
+        }else{
+          this.monthStatement = ''
+        }
+        
 
-        console.log(month1, this.creditCard[0].data_fechamento, this.monthStatement, this.creditCard)
+        // console.log(month1, this.creditCard[0].data_fechamento, this.monthStatement, this.creditCard)
 
         this.faturaTotal = this.creditCard.reduce((accumulator, item) => {
           return accumulator + Number(item.fatura_gastos);

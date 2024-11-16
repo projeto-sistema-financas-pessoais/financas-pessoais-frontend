@@ -1,6 +1,6 @@
 <div class="f-20 color-black-1"> {{!type ? 'Contas a pagar atrasadas' : 'Contas a receber atrasadas'}}</div>
 
-@if(transactionList.length !=0){
+@if(transactionList.length !=0 || faturaInfo.length !=0){
   <div class="overflow  scroll pt-3">
     <ng-container *ngFor="let item of transactionList; let i = index;" >
 
