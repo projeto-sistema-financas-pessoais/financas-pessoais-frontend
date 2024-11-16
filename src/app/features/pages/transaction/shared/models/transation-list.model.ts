@@ -40,6 +40,7 @@ export class TransactionList{
     id_movimentacao!: number;
     id_conta_destino!: number;
     nome_conta_destino!: string
+    id_cartao_credito?: number;
     divide_parente!: DivideMember[]
     participa_limite_fatura_gastos!: boolean | null;
     fatura_info?: FaturaInfo

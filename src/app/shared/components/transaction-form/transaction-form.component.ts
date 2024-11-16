@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { TransationService } from 'src/app/features/pages/transaction/shared/services/transation.service';
@@ -16,7 +16,7 @@ import { DivideMember } from '../../../features/pages/transaction/shared/models/
   templateUrl: './transaction-form.component.html',
   styleUrls: ['./transaction-form.component.scss']
 })
-export class TransactionFormComponent implements OnInit {
+export class TransactionFormComponent implements OnChanges {
 
   @Input() resourceFormTransfer!: FormGroup
   @Input() resourceFormIncomeExpense!: FormGroup
@@ -63,6 +63,8 @@ export class TransactionFormComponent implements OnInit {
 
   @Input() quantityMember!: string[]
 
+  @Input() edit!: boolean
+
   enumMovimentacao: typeof TipoMovimentacao
   enumFormaPagamento: typeof FormaPagamento
   filteredformaPagamento!: string[]
@@ -88,8 +90,89 @@ export class TransactionFormComponent implements OnInit {
     this.filteredCondicaoPagamento = Object.values(this.enumCondicaoPagamento).filter(item => item !== 'Parcelado');
 
    }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.chargeVariable()
 
-  ngOnInit() {
+
+    console.log("entrou income edit", this.openModalExpense, this.openModalTransfer, this.edit)
+
+    if(this.openModalIncome || this.openModalExpense){
+
+
+      if(this.edit ){
+        this.resourceFormIncomeExpense.get('tipo_recorrencia')?.disable();
+        this.resourceFormIncomeExpense.get('quantity_member')?.disable();
+        this.resourceFormIncomeExpense.get('condicao_pagamento')?.disable();
+        this.resourceFormIncomeExpense.get('quantidade_parcelas')?.disable();
+
+
+      } else {
+        this.resourceFormIncomeExpense.get('tipo_recorrencia')?.enable();
+        this.resourceFormIncomeExpense.get('quantity_member')?.enable();
+        this.resourceFormIncomeExpense.get('condicao_pagamento')?.enable();
+        this.resourceFormIncomeExpense.get('quantidade_parcelas')?.enable();
+
+
+      }
+    }
+
+    
+
+  }
+
+
+
+  chargeVariable(){
+    if(this.openModalIncome || this.openModalExpense){
+      const categoriaId = this.resourceFormIncomeExpense.get('id_categoria')?.value
+      if(categoriaId !== null){
+        if(this.openModalExpense){
+          const category = this.categoryExpense.find(item => item.id_categoria == Number(categoriaId))
+          if(category)
+            this.selectCategory(category)
+        }else if(this.openModalIncome){
+          const category = this.categoryIncome.find(item => item.id_categoria == Number(categoriaId))
+          if(category)
+            this.selectCategory(category)
+        }
+      }
+
+      const financeiroId = this.resourceFormIncomeExpense.get('id_financeiro')?.value
+      const formaPagamento = this.resourceFormIncomeExpense.get('forma_pagamento')?.value
+
+      if(financeiroId != null && formaPagamento != null){
+        if( formaPagamento == this.enumFormaPagamento.CREDITO){
+          const creditCard = this.creditCard.find(item => item.id_cartao_credito == Number(financeiroId))
+          if(creditCard)  
+            this.selectPayment(creditCard, this.enumFormaPagamento.CREDITO)
+        }
+        else if( formaPagamento == this.enumFormaPagamento.DINHEIRO){
+          const dinheiro = this.accountDinheiro.find(item => item.id_conta == Number(financeiroId))
+          if(dinheiro)  
+            this.selectPayment(dinheiro, this.enumFormaPagamento.DINHEIRO)
+        }
+        else if( formaPagamento == this.enumFormaPagamento.DEBITO){
+          const debito = this.accountDinheiro.find(item => item.id_conta == Number(financeiroId))
+          if(debito)  
+            this.selectPayment(debito, this.enumFormaPagamento.DEBITO)
+        }
+      }
+
+    }else if(this.openModalTransfer){
+      const contaAtualId  = this.resourceFormTransfer.get('id_conta_atual')?.value
+      const contaTranferenciaId = this.resourceFormTransfer.get('id_conta_transferencia')?.value
+
+      console.log("conta", contaAtualId, contaTranferenciaId)
+      if(contaAtualId !== null && contaTranferenciaId !== null){
+        const contaAtual = this.account.find(item => item.id_conta == contaAtualId)
+        const contaTransferencia = this.account.find(item => item.id_conta == contaTranferenciaId)
+        if(contaAtual)
+          this.selectAccountCurrent(contaAtual)
+        if(contaTransferencia)
+          this.selectAccountTransfer(contaTransferencia)
+
+      }
+    }
   }
 
   get divideMember(): FormArray {

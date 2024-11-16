@@ -1,17 +1,11 @@
+import { BaseTransationComponent } from '../base/base-transation.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Injector, Input, Output, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { CondicaoPagamento, FormaPagamento, TipoMovimentacao } from 'src/app/shared/models/enum.model';
 import { TransationFilter, TransactionList } from 'src/app/features/pages/transaction/shared/models/transation-list.model';
-import { TransationService } from 'src/app/features/pages/transaction/shared/services/transation.service';
 import { Category } from 'src/app/features/pages/user/shared/models/category.model';
-import { ModalComponent } from '../modal/modal.component';
-import { ModalConfig } from '../../models/moda-config.model';
-import { AlertModalService } from '../../services/alert-modal.service';
-import { TransationConsolidated } from 'src/app/features/pages/transaction/shared/models/transation.model';
-import { CategoryService } from 'src/app/features/pages/user/shared/services/category.service';
 import { AuthService } from 'src/app/features/auth/shared/services/auth.service';
-import { BaseTransationComponent } from '../base/base-transation.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -25,11 +19,9 @@ export class TransactionListComponent extends BaseTransationComponent {
   @Input() type: 'transation' | 'member' | 'account' | 'credit' = 'transation'
   @Input() id_type?: number;
   @Input() data_fechamento: number  = 0;
-  // @Input() mes_fechamento: number  = 0;
 
   @Output() itemStatement: EventEmitter<TransactionList | undefined> = new EventEmitter;
   
-
   // !== transatiotn
   @Output() valueTotalExpense: EventEmitter<number> = new EventEmitter<number>();
   @Output() valueConsolidatedExpense: EventEmitter<number> = new EventEmitter<number>();
@@ -85,7 +77,6 @@ export class TransactionListComponent extends BaseTransationComponent {
 
   constructor(
     injector : Injector,
-    private readonly categoryService: CategoryService,
     private readonly authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
@@ -102,6 +93,8 @@ export class TransactionListComponent extends BaseTransationComponent {
     this.transationFilter = new TransationFilter()
     this.transationFilter.ano = new Date().getFullYear();
     this.transationFilter.mes = new Date().getMonth() + 1;
+
+    this.buildFomrIncomeExpense()
     
   }
 
@@ -305,7 +298,7 @@ export class TransactionListComponent extends BaseTransationComponent {
   }
 
 
-  divideMember(item: TransactionList): boolean {
+  divideMemberF(item: TransactionList): boolean {
     return item.divide_parente.length > 1 || 
            (item.divide_parente.length === 1 && item.divide_parente[0].nome_parente !== this.nameUser);
   }
@@ -376,6 +369,8 @@ export class TransactionListComponent extends BaseTransationComponent {
       }
     })
   }
+
+
 
   
 }

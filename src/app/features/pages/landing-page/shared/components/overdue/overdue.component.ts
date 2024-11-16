@@ -1,12 +1,11 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
+import { BaseTransationComponent } from 'src/app/shared/components/base/base-transation.component';
 import { OverdueService } from '../../services/overdue.service';
 import { FaturaInfo, TransactionList } from 'src/app/features/pages/transaction/shared/models/transation-list.model';
-import { Subject, takeUntil } from 'rxjs';
+import { takeUntil } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { BaseTransationComponent } from 'src/app/shared/components/base/base-transation.component';
 import { Overdue } from '../../models/overdue.model';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-overdue',
@@ -42,7 +41,6 @@ export class OverdueComponent extends BaseTransationComponent implements OnInit 
   constructor(
     private readonly overdueService: OverdueService,
     private router: Router,
-    private location: Location,
     injector : Injector,
     ) { 
     super(injector);

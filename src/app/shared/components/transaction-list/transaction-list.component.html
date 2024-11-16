@@ -168,6 +168,9 @@
                                     <a class="dropdown-item button-cursor color-green-2" (click)="openDelete(item)">
                                         <i class="fa-solid fa-trash"></i> Excluir
                                     </a>
+                                    <a class="dropdown-item button-cursor color-green-2" (click)="openEdit(item)">
+                                        <i class="fa-solid fa-trash"></i> Editar
+                                    </a>
                                 </div>
                             </div>
                             
@@ -210,7 +213,7 @@
                         </div>
         
                         
-                        <div *ngIf="divideMember(item)" class="d-flex justify-content-between align-items-center pt-1 my-0 flex-wrap">
+                        <div *ngIf="divideMemberF(item)" class="d-flex justify-content-between align-items-center pt-1 my-0 flex-wrap">
                             <mat-icon class="color-light-1 display-none-desktop me-2">groups</mat-icon>
         
                             <div class="color-light-1 f-14 d-flex align-items-center flex-grow-1 flex-wrap"> 
@@ -243,9 +246,62 @@
 
 
 <app-modal #modal_small [modalConfig]="modalConfig">
-    <div modal-generic-content-small class="pt-3" *ngIf="openModalDelete">
+    <div modal-generic-content-small class="pt-3" >
 
-        <app-delete-transation  [deleteItem]="deleteItem" (dismiss)="modalSmall.dismiss()" (delete)="deleteTransation()"></app-delete-transation>
+        <app-delete-transation  *ngIf="openModalDelete" [deleteItem]="deleteItem" (dismiss)="modalSmall.dismiss()" (delete)="deleteTransation()"></app-delete-transation>
+       
+        <ng-container *ngIf="openModalCantEdit">
+            <span class="color-light-1">
+
+                <p class="text-center">
+                    Não é possível editar uma movimentação de uma fatura que já foi paga.
+                </p>
+            </span>
+    
+            <div class="d-flex justify-content-center mt-4">
+                <button type="button" class="btn btn-outline-secondary f-16" (click)="modalSmall.dismiss()">Sair</button>
+            </div>       
+        </ng-container>
+        
+    </div>
+
+</app-modal>
+
+
+<app-modal #modal_default [modalConfig]="modalConfig" >
+
+    <div modal-generic-content class="pt-3">
+
+        <!-- Transferencia -->
+        <app-transaction-form
+        [resourceFormTransfer]="resourceFormTransfer"
+        [resourceFormIncomeExpense]="resourceFormIncomeExpense"
+        [openModalTransfer]="openModalTransfer"
+        [openModalIncome]="openModalIncome"
+        [openModalExpense]="openModalExpense"
+        [selectedCategoryName]="selectedCategoryName"
+        [selectedCategoryIcon]="selectedCategoryIcon"
+        [dropdownOpenCategory]="dropdownOpenCategory"
+        [selectedPaymentName]="selectedPaymentName"
+        [selectedPaymentIcon]="selectedPaymentIcon"
+        [dropdownOpenPayment]="dropdownOpenPayment"
+        [dropdownOpenAccountCurrent]="dropdownOpenAccountCurrent"
+        [selectedAccontCurrentName]="selectedAccontCurrentName"
+        [selectedAccontTransferName]="selectedAccontTransferName"
+        [selectedAccontTransferIcon]="selectedAccontTransferIcon"
+        [account]="account"
+        [member]="member"
+        [nameUser]="nameUser"
+        [categoryIncome]="categoryIncome"
+        [categoryExpense]="categoryExpense"
+        [creditCard]="creditCard"
+        [accountDebito]="accountDebito"
+        [accountDinheiro]="accountDinheiro"
+        [quantityMember]="quantityMember"
+        [edit]="edit"
+        
+        >
+        </app-transaction-form>
        
     </div>
 </app-modal>
