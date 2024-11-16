@@ -1,0 +1,48 @@
+@import 'src/styles.scss';
+
+.line{
+    height: 1px;
+
+    @media  screen and (max-width: 801px) {
+
+     width: 100%;
+    }
+    width: 96%;
+
+    background-color: $color-light-2;
+}
+
+.ellipsis {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    white-space: normal;    
+    line-height: 1.2em;
+    min-height: calc(1 * 1.2em);
+    overflow: hidden; 
+}
+
+
+.text-start {
+    flex-grow: 1; /* Permite que o texto ocupe espaço restante */
+    min-width: 0; /* Impede que o texto force o container */
+}
+
+
+@media (max-width: 1024px) {
+    .display-none-1024 {
+      display: none;
+    }
+}
+
+.overflow{
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 300px;
+
+    @media  screen and (max-width: 801px) {
+
+        width: 280px;
+    }
+    
+}

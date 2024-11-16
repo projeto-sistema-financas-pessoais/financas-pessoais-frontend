@@ -1,0 +1,49 @@
+<div class="f-20 color-black-1 d-flex align-items-center"> Fatura {{monthStatement}}
+  <i class="color-green-2 f-16  ms-2 button-cursor fa-solid fa-arrow-up-right-from-square" [routerLink]="'/cartao-de-credito'"></i>
+</div>
+
+@if(creditCard.length !=0){
+  <div class="d-flex justify-content-end">
+
+    <div class="color-light-1 F-16">
+        Total confirmado: 
+        <span  class="text-danger">R$ {{faturaTotal | formatPrice}}</span>
+      </div>
+  
+  </div>
+  
+  <div class="overflow  scroll pt-3">
+  
+    <ng-container *ngFor="let item of creditCard; let i = index;" >
+  
+      <div class="d-flex justify-content-between align-items-center flex-row pt-1">
+  
+        <div class="d-flex justify-content-start align-items-center col-md-6">
+            
+          <img class="icon" src="./assets/icons_user/{{item.nome_icone}}" (error)="item.nome_icone = '1_pagamento.svg'" alt="">
+          
+          <div class="text-start">
+            <div class="ms-3 color-black-1 f-16 ellipsis">{{item.nome || 'Outros'}}</div>  
+          </div>
+    
+        </div>
+  
+        <div class="color-black-1 col-md-2 f-16 d-flex justify-content-end"> 
+          <span  class="text-danger">R$ {{item.fatura_gastos || 0 | formatPrice}}</span>
+      
+        </div>
+      </div>
+      <div *ngIf="i !== creditCard.length -1" class="line mt-2"></div>
+  
+    </ng-container>
+  
+  </div>
+}@else {
+
+  <div class="f-14 color-light-1 py-4 d-flex justify-content-center">
+    <span >Você não possui cartões de crédito.
+      <a [routerLink]="'/cartao-de-credito'">Crie uma novo </a>
+    </span>  
+
+  </div>
+}
