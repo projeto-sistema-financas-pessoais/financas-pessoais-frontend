@@ -118,12 +118,12 @@ export class TransactionsComponent implements OnInit{
   ]
 
 
-  enumMovimentacao!: typeof TipoMovimentacao
-  enumFormaPagamento!: typeof FormaPagamento
-  filteredformaPagamento!: string[]
+  // enumMovimentacao!: typeof TipoMovimentacao
+  // enumFormaPagamento!: typeof FormaPagamento
+  // filteredformaPagamento!: string[]
   enumTipoConta!: typeof TipoConta
   enumCondicaoPagamento!: typeof CondicaoPagamento
-  filteredCondicaoPagamento!: string[]
+  // filteredCondicaoPagamento!: string[]
   enumTipoRecorrencia!: typeof TipoRecorrencia
 
   Object = Object
@@ -146,10 +146,10 @@ export class TransactionsComponent implements OnInit{
 
       this.enumTipoConta = TipoConta;
       this.enumCondicaoPagamento = CondicaoPagamento;
-      this.enumFormaPagamento = FormaPagamento;
+      // // this.enumFormaPagamento = FormaPagamento;
       this.enumTipoRecorrencia = TipoRecorrencia
-      this.filteredformaPagamento = Object.values(this.enumFormaPagamento).filter(item => item !== 'Crédito');
-      this.filteredCondicaoPagamento = Object.values(this.enumCondicaoPagamento).filter(item => item !== 'Parcelado');
+      // // this.filteredformaPagamento = Object.values(this.enumFormaPagamento).filter(item => item !== 'Crédito');
+      // this.filteredCondicaoPagamento = Object.values(this.enumCondicaoPagamento).filter(item => item !== 'Parcelado');
 
 
   }
@@ -213,12 +213,12 @@ export class TransactionsComponent implements OnInit{
     return this.resourceFormIncomeExpense.get('divide_parente') as FormArray;
   }
 
-  createDivideMember(memberId: number | null, value: number): FormGroup{
-    return this.formBuilder.group({
-      id_parente: [memberId, Validators.required],
-      valor_parente: [value, Validators.required],
-    });
-  }
+  // createDivideMember(memberId: number | null, value: number): FormGroup{
+  //   return this.formBuilder.group({
+  //     id_parente: [memberId, Validators.required],
+  //     valor_parente: [value, Validators.required],
+  //   });
+  // }
 
   ///////////////////// functions subscribe  /////////////////////
 
@@ -298,111 +298,112 @@ export class TransactionsComponent implements OnInit{
     })
   }
 
-  addTransationTransfer(reload: boolean){
-    let resource = Object.assign({}, this.resourceFormTransfer.value);
-    this.transationService.addTransfer(resource)
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe({
-      next:(data) => {
-        this.alertService.showAlertSuccess("Sucesso ao fazer transferência!")
+//excluir
+  // addTransationTransfer(reload: boolean){
+  //   let resource = Object.assign({}, this.resourceFormTransfer.value);
+  //   this.transationService.addTransfer(resource)
+  //   .pipe(takeUntil(this.ngUnsubscribe))
+  //   .subscribe({
+  //     next:(data) => {
+  //       this.alertService.showAlertSuccess("Sucesso ao fazer transferência!")
 
-        if(reload){
-          setTimeout(() =>{
-            window.location.reload();
-          }, 1000)
-        }
-        else {
-          this.resourceFormTransfer.get('valor')?.setValue(null)
-          this.resourceFormTransfer.get('descricao')?.setValue(null)
+  //       if(reload){
+  //         setTimeout(() =>{
+  //           window.location.reload();
+  //         }, 1000)
+  //       }
+  //       else {
+  //         this.resourceFormTransfer.get('valor')?.setValue(null)
+  //         this.resourceFormTransfer.get('descricao')?.setValue(null)
 
-        }
-      },
-      error:(error: HttpErrorResponse) =>{
-        console.error(error)
-      }
-    })
+  //       }
+  //     },
+  //     error:(error: HttpErrorResponse) =>{
+  //       console.error(error)
+  //     }
+  //   })
     
 
-  }
+  // }
 
 
-  setDivideMember(resource: any){
-    let member: FamilyMembers | undefined;
+  // setDivideMember(resource: any){
+  //   let member: FamilyMembers | undefined;
 
-    if(resource.quantity_member == "Somente eu" || isNaN(Number(resource.quantity_member))){
+  //   if(resource.quantity_member == "Somente eu" || isNaN(Number(resource.quantity_member))){
       
-      member = this.member.find(item => item.nome == this.nameUser)
+  //     member = this.member.find(item => item.nome == this.nameUser)
 
-      if(member)
-        resource.divide_parente = [{
-          id_parente: member.id_parente,
-          valor_parente: resource.valor
-        }]
-    }
+  //     if(member)
+  //       resource.divide_parente = [{
+  //         id_parente: member.id_parente,
+  //         valor_parente: resource.valor
+  //       }]
+  //   }
 
   
-    return resource
-  }
+  //   return resource
+  // }
 
-  addTransationExpense(reload: boolean){
-    let resource =  Object.assign({}, this.resourceFormIncomeExpense.value);
+  // addTransationExpense(reload: boolean){
+  //   let resource =  Object.assign({}, this.resourceFormIncomeExpense.value);
     
-    resource = this.setDivideMember(resource);
+  //   resource = this.setDivideMember(resource);
 
-    console.log("resource", resource)
+  //   console.log("resource", resource)
 
-    this.transationService.addExpense(resource)
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe({
-      next:(data) => {
-        this.alertService.showAlertSuccess("Sucesso ao salvar nova despesa!")
-        if(reload){
-          setTimeout(() =>{
-            window.location.reload();
-          }, 1000)
-        }
-        else {
-          this.resourceFormIncomeExpense.get('valor')?.setValue(null)
-          this.resourceFormIncomeExpense.get('descricao')?.setValue(null)
+  //   this.transationService.addExpense(resource)
+  //   .pipe(takeUntil(this.ngUnsubscribe))
+  //   .subscribe({
+  //     next:(data) => {
+  //       this.alertService.showAlertSuccess("Sucesso ao salvar nova despesa!")
+  //       if(reload){
+  //         setTimeout(() =>{
+  //           window.location.reload();
+  //         }, 1000)
+  //       }
+  //       else {
+  //         this.resourceFormIncomeExpense.get('valor')?.setValue(null)
+  //         this.resourceFormIncomeExpense.get('descricao')?.setValue(null)
 
-        }
-        console.log('sucesso', data)
-      },
-      error:(error: HttpErrorResponse) =>{
-        console.error(error)
-      }
-    })
-  }
+  //       }
+  //       console.log('sucesso', data)
+  //     },
+  //     error:(error: HttpErrorResponse) =>{
+  //       console.error(error)
+  //     }
+  //   })
+  // }
 
 
-  addTransationIncome(reload: boolean) {
-    let resource =  Object.assign({}, this.resourceFormIncomeExpense.value);
+  // addTransationIncome(reload: boolean) {
+  //   let resource =  Object.assign({}, this.resourceFormIncomeExpense.value);
     
-    resource = this.setDivideMember(resource);
+  //   resource = this.setDivideMember(resource);
 
-    console.log("resource", resource)
+  //   console.log("resource", resource)
 
-    this.transationService.addIncome(resource)
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe({
-      next:(data) => {
-        this.alertService.showAlertSuccess("Sucesso ao salvar nova receita!")
-        if(reload){
-          setTimeout(() =>{
-            window.location.reload();
-          }, 1000)
-        }
-        else {
-          this.resourceFormIncomeExpense.get('valor')?.setValue(null)
-          this.resourceFormIncomeExpense.get('descricao')?.setValue(null)
+  //   this.transationService.addIncome(resource)
+  //   .pipe(takeUntil(this.ngUnsubscribe))
+  //   .subscribe({
+  //     next:(data) => {
+  //       this.alertService.showAlertSuccess("Sucesso ao salvar nova receita!")
+  //       if(reload){
+  //         setTimeout(() =>{
+  //           window.location.reload();
+  //         }, 1000)
+  //       }
+  //       else {
+  //         this.resourceFormIncomeExpense.get('valor')?.setValue(null)
+  //         this.resourceFormIncomeExpense.get('descricao')?.setValue(null)
 
-        }
-        console.log('sucesso', data)
-      },
-      error:(error: HttpErrorResponse) =>{
-        console.error(error)
-      }
-    })  }
+  //       }
+  //       console.log('sucesso', data)
+  //     },
+  //     error:(error: HttpErrorResponse) =>{
+  //       console.error(error)
+  //     }
+  //   })  }
 
 
 
@@ -507,107 +508,107 @@ export class TransactionsComponent implements OnInit{
 
   ///////////////////// Functions Modals /////////////////////
 
-  checkIfAccountTransf(){
-    const atual = this.resourceFormTransfer.get('id_conta_atual')?.value
-    const transf = this.resourceFormTransfer.get('id_conta_transferencia')?.value
-    return atual  == transf && atual!= null && transf !== null
-  }
+  // checkIfAccountTransf(){
+  //   const atual = this.resourceFormTransfer.get('id_conta_atual')?.value
+  //   const transf = this.resourceFormTransfer.get('id_conta_transferencia')?.value
+  //   return atual  == transf && atual!= null && transf !== null
+  // }
 
 
-  toggleDropdownCategory() {
-    this.dropdownOpenCategory = !this.dropdownOpenCategory;
-  }
+  // toggleDropdownCategory() {
+  //   this.dropdownOpenCategory = !this.dropdownOpenCategory;
+  // }
 
-  toggleDropdownPayment(){
-    this.dropdownOpenPayment= !this.dropdownOpenPayment;
+  // toggleDropdownPayment(){
+  //   this.dropdownOpenPayment= !this.dropdownOpenPayment;
 
-  }
+  // }
 
-  toggleDropdownAccountCurrent(){
-    this.dropdownOpenAccountCurrent= !this.dropdownOpenAccountCurrent;
+  // toggleDropdownAccountCurrent(){
+  //   this.dropdownOpenAccountCurrent= !this.dropdownOpenAccountCurrent;
 
-  }
+  // }
 
-  toggleDropdownAccountTransfer(){
-    this.dropdownOpenAccountTransfer= !this.dropdownOpenAccountTransfer;
+  // toggleDropdownAccountTransfer(){
+  //   this.dropdownOpenAccountTransfer= !this.dropdownOpenAccountTransfer;
 
-  }
-
-
-  selectCategory(category: Category) {
-    this.selectedCategoryName = category.nome;
-    this.selectedCategoryIcon = category.nome_icone;
-    this.resourceFormIncomeExpense.get('id_categoria')?.setValue(category.id_categoria)
-    this.dropdownOpenCategory = false;
-  }
-
-  selectPayment(resource: any, type: string) {
+  // }
 
 
-    this.selectedPaymentName = resource.nome;
-    this.selectedPaymentIcon = resource.nome_icone;
+  // selectCategory(category: Category) {
+  //   this.selectedCategoryName = category.nome;
+  //   this.selectedCategoryIcon = category.nome_icone;
+  //   this.resourceFormIncomeExpense.get('id_categoria')?.setValue(category.id_categoria)
+  //   this.dropdownOpenCategory = false;
+  // }
+
+  // selectPayment(resource: any, type: string) {
+
+
+  //   this.selectedPaymentName = resource.nome;
+  //   this.selectedPaymentIcon = resource.nome_icone;
     
-    let value
-    if(type !== this.enumFormaPagamento.CREDITO)
-      value = resource.id_conta
-    else
-      value = resource.id_cartao_credito
+  //   let value
+  //   if(type !== this.enumFormaPagamento.CREDITO)
+  //     value = resource.id_conta
+  //   else
+  //     value = resource.id_cartao_credito
     
-    this.resourceFormIncomeExpense.get('id_financeiro')?.setValue(value)
+  //   this.resourceFormIncomeExpense.get('id_financeiro')?.setValue(value)
 
-    this.dropdownOpenPayment = false;
-  }
-
-
-  selectAccountCurrent(resource: Account){
-    this.selectedAccontCurrentName = resource.nome;
-    this.selectedAccontCurrentIcon = resource.nome_icone;
-    this.resourceFormTransfer.get('id_conta_atual')?.setValue(resource.id_conta)
-    this.dropdownOpenAccountCurrent = false;
-  }
-
-  selectAccountTransfer(resource: Account){
-    this.selectedAccontTransferName = resource.nome;
-    this.selectedAccontTransferIcon = resource.nome_icone;
-    this.resourceFormTransfer.get('id_conta_transferencia')?.setValue(resource.id_conta)
-    this.dropdownOpenAccountTransfer = false;
-  }
-
-  cleanSelected(){
-    this.selectedPaymentName = null;
-    this.selectedPaymentIcon = null;
-    this.resourceFormIncomeExpense.get('id_financeiro')?.setValue(null)
-
-  }
-
-  changeConsolidado(){
-    const value =  this.resourceFormIncomeExpense.get('consolidado')?.value
-    this.resourceFormIncomeExpense.get('consolidado')?.setValue(!value)   
-  }
-
-  createMember(){
-    const quantity = this.resourceFormIncomeExpense.get('quantity_member')?.value
-    const valueTotal = this.resourceFormIncomeExpense.get('valor')?.value;
-
-    this.divideMember.clear()
-    if(quantity !== "Somente eu"){
-
-      const quantityNumber = Number(quantity)
-      const valueMember = valueTotal / quantityNumber;
-      const valueMemberFinal = Math.round(valueMember* 100) / 100;
-      const remainingValue = Math.round((valueTotal - (valueMemberFinal * quantityNumber)) *100) /100;
+  //   this.dropdownOpenPayment = false;
+  // }
 
 
-      for(let i = 0; i < Number(quantity); i++){
-        console.log("entrou")
-        let valueSend;
-        let  memberId;
-        i == 0 ?  valueSend = valueMemberFinal + remainingValue :  valueSend = valueMemberFinal
-        const value = Number(valueSend.toFixed(2))
-        memberId = this.member[i].id_parente || null
+  // selectAccountCurrent(resource: Account){
+  //   this.selectedAccontCurrentName = resource.nome;
+  //   this.selectedAccontCurrentIcon = resource.nome_icone;
+  //   this.resourceFormTransfer.get('id_conta_atual')?.setValue(resource.id_conta)
+  //   this.dropdownOpenAccountCurrent = false;
+  // }
 
-        this.divideMember.push(this.createDivideMember(memberId, value));
-      }
-    }
-  }
+  // selectAccountTransfer(resource: Account){
+  //   this.selectedAccontTransferName = resource.nome;
+  //   this.selectedAccontTransferIcon = resource.nome_icone;
+  //   this.resourceFormTransfer.get('id_conta_transferencia')?.setValue(resource.id_conta)
+  //   this.dropdownOpenAccountTransfer = false;
+  // }
+
+  // cleanSelected(){
+  //   this.selectedPaymentName = null;
+  //   this.selectedPaymentIcon = null;
+  //   this.resourceFormIncomeExpense.get('id_financeiro')?.setValue(null)
+
+  // }
+
+  // changeConsolidado(){
+  //   const value =  this.resourceFormIncomeExpense.get('consolidado')?.value
+  //   this.resourceFormIncomeExpense.get('consolidado')?.setValue(!value)   
+  // }
+
+  // createMember(){
+  //   const quantity = this.resourceFormIncomeExpense.get('quantity_member')?.value
+  //   const valueTotal = this.resourceFormIncomeExpense.get('valor')?.value;
+
+  //   this.divideMember.clear()
+  //   if(quantity !== "Somente eu"){
+
+  //     const quantityNumber = Number(quantity)
+  //     const valueMember = valueTotal / quantityNumber;
+  //     const valueMemberFinal = Math.round(valueMember* 100) / 100;
+  //     const remainingValue = Math.round((valueTotal - (valueMemberFinal * quantityNumber)) *100) /100;
+
+
+  //     for(let i = 0; i < Number(quantity); i++){
+  //       console.log("entrou")
+  //       let valueSend;
+  //       let  memberId;
+  //       i == 0 ?  valueSend = valueMemberFinal + remainingValue :  valueSend = valueMemberFinal
+  //       const value = Number(valueSend.toFixed(2))
+  //       memberId = this.member[i].id_parente || null
+
+  //       this.divideMember.push(this.createDivideMember(memberId, value));
+  //     }
+  //   }
+  // }
 }
