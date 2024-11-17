@@ -3,10 +3,13 @@
     <div class="d-flex justify-content-between">
     
         <h4>
-            <span class="me-2 button-cursor">
-                <i  class="fa-solid fa-chevron-left button-cursor  color-green-2" [routerLink]="'/membros-da-familia'"></i>
-
-            </span>
+            <button 
+                type="button" 
+                class="btn btn-link p-0 me-2" 
+                [routerLink]="'/membros-da-familia'"
+                aria-label="Voltar para membros da família">
+                <i class="fa-solid fa-chevron-left color-green-2"></i>
+            </button>
          
             <span>  Membro da Família  </span>
 
