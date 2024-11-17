@@ -11,6 +11,9 @@ import { FormatDayDate } from './pipes/format-data';
 import { TransactionListComponent } from './components/transaction-list/transaction-list.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { FirstTwoWordsPipe } from './pipes/format-name.pipe';
+import { DeleteTransationComponent } from './components/delete-transation/delete-transation.component';
+import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
+import { BaseTransationComponent } from './components/base/base-transation.component';
 
 
 
@@ -23,14 +26,17 @@ import { FirstTwoWordsPipe } from './pipes/format-name.pipe';
     FormatPricePipe,
     FormatDayDate,
     FirstTwoWordsPipe,
-    TransactionListComponent
+    TransactionListComponent,
+    DeleteTransationComponent,
+    TransactionFormComponent
   ],
   imports: [
     CommonModule,
     ModalModule,
     FormsModule,
     TooltipModule.forRoot(),
-    MatIconModule
+    MatIconModule,
+    ReactiveFormsModule
 
   ],
   exports: [
@@ -46,6 +52,8 @@ import { FirstTwoWordsPipe } from './pipes/format-name.pipe';
     ReactiveFormsModule,
     TransactionListComponent,
     FirstTwoWordsPipe,
+    DeleteTransationComponent,
+    TransactionFormComponent
 
 
 

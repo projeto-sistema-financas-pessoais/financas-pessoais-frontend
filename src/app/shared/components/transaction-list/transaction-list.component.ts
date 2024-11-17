@@ -1,30 +1,27 @@
+import { BaseTransationComponent } from '../base/base-transation.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, Output, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { CondicaoPagamento, FormaPagamento, TipoMovimentacao } from 'src/app/shared/models/enum.model';
 import { TransationFilter, TransactionList } from 'src/app/features/pages/transaction/shared/models/transation-list.model';
-import { TransationService } from 'src/app/features/pages/transaction/shared/services/transation.service';
 import { Category } from 'src/app/features/pages/user/shared/models/category.model';
-import { ModalComponent } from '../modal/modal.component';
-import { ModalConfig } from '../../models/moda-config.model';
-import { AlertModalService } from '../../services/alert-modal.service';
-import { TransationConsolidated } from 'src/app/features/pages/transaction/shared/models/transation.model';
-import { CategoryService } from 'src/app/features/pages/user/shared/services/category.service';
 import { AuthService } from 'src/app/features/auth/shared/services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-transaction-list',
   templateUrl: './transaction-list.component.html',
   styleUrls: ['./transaction-list.component.scss']
 })
-export class TransactionListComponent {
-  protected ngUnsubscribe = new Subject<void>();
+export class TransactionListComponent extends BaseTransationComponent {
 
   @Input() type: 'transation' | 'member' | 'account' | 'credit' = 'transation'
   @Input() id_type?: number;
+  @Input() data_fechamento: number  = 0;
+
   @Output() itemStatement: EventEmitter<TransactionList | undefined> = new EventEmitter;
   
-
   // !== transatiotn
   @Output() valueTotalExpense: EventEmitter<number> = new EventEmitter<number>();
   @Output() valueConsolidatedExpense: EventEmitter<number> = new EventEmitter<number>();
@@ -47,11 +44,7 @@ export class TransactionListComponent {
   @Output() valueTotalTotalConsolidatedMemberExpense: EventEmitter<number> = new EventEmitter<number>();
 
 
-  @ViewChild('modal_small') protected modalSmall!: ModalComponent;
-  modalConfig! : ModalConfig;
 
-  deleteItem!: TransactionList;
-  openModalDelete: boolean = false;
 
   canOpenFilter: boolean = false;
 
@@ -70,9 +63,7 @@ export class TransactionListComponent {
     "Dezembro"
   ];
 
-  enumMovimentacao!: typeof TipoMovimentacao
-  enumFormaPagamento!: typeof FormaPagamento
-  enumCondicaoPagamento!: typeof CondicaoPagamento
+
   Object = Object;
 
   transactionList: TransactionList[] = [];
@@ -85,10 +76,14 @@ export class TransactionListComponent {
 
 
   constructor(
-    private readonly transationService: TransationService,
-    private readonly categoryService: CategoryService,
-    private readonly alertService: AlertModalService,
-    private readonly authService: AuthService){
+    injector : Injector,
+    private readonly authService: AuthService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private location: Location
+    ){
+
+    super(injector);
 
     this.enumMovimentacao = TipoMovimentacao;
     this.enumFormaPagamento = FormaPagamento;
@@ -98,11 +93,16 @@ export class TransactionListComponent {
     this.transationFilter = new TransationFilter()
     this.transationFilter.ano = new Date().getFullYear();
     this.transationFilter.mes = new Date().getMonth() + 1;
+
+    this.buildFomrIncomeExpense()
     
   }
 
   ngOnInit(): void {
     this.nameUser = this.authService.GetUser().name || 'null'
+
+    
+
 
     if(this.id_type){
       if(this.type == 'member'){
@@ -112,7 +112,15 @@ export class TransactionListComponent {
         this.transationFilter.id_conta = this.id_type
       }
       else if (this.type == 'credit'){
-        this.transationFilter.id_cartao_credito = this.id_type
+        this.transationFilter.id_cartao_credito = this.id_type;
+
+
+        const [year, month, day] = String(this.data_fechamento).split('-').map(Number);
+        this.transationFilter.dia_fechamento = day;
+
+        this.transationFilter.ano = year;
+        this.transationFilter.mes = month;
+
       }else {
         this.getCategory();
 
@@ -122,6 +130,22 @@ export class TransactionListComponent {
 
     }
 
+
+    this.route.queryParams.subscribe(params => {
+      console.log("params", params)
+      if (params['mes']) {
+         this.transationFilter.mes = Number(params['mes'])
+      }
+
+      if (params['ano']) {
+        this.transationFilter.ano = Number(params['ano'])
+      }
+
+      
+    });
+   
+
+    this.updateQuery()
     this.chargeList();
 
    
@@ -274,7 +298,7 @@ export class TransactionListComponent {
   }
 
 
-  divideMember(item: TransactionList): boolean {
+  divideMemberF(item: TransactionList): boolean {
     return item.divide_parente.length > 1 || 
            (item.divide_parente.length === 1 && item.divide_parente[0].nome_parente !== this.nameUser);
   }
@@ -305,75 +329,23 @@ export class TransactionListComponent {
       }
     }
 
+    this.updateQuery()
     this.chargeList();
   }
 
-  protected openDelete(item: TransactionList){
 
-    this.openModalDelete = true;
-
-    this.deleteItem = item;
-    this.modalConfig = {
-      modalTitle: 'Excluir movimentação'
-    }
-
-    this.modalSmall.openSmall();
+  updateQuery(){
+    
+    let queryParams: any = {mes:  this.transationFilter.mes, ano:  this.transationFilter.ano};
+    const currentUrl = this.router.url.split('?')[0];
+    const url = this.router.createUrlTree([currentUrl], { queryParams }).toString();    this.location.go(url)
+    this.location.replaceState(url)
   }
+  
 
-  deleteTransation(){
-    this.transationService.deleteTransation(this.deleteItem.id_movimentacao)
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe({
-      next: (data: any) =>{
 
-        this.alertService.showAlertSuccess("Sucesso ao deletar!")
-
-        setTimeout(() =>{
-          window.location.reload();
-        }, 1000)
-        
-        console.log("delete transation success", data)
-      },
-      error: (error: HttpErrorResponse) =>{
-        console.log('error delete transation', error)
-      }
-    })
-  }
-
-  changeConsolidated(item: TransactionList){
-
-    item.consolidado = !item.consolidado;
-
-    let consolidated: TransationConsolidated = {
-      id_movimentacao: item.id_movimentacao,
-      consolidado: item.consolidado
-    }
-    this.transationService.consolidatedTransation(consolidated)
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe({
-      next: (data: any) =>{
-
-        this.alertService.showAlertSuccess(
-          item.consolidado ? 'Sucesso ao consolidar movimentação!' : 'Sucesso ao não consolidar movimentação!'
-         
-        )
-
-        if(this.type == 'account'  || this.type == 'member'){
-          setTimeout(() =>{
-            window.location.reload();
-          }, 1000)
-        }
-        
-        console.log("delete transation success", data)
-      },
-      error: (error: HttpErrorResponse) =>{
-        console.log('error delete transation', error)
-      }
-    })
-  }
-
-  changeLimitAndExchange(item: TransactionList){
-
+  changeLimitAndExchange(item: TransactionList, type: string){
+    
     item.participa_limite_fatura_gastos = !item.participa_limite_fatura_gastos;
 
     this.transationService.changeLimitAndExpense(item.id_movimentacao, item.participa_limite_fatura_gastos)
@@ -384,7 +356,7 @@ export class TransactionListComponent {
         this.alertService.showAlertSuccess(
           item.participa_limite_fatura_gastos ? 'Sucesso ao contalizar no limite e gastos da fatura!' : 'Sucesso ao retirar do  limite e gastos da fatura!'
         )
-        if(this.type == 'credit'){
+        if(type == 'credit'){
           setTimeout(() =>{
             window.location.reload();
           }, 1000)
@@ -397,4 +369,8 @@ export class TransactionListComponent {
       }
     })
   }
+
+
+
+  
 }

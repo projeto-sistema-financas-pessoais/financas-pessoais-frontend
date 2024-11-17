@@ -8,7 +8,9 @@ import { EconomyComponent } from './shared/components/economy/economy.component'
 import { IncomeExpenseComponent } from './shared/components/income-expense/income-expense.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormsModule } from '@angular/forms';
-
+import { OverdueModule } from './shared/components/overdue/overdue.module';
+import { FinanceComponent } from './shared/components/finance/finance.component';
+import { CreditFinanceComponent } from './shared/components/credit-finance/credit-finance.component';
 
 
 @NgModule({
@@ -17,13 +19,17 @@ import { FormsModule } from '@angular/forms';
     MonthlyBudgetVsActualComponent,
     EconomyComponent,
     IncomeExpenseComponent,
+    FinanceComponent,
+    CreditFinanceComponent
   ],
   imports: [
     SharedModule,
     LandingPageRoutingModule,
     NgApexchartsModule,
     MatButtonToggleModule,
-    FormsModule
+    FormsModule,
+    OverdueModule
+
   ]
 })
 export class LandingPageModule { }
