@@ -158,8 +158,9 @@
         </span>
 
         <div class="d-flex justify-content-evenly mt-4">
-            <button type="button" class="btn btn-outline-secondary f-16" (click)="modalSmall.dismiss()">Cancelar</button>
-            <button type="button" class="btn btn-green f-16" (click)="sendEmail()" *ngIf="resourceData.email && valuetotalMemberExpense - valueTotalTotalConsolidatedMemberExpense !== 0">Enviar</button>
+            <button type="button" class="btn btn-outline-secondary f-16" (click)="modalSmall.dismiss()" *ngIf="!(resourceData.email && valuetotalMemberExpense - valueTotalTotalConsolidatedMemberExpense !== 0)">Cancelar</button>
+            <button type="button" class="btn btn-green f-16" (click)="sendEmail()" *ngIf="resourceData.email && valuetotalMemberExpense - valueTotalTotalConsolidatedMemberExpense !== 0">Enviar e-mail</button>
+            <button type="button" class="btn btn-outline-secondary f-16" (click)="cobrancaPdf()" *ngIf="valuetotalMemberExpense - valueTotalTotalConsolidatedMemberExpense !== 0">Gerar PDF</button>
         </div>
     </div>
 </app-modal>
