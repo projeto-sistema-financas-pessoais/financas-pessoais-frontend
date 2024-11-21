@@ -90,7 +90,10 @@ export class FamilyMemberTransationsComponent extends BaseGetIdComponent<FamilyM
       this.memberSendEmail.mes = month +1;
       this.memberSendEmail.id_parente = this.resourceData.id_parente;
       this.dateMonth = this.month[month] + " " + year
-  
+      this.itemStatement = evt;
+
+    }else{
+      this.itemStatement = undefined
     }
   
   }

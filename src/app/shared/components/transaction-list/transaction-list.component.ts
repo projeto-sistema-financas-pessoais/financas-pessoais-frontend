@@ -5,7 +5,6 @@ import { Subject, takeUntil } from 'rxjs';
 import { CondicaoPagamento, FormaPagamento, TipoMovimentacao } from 'src/app/shared/models/enum.model';
 import { TransationFilter, TransactionList } from 'src/app/features/pages/transaction/shared/models/transation-list.model';
 import { Category } from 'src/app/features/pages/user/shared/models/category.model';
-import { AuthService } from 'src/app/features/auth/shared/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -77,7 +76,6 @@ export class TransactionListComponent extends BaseTransationComponent {
 
   constructor(
     injector : Injector,
-    private readonly authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
     private location: Location
@@ -259,8 +257,8 @@ export class TransactionListComponent extends BaseTransationComponent {
     
 
     if(this.type== 'member' || this.type == 'account'){
-      this.valueConsolidatedIncome.emit(sumTotalConsolidatedIncome)
       this.valueTotalIncome.emit(sumTotalIncome);
+      this.valueConsolidatedIncome.emit(sumTotalConsolidatedIncome)
       this.valueTotalTransferReceived.emit(sumTotalTransferReceived);
       this.valueTotalTransferSend.emit(sumTotalTransferSend);
 
