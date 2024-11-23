@@ -27,7 +27,7 @@
 
     <div class="d-flex  justify-content-evenly flex-wrap">
 
-        <div *ngIf="itemStatement" class="card-info my-4">
+        <div *ngIf="itemStatement != null || itemStatement!= undefined " class="card-info my-4">
 
             <div class="d-flex justify-content-between">
                 <span class="color-black-1">Limite do cartão: </span>

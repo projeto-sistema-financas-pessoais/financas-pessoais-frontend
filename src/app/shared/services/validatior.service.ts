@@ -23,13 +23,12 @@ export function divideParentValidator(): ValidatorFn {
       }
   
       const somaValores = divideParenteArray.controls
-        .map(control => control.get('valor_parente')?.value || 0)
+        .map(control => Number(control.get('valor_parente')?.value) || 0)
         .reduce((acc, curr) => acc + curr, 0);
   
         const somaArredondada = Math.round(somaValores * 100) / 100;
         const valorTotalArredondado = Math.round(valueTotal * 100) / 100;
   
-    
         return somaArredondada === valorTotalArredondado ? null : { invalidSum: true };
       };
   }

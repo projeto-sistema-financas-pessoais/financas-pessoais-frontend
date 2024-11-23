@@ -25,15 +25,11 @@
     </div>
     <div class="d-flex  justify-content-evenly flex-wrap">
 
-        <div *ngIf="valueTotalIncome"  class="card-info my-4">
+        <div *ngIf="itemStatement != null || itemStatement!= undefined"  class="card-info my-4">
 
             <div class="color-green-2 pb-1">
                 {{this.dateMonth}}
-
-
             </div>
-
-            
 
             <div class="color-light-3 pb-2">
                 Totais
@@ -120,7 +116,7 @@
 
             <div class="d-flex justify-content-between">
                 <span class="color-black-1">A pagar: </span>
-                <span class="text-danger">R$ {{ valueConsolidatedExpense - valueConsolidatedExpense | formatPrice}}</span>
+                <span class="text-danger">R$ {{ valueTotalExpense - valueConsolidatedExpense | formatPrice}}</span>
 
             </div>
 

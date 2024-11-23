@@ -18,6 +18,7 @@ import { FamilyMembersService } from "src/app/features/pages/family-members/shar
 import { CreditCardService } from "src/app/features/pages/credit-card/shared/services/credit-card.service";
 import { CreditCard } from "src/app/features/pages/credit-card/shared/models/credit-card.model";
 import { divideParentValidator } from "../../services/validatior.service";
+import { AuthService } from "src/app/features/auth/shared/services/auth.service";
 
 
 @Directive()
@@ -76,7 +77,7 @@ export abstract class BaseTransationComponent implements  OnDestroy{
     creditCard: CreditCard [] = [];
 
 
-    edit: boolean = false;
+    edit: number | null = null;
 
     quantityMember = [
       "Somente eu"
@@ -92,6 +93,7 @@ export abstract class BaseTransationComponent implements  OnDestroy{
     protected readonly memberService: FamilyMembersService
     protected readonly creditCardService: CreditCardService
     protected readonly formBuilder: FormBuilder
+    protected readonly authService: AuthService
 
 
     // resourceData!: T
@@ -119,6 +121,8 @@ export abstract class BaseTransationComponent implements  OnDestroy{
         this.memberService = this.injector.get(FamilyMembersService)
         this.creditCardService = this.injector.get(CreditCardService)
         this.formBuilder = this.injector.get(FormBuilder)
+        this.authService = this.injector.get(AuthService)
+
 
     }
   
@@ -192,7 +196,7 @@ export abstract class BaseTransationComponent implements  OnDestroy{
 
   openEdit(item: TransactionList){
 
-    this.edit = true;
+    this.edit = item.id_movimentacao;
     this.modalConfig = {
       modalTitle: 'Editar movimentação'
     }
@@ -230,6 +234,8 @@ export abstract class BaseTransationComponent implements  OnDestroy{
   }
 
   patchIncomeExpense(){
+    let nameUser = this.authService.GetUser().name || 'null'
+
     this.resourceFormIncomeExpense.patchValue(this.selectedItemEdit)
     if(this.selectedItemEdit.forma_pagamento == this.enumFormaPagamento.CREDITO){
       this.resourceFormIncomeExpense.get('id_financeiro')?.setValue(this.selectedItemEdit.id_cartao_credito)
@@ -237,8 +243,24 @@ export abstract class BaseTransationComponent implements  OnDestroy{
       this.resourceFormIncomeExpense.get('id_financeiro')?.setValue(this.selectedItemEdit.id_conta)
     }
 
+
+    if(this.selectedItemEdit.divide_parente.length > 1 || this.selectedItemEdit.divide_parente[0].nome_parente !== nameUser){
+      this.resourceFormIncomeExpense.get('quantity_member')?.setValue(this.selectedItemEdit.divide_parente.length)
+
+      this.selectedItemEdit.divide_parente.forEach(item => {
+        this.divideMember.push(this.createDivideMember(item.id_parente, item.valor_parente));
+
+      })
+
+    }
   }
 
+  createDivideMember(memberId: number | null, value: number): FormGroup{
+    return this.formBuilder.group({
+      id_parente: [memberId, Validators.required],
+      valor_parente: [value, Validators.required],
+    });
+  }
   
 
 
@@ -254,7 +276,7 @@ export abstract class BaseTransationComponent implements  OnDestroy{
 
   protected buildFomrIncomeExpense(): void {
     let date = new Date().toISOString();
-    let data_pagamento = new Date().toISOString().split('T')[0]; 
+    let data_pagamento = new Date().toLocaleDateString('en-CA')
     this.resourceFormIncomeExpense = this.formBuilder.group({
       valor: [null, [Validators.required]],
       descricao: [null,  [Validators.maxLength(30)]],
@@ -364,7 +386,7 @@ export abstract class BaseTransationComponent implements  OnDestroy{
     this.selectedCategoryName = null;
     this.selectedCategoryIcon = null;
 
-    this.edit = edit ? true : false;
+    this.edit = edit ? this.selectedItemEdit.id_movimentacao : null;
 
     this.buildFomrIncomeExpense()
 
@@ -401,7 +423,7 @@ export abstract class BaseTransationComponent implements  OnDestroy{
     this.selectedPaymentIcon = null;
     this.selectedCategoryName = null;
     this.selectedCategoryIcon = null;
-    this.edit = edit ? true : false;
+    this.edit = edit ? this.selectedItemEdit.id_movimentacao : null;
 
     this.buildFomrIncomeExpense()
 
@@ -439,7 +461,7 @@ export abstract class BaseTransationComponent implements  OnDestroy{
     this.selectedAccontCurrentName = null;
     this.selectedAccontTransferIcon = null;
     this.selectedAccontTransferName = null;
-    this.edit = edit ? true : false;
+    this.edit = edit ? this.selectedItemEdit.id_movimentacao : null;
 
     this.buildFormTransfer()
 

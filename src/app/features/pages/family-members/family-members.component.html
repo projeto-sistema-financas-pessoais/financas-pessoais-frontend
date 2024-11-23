@@ -34,10 +34,21 @@
                         <div class="text-start color-black-1 pb-1 f-16">Status: &nbsp;
                             <span class="color-light-1">{{item.ativo ? 'Ativo' : 'Desativado'}}</span>
                         </div>
+                        <div class="text-start color-black-1 pb-1 f-16">
+                            Email: &nbsp;
+                            <span class="color-light-1">
+                                <ng-container *ngIf="item.email; else emailNotInformed">
+                                    {{item.email}}
+                                </ng-container>
+                                <ng-template #emailNotInformed>
+                                    <span class="text-muted">email não informado</span>
+                                </ng-template>
+                            </span>
+                        </div>  
                         <div class="text-start color-black-1 pb-1 f-16">Grau de Parentesco: &nbsp;
                             <span class="color-light-1"> {{item.grau_parentesco}}</span>
-                        </div>                   
-        
+                        </div>
+                  
                     </div>
 
                     <div class="d-flex justify-content-end ">

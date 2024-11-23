@@ -63,7 +63,7 @@ export class TransactionFormComponent implements OnChanges {
 
   @Input() quantityMember!: string[]
 
-  @Input() edit!: boolean
+  @Input() editId!: number | null
 
   enumMovimentacao: typeof TipoMovimentacao
   enumFormaPagamento: typeof FormaPagamento
@@ -94,16 +94,21 @@ export class TransactionFormComponent implements OnChanges {
     this.chargeVariable()
 
 
-    console.log("entrou income edit", this.openModalExpense, this.openModalTransfer, this.edit)
+    // console.log("entrou income edit", this.openModalExpense, this.openModalTransfer, this.editId)
 
     if(this.openModalIncome || this.openModalExpense){
 
 
-      if(this.edit ){
+      if(this.editId ){
         this.resourceFormIncomeExpense.get('tipo_recorrencia')?.disable();
         this.resourceFormIncomeExpense.get('quantity_member')?.disable();
         this.resourceFormIncomeExpense.get('condicao_pagamento')?.disable();
         this.resourceFormIncomeExpense.get('quantidade_parcelas')?.disable();
+
+         // FormArray com os campos 'id_parente' e 'valor_parente'
+        this.divideMember.controls.forEach(control => {
+          control.get('id_parente')?.disable();
+        });
 
 
       } else {
@@ -112,6 +117,10 @@ export class TransactionFormComponent implements OnChanges {
         this.resourceFormIncomeExpense.get('condicao_pagamento')?.enable();
         this.resourceFormIncomeExpense.get('quantidade_parcelas')?.enable();
 
+        
+        this.divideMember.controls.forEach(control => {
+          control.get('id_parente')?.enable();
+        });
 
       }
     }
@@ -140,6 +149,7 @@ export class TransactionFormComponent implements OnChanges {
       const financeiroId = this.resourceFormIncomeExpense.get('id_financeiro')?.value
       const formaPagamento = this.resourceFormIncomeExpense.get('forma_pagamento')?.value
 
+
       if(financeiroId != null && formaPagamento != null){
         if( formaPagamento == this.enumFormaPagamento.CREDITO){
           const creditCard = this.creditCard.find(item => item.id_cartao_credito == Number(financeiroId))
@@ -152,7 +162,7 @@ export class TransactionFormComponent implements OnChanges {
             this.selectPayment(dinheiro, this.enumFormaPagamento.DINHEIRO)
         }
         else if( formaPagamento == this.enumFormaPagamento.DEBITO){
-          const debito = this.accountDinheiro.find(item => item.id_conta == Number(financeiroId))
+          const debito = this.accountDebito.find(item => item.id_conta == Number(financeiroId))
           if(debito)  
             this.selectPayment(debito, this.enumFormaPagamento.DEBITO)
         }
@@ -392,7 +402,59 @@ export class TransactionFormComponent implements OnChanges {
       error:(error: HttpErrorResponse) =>{
         console.error(error)
       }
-    })  }
+    })  
+  }
+
+  editTransation(){
+
+    let resource;
+    if(this.openModalTransfer){
+      resource =  Object.assign({}, this.resourceFormTransfer.getRawValue());
+
+    }else{
+      resource =  Object.assign({}, this.resourceFormIncomeExpense.getRawValue());
+
+    }
+
+    
+    if(this.editId)
+      this.transationService.editTransation(this.editId, resource)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next:(data) => {
+          let end;
+          if(this.openModalExpense)
+            end = "despesa!"
+          else if (this.openModalIncome)
+            end = "receita!"
+          else if (this.openModalTransfer)
+            end = "transferência!"
+
+          this.alertService.showAlertSuccess("Sucesso ao editar " + end)
+          setTimeout(() =>{
+            window.location.reload();
+          }, 1000)
+        },
+        error:(error: HttpErrorResponse) =>{
+          console.error(error)
+        }
+      })  
+  }
+
+  submitIncomeExpense(){
+    if(this.editId != null){
+      this.editTransation();
+    }else{
+      if(this.openModalExpense){
+        this.addTransationExpense(true)
+      }else{
+        this.addTransationIncome(true)
+      }
+    }
+    
+  }
 
 
 }
+
+

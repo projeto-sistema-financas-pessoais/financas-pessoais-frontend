@@ -21,7 +21,6 @@ export class TransactionsComponent  extends BaseTransationComponent implements O
 
   Object = Object
 
-  private readonly authService: AuthService
 
   isMobile: boolean = false;
   
@@ -31,7 +30,6 @@ export class TransactionsComponent  extends BaseTransationComponent implements O
     ){
 
     super(injector);
-    this.authService = this.injector.get(AuthService)
 
   }
 

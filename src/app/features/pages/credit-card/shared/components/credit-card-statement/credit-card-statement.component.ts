@@ -29,7 +29,6 @@ export class CreditCardStatementComponent extends BaseGetIdComponent<CreditCard>
 
 
   // general
-  itemStatement!: TransactionList | undefined;
   statementSend!: StatementSend;
   dateMonth!: string;
   // dateFechamento!: Date;
