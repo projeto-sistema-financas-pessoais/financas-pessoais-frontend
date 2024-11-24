@@ -76,6 +76,7 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
 
   protected async openAddModal(){
     this.openModalAdd = true;
+    this.openModalEdit = false;
     this.openMenuGallery = false;
     this.buildForm()
     if(this.images)
@@ -101,7 +102,7 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
       modalTitle: `Editar ${this.nameComplete}`,
       canReturn: false
     }
-    this.buildForm()
+    this.buildForm(item)
 
     this.loadForm(item);
     await this.modalDefault.openDefault();
@@ -221,6 +222,6 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
     resource[`id_${this.nameId}`]  = this.idEdit;
     this.editResource(resource)
   }
-  protected abstract buildForm(): void;
+  protected abstract buildForm(item?:T): void;
 
 }
