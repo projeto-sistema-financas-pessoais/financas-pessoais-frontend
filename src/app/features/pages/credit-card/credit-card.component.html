@@ -54,6 +54,13 @@
                     
                                     </span>
                                 </div>
+
+                                <div class="text-start color-black-1 pb-1">Dia de Fechamento:  &nbsp;
+                                    <span  class="color-light-1">{{item.dia_fechamento }}</span>
+                                </div>
+                                <div class="text-start color-black-1 pb-1">Dia de Vencimento:  &nbsp;
+                                    <span  class="color-light-1">{{item.dia_vencimento }}</span>
+                                </div>
                             </div>
                             <div class="d-flex justify-content-end ">
                                 <button type="button" class="btn btn-outline-secondary f-16"  [routerLink]="['fatura-e-movimentacoes-do-cartao/', item.id_cartao_credito]" >Ver fatura</button>

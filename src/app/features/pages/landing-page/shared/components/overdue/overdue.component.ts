@@ -21,6 +21,9 @@ export class OverdueComponent extends BaseTransationComponent implements OnInit 
 
   // item!: TransactionList;
 
+  nameUser!: string;
+
+
 
   month = [
     "Janeiro",
@@ -49,6 +52,8 @@ export class OverdueComponent extends BaseTransationComponent implements OnInit 
   }
 
   ngOnInit() {
+
+    this.nameUser = this.authService.GetUser().name || 'null'
 
     this.getOverdue()
   }

@@ -22,6 +22,7 @@ export class CategoryComponent extends BaseFormComponent<Category>{
   tipoCategoria: string[] = [
     "Fixa",
     "Variável",
+    "Extra",
   ]
 
 
