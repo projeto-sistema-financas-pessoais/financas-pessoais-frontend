@@ -22,7 +22,7 @@
                             <div class="btn-group f-16">
                                 <i class="menu-icon fa-solid fa-ellipsis-vertical button-cursor"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                                 <div class="dropdown-menu" id="dropdownMenu">
-                                    <a *ngIf="item.nome !== 'Carteira'"  class="dropdown-item button-cursor color-green-2" (click)="deleteResource(item.id_cartao_credito)"> <i class="fa-solid fa-trash"></i> Excluir</a>
+                                    <a *ngIf="item.nome !== 'Carteira'"  class="dropdown-item button-cursor color-green-2" (click)="openDelete(item.id_cartao_credito, item.nome)"> <i class="fa-solid fa-trash"></i> Excluir</a>
                                     <a class="dropdown-item button-cursor color-green-2" (click)="deactivateResource(item.ativo, item.id_cartao_credito)"> <i class="fa-regular fa-rectangle-xmark"></i>
                                         {{item.ativo ? 'Desativar': 'Ativar'}}</a>
                                     <div *ngIf="item.nome !== 'Carteira'" class="dropdown-divider"></div>
@@ -87,7 +87,7 @@
 </div>
 
 
-<app-modal #modal_default [modalConfig]="modalConfig" (returnMessage)="this.openMenuGallery = false; this.modalConfig.canReturn = false;">
+<app-modal #modal_default [modalConfig]="modalConfig" (returnMessage)="this.openMenuGallery = false; this.modalConfig.canReturn = false;"   (dismiss)="this.openModalEdit = false; this.focusedField = null">
 
     <div modal-generic-content class="pt-3">
 
@@ -116,15 +116,34 @@
 
                 <div class="form-group mb-2 f-16">
                     <label for="dia_fechamento">Dia de Fechamento <b> * </b></label>
-                    <input type="number" class="form-control" id="dia_fechamento" formControlName="dia_fechamento">
-                    <app-form-field-error [control]="resourceForm.get('dia_fechamento')"></app-form-field-error>
-                </div>
+                    <input 
+                        type="number" 
+                        class="form-control" 
+                        id="dia_fechamento" 
+                        formControlName="dia_fechamento"
 
+                    >
+                    <app-form-field-error [control]="resourceForm.get('dia_fechamento')"></app-form-field-error>
+                    <small *ngIf="resourceForm.get('dia_fechamento')?.dirty && resourceForm.get('dia_fechamento')?.touched && openModalEdit" class="text-muted">
+                        Alterar o Dia de Fechamento afetará a fatura atual ({{monthNew}}) e futuras.
+                    </small>
+                </div>
+                
                 <div class="form-group mb-2 f-16">
                     <label for="dia_vencimento">Dia de Vencimento <b> * </b></label>
-                    <input type="number" class="form-control" id="dia_vencimento" formControlName="dia_vencimento">
+                    <input 
+                        type="number" 
+                        class="form-control" 
+                        id="dia_vencimento" 
+                        formControlName="dia_vencimento"
+
+                    >
                     <app-form-field-error [control]="resourceForm.get('dia_vencimento')"></app-form-field-error>
+                    <small *ngIf="resourceForm.get('dia_vencimento')?.dirty && resourceForm.get('dia_vencimento')?.touched && openModalEdit" class="text-muted">
+                        Alterar o Dia de Vencimento afetará a fatura atual ({{monthNew}}) e futuras.
+                    </small>
                 </div>
+                
             </div>
 
             <div class="d-flex justify-content-center">
@@ -150,3 +169,18 @@
        
     </div>
 </app-modal>
+<app-modal #modal_small [modalConfig]="modalConfig">
+    <div modal-generic-content-small class="pt-3" *ngIf="openModalDelete">
+      <span class="color-light-1">
+        <p class="text-center">Tem certeza que deseja excluir o cartão de crédito "{{currentCardName}}"?</p>
+      </span>
+      <div class="d-flex justify-content-evenly mt-4">
+        <button type="button" class="btn btn-outline-secondary f-16 flex-grow-1 mx-2" (click)="modalSmall.dismiss()">
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-danger f-16 flex-grow-1 mx-2" (click)="onDelete()">
+          Excluir
+        </button>
+      </div>
+    </div>
+  </app-modal>
