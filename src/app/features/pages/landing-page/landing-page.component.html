@@ -6,12 +6,73 @@
     <div class="pt-3">
 
         <div class="row d-flex justify-content-center">
+
+            <div class="col-md-5 card" >
+
+                <app-finance></app-finance>
+
+            </div>
+
+            <div class="col-md-5 card" >
+                <app-credit-finance></app-credit-finance> 
+
+            </div>
+
+        </div>
+
+
+        <div class="row d-flex justify-content-center">
+
+            <div class="col-md-5 card" >
+
+                <app-overdue [type]="true"></app-overdue>
+
+                
+            </div>
+
+            <div class="col-md-5 card" >
+                <app-overdue [type]="false"></app-overdue>
+
+
+
+            </div>
+
+        </div>
+
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-5 card" >
+                <app-income-expense [type]="true" [onlyUser]="income"></app-income-expense>
+
+                <p class="d-flex justify-content-center">
+                    <mat-button-toggle-group name="income" aria-label="income" [(ngModel)]="income">
+                        <mat-button-toggle [value]="true" class="f-16">Somente eu</mat-button-toggle>
+                    </mat-button-toggle-group>
+                </p>
+            </div>
+
+            <div class="col-md-5 card">
+                <app-income-expense [type]="false" [onlyUser]="expense"></app-income-expense>
+
+                <p class="d-flex justify-content-center">
+                    <mat-button-toggle-group name="expense" aria-label="expense" [(ngModel)]="expense">
+                        <mat-button-toggle [value]="true" class="f-16">Somente eu</mat-button-toggle>
+                        <mat-button-toggle [value]="false" class="f-16">Todos os membros</mat-button-toggle>
+                    </mat-button-toggle-group>
+                </p>
+            </div>
+            
+        </div>
+
+
+
+        <div class="row d-flex justify-content-center">
             <div class="col-md-5 card">
                 <app-monthly-budget-vs-actual (dateMonthYear)="dateMonthYear"></app-monthly-budget-vs-actual>
             
                 <p class="d-flex justify-content-center">
                     <mat-button-toggle-group name="monthly"  [(ngModel)]="monthly" aria-label="monthly">
-                        <mat-button-toggle [value]="true">Somente eu</mat-button-toggle>
+                        <mat-button-toggle [value]="true" class="f-16">Somente eu</mat-button-toggle>
                     </mat-button-toggle-group>
                 </p>
             
@@ -24,8 +85,8 @@
 
                 <p class="d-flex justify-content-center">
                     <mat-button-toggle-group name="economy" aria-label="economy" [(ngModel)]="economy">
-                        <mat-button-toggle [value]="true">Somente eu</mat-button-toggle>
-                        <mat-button-toggle [value]="false">Todos os membros</mat-button-toggle>
+                        <mat-button-toggle [value]="true" class="f-16">Somente eu</mat-button-toggle>
+                        <mat-button-toggle [value]="false" class="f-16">Todos os membros</mat-button-toggle>
                     </mat-button-toggle-group>
                 </p>
             </div>
@@ -33,29 +94,8 @@
         </div>
         
 
-        <div class="row d-flex justify-content-center">
-            <div class="col-md-5 card" >
-                <app-income-expense [type]="true" [onlyUser]="income"></app-income-expense>
-
-                <p class="d-flex justify-content-center">
-                    <mat-button-toggle-group name="income" aria-label="income" [(ngModel)]="income">
-                        <mat-button-toggle [value]="true">Somente eu</mat-button-toggle>
-                    </mat-button-toggle-group>
-                </p>
-            </div>
-
-            <div class="col-md-5 card">
-                <app-income-expense [type]="false" [onlyUser]="expense"></app-income-expense>
-
-                <p class="d-flex justify-content-center">
-                    <mat-button-toggle-group name="expense" aria-label="expense" [(ngModel)]="expense">
-                        <mat-button-toggle [value]="true">Somente eu</mat-button-toggle>
-                        <mat-button-toggle [value]="false">Todos os membros</mat-button-toggle>
-                    </mat-button-toggle-group>
-                </p>
-            </div>
-            
-        </div>
+        
+       
         
           
     </div>

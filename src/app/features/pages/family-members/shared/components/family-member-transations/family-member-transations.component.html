@@ -3,10 +3,13 @@
     <div class="d-flex justify-content-between">
     
         <h4>
-            <span class="me-2 button-cursor">
-                <i  class="fa-solid fa-chevron-left button-cursor  color-green-2" [routerLink]="'/membros-da-familia'"></i>
-
-            </span>
+            <button 
+                type="button" 
+                class="btn btn-link p-0 me-2" 
+                [routerLink]="'/membros-da-familia'"
+                aria-label="Voltar para membros da família">
+                <i class="fa-solid fa-chevron-left color-green-2"></i>
+            </button>
          
             <span>  Membro da Família  </span>
 
@@ -21,7 +24,7 @@
 
     <div class="d-flex  justify-content-evenly flex-wrap">
 
-        <div *ngIf="valuetotalMemberExpense"  class="card-info my-4">
+        <div *ngIf="itemStatement != null || itemStatement!= undefined"  class="card-info my-4">
 
             <div class="color-green-2 pb-1">
                 {{this.dateMonth}}
@@ -155,8 +158,9 @@
         </span>
 
         <div class="d-flex justify-content-evenly mt-4">
-            <button type="button" class="btn btn-outline-secondary f-16" (click)="modalSmall.dismiss()">Cancelar</button>
-            <button type="button" class="btn btn-green f-16" (click)="sendEmail()" *ngIf="resourceData.email && valuetotalMemberExpense - valueTotalTotalConsolidatedMemberExpense !== 0">Enviar</button>
+            <button type="button" class="btn btn-outline-secondary f-16" (click)="modalSmall.dismiss()" *ngIf="!(resourceData.email && valuetotalMemberExpense - valueTotalTotalConsolidatedMemberExpense !== 0)">Cancelar</button>
+            <button type="button" class="btn btn-green f-16" (click)="sendEmail()" *ngIf="resourceData.email && valuetotalMemberExpense - valueTotalTotalConsolidatedMemberExpense !== 0">Enviar e-mail</button>
+            <button type="button" class="btn btn-outline-secondary f-16" (click)="cobrancaPdf()" *ngIf="valuetotalMemberExpense - valueTotalTotalConsolidatedMemberExpense !== 0">Gerar PDF</button>
         </div>
     </div>
 </app-modal>

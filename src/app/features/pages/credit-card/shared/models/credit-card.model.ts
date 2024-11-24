@@ -9,6 +9,7 @@ export class CreditCard{
     dia_vencimento?: number
     dia_fechamento?: number
 
+    data_fechamento?: number
     constructor(data: any){
         Object.assign(this, data);
     }

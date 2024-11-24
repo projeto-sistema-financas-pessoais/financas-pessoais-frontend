@@ -1,0 +1,40 @@
+<div class="f-20 color-black-1"> Minhas contas
+  <i class="color-green-2 f-16  ms-2 button-cursor fa-solid fa-arrow-up-right-from-square" [routerLink]="'/contas'"></i>
+</div>
+
+
+<div class="d-flex justify-content-end">
+
+  <div class="color-light-1 F-16">
+      Saldo total: 
+      <span   [ngClass]="saldoTotal && saldoTotal < 0 ? 'text-danger' : 'text-success'">R$ {{saldoTotal | formatPrice}}</span>
+    </div>
+
+</div>
+
+<div class="overflow  scroll pt-3">
+
+  <ng-container *ngFor="let item of account; let i = index;" >
+
+    <div class="d-flex justify-content-between align-items-center flex-row pt-1">
+
+      <div class="d-flex justify-content-start align-items-center col-md-6">
+          
+        <img class="icon" src="./assets/icons_user/{{item.nome_icone}}" (error)="item.nome_icone = '1_pagamento.svg'" alt="">
+        
+        <div class="text-start">
+          <div class="ms-3 color-black-1 f-16 ellipsis">{{item.nome || 'Outros'}}</div>  
+        </div>
+  
+      </div>
+
+      <div class="color-black-1 col-md-2 f-16 d-flex justify-content-end"> 
+        <span   [ngClass]="item.saldo && item.saldo < 0 ? 'text-danger' : 'text-success'">R$ {{item.saldo || 0 | formatPrice}}</span>
+    
+      </div>
+    </div>
+    <div *ngIf="i !== account.length -1" class="line mt-2"></div>
+
+  </ng-container>
+
+</div>

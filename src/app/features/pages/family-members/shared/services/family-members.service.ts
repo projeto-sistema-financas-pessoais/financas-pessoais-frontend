@@ -17,4 +17,8 @@ export class FamilyMembersService extends BaseFormService<FamilyMembers>{
   sendEmailBill(statement: MemberSendEmail):Observable<any>{
     return this.http.post<any>(`${environment.financas}/${this.apiPath}/enviar-cobranca` ,statement,  {headers: this.headers})
   }
+
+  cobranca(statement: MemberSendEmail):Observable<any>{
+    return this.http.post<any>(`${environment.financas}/${this.apiPath}/cobranca`,  statement, {headers: this.headers})
+  }
 }

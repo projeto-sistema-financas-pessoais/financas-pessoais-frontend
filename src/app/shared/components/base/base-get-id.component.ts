@@ -3,6 +3,7 @@ import { Subject, takeUntil } from "rxjs";
 import { BaseModel } from "../../models/base/base-model.model";
 import { BaseFormService } from "../../services/base/base-form.service";
 import { ActivatedRoute } from "@angular/router";
+import { TransactionList } from "src/app/features/pages/transaction/shared/models/transation-list.model";
 
 @Directive()
 export abstract class BaseGetIdComponent<T extends BaseModel> implements OnInit, OnDestroy{
@@ -12,6 +13,8 @@ export abstract class BaseGetIdComponent<T extends BaseModel> implements OnInit,
     protected route: ActivatedRoute;
 
     resourceData!: T
+    itemStatement!: TransactionList | undefined;
+
   
     id!: number;
     constructor(

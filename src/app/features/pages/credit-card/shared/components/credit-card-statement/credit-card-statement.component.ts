@@ -29,12 +29,11 @@ export class CreditCardStatementComponent extends BaseGetIdComponent<CreditCard>
 
 
   // general
-  itemStatement!: TransactionList | undefined;
   statementSend!: StatementSend;
   dateMonth!: string;
-  dateFechamento!: Date;
-  datePayment!: Date;
-  dateToday!: Date;
+  // dateFechamento!: Date;
+  // datePayment!: Date;
+  dateToday!: string;
 
   valueConsolidatedExpense!: number
   valueTotalExpense!: number;
@@ -60,36 +59,98 @@ export class CreditCardStatementComponent extends BaseGetIdComponent<CreditCard>
     private alertService: AlertModalService,
     private creditCardService: CreditCardService){
     super(injector, new CreditCard({}), creditCardService );
-    this.dateToday = new Date()
+    this.dateToday= this.formatDateToday(); 
+
     this.statementSend = new StatementSend()
   }
 
+  formatDateToday(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); 
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
   
   addStatement(evt: TransactionList | undefined){
     
     if(evt){
-      this.datePayment = new Date(evt.data_pagamento);
-    
-      const month = this.datePayment.getMonth();
-      const year = this.datePayment.getFullYear();
-  
-      this.dateMonth = this.month[month] + " " + year
-      this.itemStatement = evt;
-  
-      this.dateFechamento =  new Date(this.itemStatement.fatura_info?.data_fechamento || '')
-      console.log("itemStatement", this.itemStatement, this.valueTotalExpense,  "teste",this.valueConsolidatedExpense)
-  
-  
-    }else {
+
+
+      const [year, month, day] = String(evt.fatura_info?.data_fechamento).split('-').map(Number);
+
+      this.dateMonth = this.month[month-1] + " " + year
+
       this.itemStatement = evt;
 
+
     }
-  
+    else{
+      this.itemStatement  = undefined;
+    }
+
+  }
+
+  checkIfDateIsLess(date1: any, date2: any, value?: boolean){
+
+    const [year1, month1, day1] = String(date1).split('-').map(Number);
+
+    const [year2, month2, day2] = String(date2).split('-').map(Number);
+
+      let isDate1Less = false;
+
+      if (year1 < year2) {
+        isDate1Less = true;
+      } else if (year1 === year2) {
+          if (month1 < month2) {
+            isDate1Less = true;
+          } else if (month1 === month2) {
+              if (day1 < day2) {
+                isDate1Less = true;
+              }
+          }
+      }
+
+
+    return isDate1Less
+
+  }
+
+  checkMonth(date1: any, date2: any){
+    const [year1, month1, day1] = String(date1).split('-').map(Number);
+
+    const [year2, month2, day2] = String(date2).split('-').map(Number);
+
+    if(month1 !== month2){
+      return true
+    }
+
+    return false
+  }
+
+
+  checkMothYear(date1: any, date2: any){
+    const [year1, month1, day1] = String(date1).split('-').map(Number);
+
+    const [year2, month2, day2] = String(date2).split('-').map(Number);
+
+
+    if (year2 === year1) {
+      // Mesmo ano: verificar a diferença de meses
+      return (month2 - month1) >= 2;
+    } else if (year2 > year1) {
+        const monthDifference = (year2 - year1) * 12 + (month2 - month1);
+        return monthDifference >= 2;
+    }
+    
+    // Qualquer outro caso (data2 é menor que data1 ou muito próximo)
+    return false;
+
   }
 
   isButtonDisabled(): boolean {
-    return (this.dateToday.getMonth() < this.datePayment.getMonth()) || 
-           (this.dateToday.getFullYear() < this.datePayment.getFullYear());
+    return this.checkMothYear(this.dateToday, this.itemStatement?.fatura_info?.data_fechamento)
+
   }
 
 
@@ -101,7 +162,8 @@ export class CreditCardStatementComponent extends BaseGetIdComponent<CreditCard>
     .subscribe({
       next: (data) =>{
         this.alertService.showAlertSuccess(
-          this.datePayment < this.dateToday || (this.dateToday.getMonth() !== this.datePayment.getMonth()) ? 'Sucesso ao antecipar fatura' : 'Sucesso ao fechar fatura'
+
+          this.checkIfDateIsLess(this.dateToday ,this.itemStatement?.fatura_info?.data_fechamento) ? 'Sucesso ao antecipar fatura' : 'Sucesso ao fechar fatura'
         )
 
         setTimeout(() =>{
@@ -123,7 +185,9 @@ export class CreditCardStatementComponent extends BaseGetIdComponent<CreditCard>
   async openCloseCardStatement(){
     this.openModalCloseStatement = true;
     this.modalConfig = {
-      modalTitle: this.datePayment < this.dateToday || (this.dateToday.getMonth() !== this.datePayment.getMonth()) ? 'Antecipar pagamento' : 'Fechar fatura'
+      modalTitle: 
+      this.checkIfDateIsLess(this.dateToday ,this.itemStatement?.fatura_info?.data_fechamento)
+       ? 'Antecipar pagamento' : 'Fechar fatura'
     }
 
     if(this.account.length == 0)

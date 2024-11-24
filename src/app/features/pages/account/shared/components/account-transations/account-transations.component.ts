@@ -11,7 +11,7 @@ import { TransactionList } from 'src/app/features/pages/transaction/shared/model
   templateUrl: './account-transations.component.html',
   styleUrls: ['./account-transations.component.scss']
 })
-export class AccountTransationsComponent extends BaseGetIdComponent<Account>{
+export class AccountTransationsComponent extends BaseGetIdComponent<Account> {
 
   valueConsolidatedIncome!: number;
   valueConsolidatedExpense!: number;
@@ -40,7 +40,7 @@ export class AccountTransationsComponent extends BaseGetIdComponent<Account>{
 
   constructor
   (  injector : Injector,
-    private accountService: AccountService
+    protected accountService: AccountService
   ){
     super(injector, new Account({}), accountService);
   }
@@ -55,7 +55,12 @@ export class AccountTransationsComponent extends BaseGetIdComponent<Account>{
       const year = datePayment.getFullYear();
   
       this.dateMonth = this.month[month] + " " + year
+      this.itemStatement = evt;
+
   
+    }else{
+      this.itemStatement = undefined;
+
     }
   
   }

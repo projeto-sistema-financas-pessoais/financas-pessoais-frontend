@@ -27,7 +27,7 @@
 
     <div class="d-flex  justify-content-evenly flex-wrap">
 
-        <div *ngIf="itemStatement" class="card-info my-4">
+        <div *ngIf="itemStatement != null || itemStatement!= undefined " class="card-info my-4">
 
             <div class="d-flex justify-content-between">
                 <span class="color-black-1">Limite do cartão: </span>
@@ -70,7 +70,8 @@
 
             <div class="d-flex justify-content-between">
                 <span class="color-black-1">
-                    {{ datePayment < dateFechamento ? 'Data da antecipação de pagamento:' : 'Data de pagamento:'}}
+                    {{ 
+                        checkIfDateIsLess(this.itemStatement.data_pagamento, this.itemStatement.fatura_info?.data_fechamento) ? 'Data da antecipação:' : 'Data de pagamento:'}}
                     
                 </span>
 
@@ -119,7 +120,7 @@
                 <span class="text-danger text-center d-flex ajust-items-center justify-content-center">
                     
                     <mat-icon class="color-green-4 ms-2 f-16 ">credit_score</mat-icon>
-                    R${{(itemStatement.fatura_info?.fatura_gastos || 0) | formatPrice}}
+                    R${{(itemStatement.fatura_info?.fatura_gastos) | formatPrice}}
                 </span>
 
             </div>
@@ -134,7 +135,14 @@
                 <button type="button" [disabled]="isButtonDisabled()"
                 (click)="openCloseCardStatement()"
                 class="btn btn-outline-secondary f-16">
-                    {{datePayment < dateToday || (dateToday.getMonth() !== datePayment.getMonth()) ? 'Antecipar pagamento' : 'Fechar fatura'}}
+                    <!-- {{datePayment < dateToday || (dateToday.getMonth() !== datePayment.getMonth()) ? 'Antecipar pagamento' : 'Fechar fatura'}} -->
+
+                    @if(checkIfDateIsLess(this.dateToday ,this.itemStatement.fatura_info?.data_fechamento  , true)){
+                        Antecipar pagamento
+
+                    }@else{
+                        Fechar Fatura
+                    }
                 </button>
 
             </div>
@@ -150,6 +158,7 @@
             (valueConsolidatedExpense)="valueConsolidatedExpense = $event"
             (valueTotalExpense)="valueTotalExpense = $event"
             (valueTotalConfirmed)="valueTotalConfirmed = $event"
+            [data_fechamento]="resourceData.data_fechamento || 0"
             ></app-transaction-list>
         </div>
         
@@ -165,7 +174,7 @@
 
     <div modal-generic-content-small class="pt-3" *ngIf="openModalCloseStatement">
 
-        <ng-container *ngIf="((itemStatement?.fatura_info?.fatura_gastos || 0) - valueConsolidatedExpense) !== 0; else notCloseStatement">
+        <ng-container *ngIf="(itemStatement?.fatura_info?.fatura_gastos) != 0; else notCloseStatement">
 
             <span class="color-light-1">
 

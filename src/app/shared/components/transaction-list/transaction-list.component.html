@@ -6,7 +6,7 @@
             ></i>
     
             <i class="fa-solid fa-circle-chevron-left button-cursor" style="font-size: 20px;" (click)="changeMonth(false)"></i>
-            <span class="color-light-3 mx-5 f-20 button-cursor">{{month[transationFilter.mes -1]}} {{transationFilter.ano}}</span>
+            <span class="color-light-3 mx-5 f-20 button-cursor"> {{type== 'credit' ? 'Fatura' : ''}}   {{month[transationFilter.mes -1]}} {{transationFilter.ano}}</span>
             <i class="fa-solid fa-circle-chevron-right button-cursor" style="font-size: 20px;" (click)="changeMonth(true)"></i>
     
         </div>
@@ -67,7 +67,7 @@
             <ng-container *ngFor="let item of transactionList; let i = index;"> 
                 <div class="d-flex justify-content-between align-items-center flex-row">
         
-                    <div class="mx-2 color-light-1 f-16 ">{{item.data_pagamento | formatday }}</div>
+                    <div class="mx-2 color-light-1 f-16 ">{{item.data_pagamento  | formatday}}</div>
         
                     <div class="item">
                         <div class="d-flex justify-content-between align-items-center">
@@ -128,7 +128,7 @@
                             
                             <div class="col-md-2 d-flex justify-content-center gap-3">
                                 <div *ngIf="item.tipoMovimentacao !== enumMovimentacao.TRANSFERENCIA && !item.id_fatura && item.tipoMovimentacao !== enumMovimentacao.FATURA"
-                                (click)="changeConsolidated(item)" class="button-cursor">
+                                (click)="changeConsolidated(item, type)" class="button-cursor">
                                     <i *ngIf="item.consolidado" class="color-green-4 fa-solid fa-circle-check "></i>
                                     <i *ngIf="!item.consolidado" class="color-light-3 fa-solid fa-circle-check"></i>
                                     
@@ -143,7 +143,7 @@
                                     *ngIf="item.consolidado" class=" fa-solid fa-circle-check color-green-opacity"></i>
                                 </div> 
         
-                                <div *ngIf="item.forma_pagamento == enumFormaPagamento.CREDITO && !item.consolidado" class="f-16 button-cursor" (click)="changeLimitAndExchange(item)"
+                                <div *ngIf="item.forma_pagamento == enumFormaPagamento.CREDITO && !item.consolidado" class="f-16 button-cursor" (click)="changeLimitAndExchange(item, type)"
                                 [tooltip]="item.participa_limite_fatura_gastos ? 'Remover movimentação do limite e total confirmado': 'Adicionar movimentação do limite e total confirmado'" container="body" placement="bottom" [delay]="600"> 
                                     <mat-icon  class="d-flex align-items-center  text-center f-16"
                                     [ngClass]="item.participa_limite_fatura_gastos ? 'color-green-4': 'color-light-3'">credit_score</mat-icon>
@@ -167,6 +167,11 @@
                                 <div class="dropdown-menu" id="dropdownMenu">
                                     <a class="dropdown-item button-cursor color-green-2" (click)="openDelete(item)">
                                         <i class="fa-solid fa-trash"></i> Excluir
+                                    </a>
+
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item button-cursor color-green-2" (click)="openEdit(item)" >
+                                        <i class="fa-solid fa-pen-to-square" ></i> Editar
                                     </a>
                                 </div>
                             </div>
@@ -210,7 +215,7 @@
                         </div>
         
                         
-                        <div *ngIf="divideMember(item)" class="d-flex justify-content-between align-items-center pt-1 my-0 flex-wrap">
+                        <div *ngIf="divideMemberF(item)" class="d-flex justify-content-between align-items-center pt-1 my-0 flex-wrap">
                             <mat-icon class="color-light-1 display-none-desktop me-2">groups</mat-icon>
         
                             <div class="color-light-1 f-14 d-flex align-items-center flex-grow-1 flex-wrap"> 
@@ -243,34 +248,62 @@
 
 
 <app-modal #modal_small [modalConfig]="modalConfig">
-    <div modal-generic-content-small class="pt-3" *ngIf="openModalDelete">
-        <ng-container *ngIf="deleteItem.consolidado && deleteItem.id_fatura; else defaultContent">
-            <span class="color-light-1">
-                <p class="text-center">Não é possível deletar uma movimentação pertencente a uma fatura consolidada.</p>
-            </span>
+    <div modal-generic-content-small class="pt-3" >
 
-            <div class="d-flex justify-content-center mt-4">
-                <button type="button" class="btn btn-outline-secondary f-16" (click)="modalSmall.dismiss()">Cancelar</button>
-            </div>
-        </ng-container>
-
-        <ng-template #defaultContent>
+        <app-delete-transation  *ngIf="openModalDelete" [deleteItem]="deleteItem" (dismiss)="modalSmall.dismiss()" (delete)="deleteTransation()"></app-delete-transation>
+       
+        <ng-container *ngIf="openModalCantEdit">
             <span class="color-light-1">
-                <p class="text-center">Tem certeza que deseja excluir a movimentação?
-                    {{deleteItem.id_repeticao ? 'Essa e as movimentações seguintes associadas serão deletadas.' : ''}}
+
+                <p class="text-center">
+                    Não é possível editar uma movimentação de uma fatura que já foi paga.
                 </p>
-                <span class="d-flex justify-content-center"> Descrição: &nbsp; <strong>{{deleteItem.descricao || 'Sem descrição'}}</strong></span>
-                <span class="d-flex justify-content-center">
-                    Data de pagamento: &nbsp;
-                    <strong>{{ deleteItem.data_pagamento ? (deleteItem.data_pagamento | date: 'dd/MM/yyyy') : null }}</strong>
-                </span>
-                <span class="d-flex justify-content-center"> Condição de pagamento: &nbsp; <strong>{{deleteItem.condicao_pagamento}}</strong></span>
             </span>
-            
-            <div class="d-flex justify-content-evenly mt-4">
-                <button type="button" class="btn btn-outline-secondary f-16" (click)="modalSmall.dismiss()">Cancelar</button>
-                <button type="button" class="btn btn-danger f-16" (click)="deleteTransation()">Remover</button>
-            </div>
-        </ng-template>
+    
+            <div class="d-flex justify-content-center mt-4">
+                <button type="button" class="btn btn-outline-secondary f-16" (click)="modalSmall.dismiss()">Sair</button>
+            </div>       
+        </ng-container>
+        
+    </div>
+
+</app-modal>
+
+
+<app-modal #modal_default [modalConfig]="modalConfig" >
+
+    <div modal-generic-content class="pt-3">
+
+        <!-- Transferencia -->
+        <app-transaction-form
+        [resourceFormTransfer]="resourceFormTransfer"
+        [resourceFormIncomeExpense]="resourceFormIncomeExpense"
+        [openModalTransfer]="openModalTransfer"
+        [openModalIncome]="openModalIncome"
+        [openModalExpense]="openModalExpense"
+        [selectedCategoryName]="selectedCategoryName"
+        [selectedCategoryIcon]="selectedCategoryIcon"
+        [dropdownOpenCategory]="dropdownOpenCategory"
+        [selectedPaymentName]="selectedPaymentName"
+        [selectedPaymentIcon]="selectedPaymentIcon"
+        [dropdownOpenPayment]="dropdownOpenPayment"
+        [dropdownOpenAccountCurrent]="dropdownOpenAccountCurrent"
+        [selectedAccontCurrentName]="selectedAccontCurrentName"
+        [selectedAccontTransferName]="selectedAccontTransferName"
+        [selectedAccontTransferIcon]="selectedAccontTransferIcon"
+        [account]="account"
+        [member]="member"
+        [nameUser]="nameUser"
+        [categoryIncome]="categoryIncome"
+        [categoryExpense]="categoryExpense"
+        [creditCard]="creditCard"
+        [accountDebito]="accountDebito"
+        [accountDinheiro]="accountDinheiro"
+        [quantityMember]="quantityMember"
+        [editId]="edit"
+        
+        >
+        </app-transaction-form>
+       
     </div>
 </app-modal>
