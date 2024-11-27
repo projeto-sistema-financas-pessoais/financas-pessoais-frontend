@@ -205,7 +205,10 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
     .subscribe({
       next: (response) =>{
         console.log("editou!", response, "resource", resource)
-        window.location.reload()
+        this.alertService.showAlertSuccess("Edição feita com sucesso!")
+        setTimeout( () => {
+          window.location.reload()
+        },500)
       },
       error: (error) => {
         if(error.status == 406)

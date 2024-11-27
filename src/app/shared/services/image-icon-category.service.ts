@@ -40,7 +40,10 @@ export class ImageIconCategoryService {
     { fileName: 'bookmark.svg' , color: '#F39C12'},
     { fileName: 'business.svg' , color: '#16A085'},
     { fileName: 'book.svg' , color: '#D35400'},
-    { fileName: 'car.svg' , color: '#FF4500'} 
+    { fileName: 'car.svg' , color: '#FF4500'},
+    { fileName: 'health_and_beauty.svg' , color: '#FF007F'} 
+
+  
   ];
 
 

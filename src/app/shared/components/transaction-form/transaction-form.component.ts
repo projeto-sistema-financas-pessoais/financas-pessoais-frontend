@@ -139,10 +139,14 @@ export class TransactionFormComponent implements OnChanges {
           const category = this.categoryExpense.find(item => item.id_categoria == Number(categoriaId))
           if(category)
             this.selectCategory(category)
+          else
+            console.log("não achou categoria expense", category)
         }else if(this.openModalIncome){
           const category = this.categoryIncome.find(item => item.id_categoria == Number(categoriaId))
           if(category)
             this.selectCategory(category)
+          else
+            console.log("não achou categoria income", category)
         }
       }
 
@@ -242,6 +246,7 @@ export class TransactionFormComponent implements OnChanges {
     this.selectedCategoryName = category.nome;
     this.selectedCategoryIcon = category.nome_icone;
     this.resourceFormIncomeExpense.get('id_categoria')?.setValue(category.id_categoria)
+    console.log("categoria", category, this.resourceFormIncomeExpense.get('id_categoria')?.value)
     this.dropdownOpenCategory = false;
   }
 
@@ -310,7 +315,7 @@ export class TransactionFormComponent implements OnChanges {
         if(reload){
           setTimeout(() =>{
             window.location.reload();
-          }, 1000)
+          }, 800)
         }
         else {
           this.resourceFormTransfer.get('valor')?.setValue(null)
@@ -359,12 +364,12 @@ export class TransactionFormComponent implements OnChanges {
         if(reload){
           setTimeout(() =>{
             window.location.reload();
-          }, 1000)
+          }, 800)
         }
         else {
           this.resourceFormIncomeExpense.get('valor')?.setValue(null)
           this.resourceFormIncomeExpense.get('descricao')?.setValue(null)
-
+          this.resourceFormIncomeExpense.get('quantity_member')?.setValue("Somente eu")
         }
         console.log('sucesso', data)
       },
@@ -390,7 +395,7 @@ export class TransactionFormComponent implements OnChanges {
         if(reload){
           setTimeout(() =>{
             window.location.reload();
-          }, 1000)
+          }, 800)
         }
         else {
           this.resourceFormIncomeExpense.get('valor')?.setValue(null)
@@ -433,7 +438,7 @@ export class TransactionFormComponent implements OnChanges {
           this.alertService.showAlertSuccess("Sucesso ao editar " + end)
           setTimeout(() =>{
             window.location.reload();
-          }, 1000)
+          }, 800)
         },
         error:(error: HttpErrorResponse) =>{
           console.error(error)
