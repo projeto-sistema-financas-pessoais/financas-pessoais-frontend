@@ -76,7 +76,9 @@
 
   <div class="row">
       <div class="form-group mb-2 col-md-6 col-sm-12">
-          <label class="f-16" for="valor">Valor<b> * </b></label>
+          <label class="f-16" for="valor">
+            {{editId !== null && resourceFormIncomeExpense.get('condicao_pagamento')?.value == enumCondicaoPagamento.PARCELADO ? 'Valor da Parcela' : 'Valor'}}
+            <b> * </b></label>
           <input type="number" class="form-control" id="valor" formControlName="valor" [placeholder]=" openModalExpense ? 'Digite o valor da despesa': 'Digite o valor da receita' ">
           <app-form-field-error [control]="resourceFormIncomeExpense.get('valor')"></app-form-field-error>
       </div>
@@ -216,8 +218,14 @@
       <div *ngIf="resourceFormIncomeExpense.get('condicao_pagamento')?.value == enumCondicaoPagamento.PARCELADO" class="form-group mb-2 col-md-6 col-sm-12">
           <label class="f-16" for="quantidade_parcelas">Quantidade de parcelas<b> * </b></label>
           <input type="number" class="form-control" id="quantidade_parcelas" formControlName="quantidade_parcelas" placeholder="Digite a quantidade de parcelas">
+          <small *ngIf="editId == null" class="text-muted">
+            O valor inserido será dividido pelo número de parcelas
+           </small>
           <app-form-field-error [control]="resourceFormIncomeExpense.get('quantidade_parcelas')"></app-form-field-error>
-      </div>
+        
+        </div>
+
+     
 
       <div *ngIf="resourceFormIncomeExpense.get('condicao_pagamento')?.value == enumCondicaoPagamento.RECORRENTE" class="form-group mb-2 col-md-6 col-sm-6">
           <label class="f-16" for="tipo_recorrencia">Tipo de Recorrência<b> * </b></label>
