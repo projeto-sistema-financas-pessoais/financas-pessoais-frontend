@@ -1,4 +1,4 @@
 export const environment = {
-    production: false,
+    production: true,
     financas: 'https://financas-pessoais-api.lat/api/v1' 
 };
