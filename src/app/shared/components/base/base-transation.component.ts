@@ -184,7 +184,7 @@ export abstract class BaseTransationComponent implements  OnDestroy{
 
         setTimeout(() =>{
           window.location.reload();
-        }, 1000)
+        }, 800)
         
         console.log("delete transation success", data)
       },

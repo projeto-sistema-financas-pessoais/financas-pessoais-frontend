@@ -67,7 +67,7 @@ export class RegisterComponent implements OnInit, OnDestroy{
 
         setTimeout( () => {
           window.location.href= '/login';
-        },1000)
+        },800)
       },
       error:(error: any) =>{
         console.log("Error", error, valueSubmit);

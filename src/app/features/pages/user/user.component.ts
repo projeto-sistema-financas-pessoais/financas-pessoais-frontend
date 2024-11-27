@@ -100,7 +100,7 @@ export class UserComponent  extends BaseFormComponent<User>{
 
         setTimeout( () => {
           window.location.reload()
-        },1000)
+        },800)
 
       },
       error: (error) => {
@@ -119,11 +119,11 @@ export class UserComponent  extends BaseFormComponent<User>{
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe({
       next: () =>{
-        this.alertService.showAlertSuccess("Sucesso ao deletar!")
+        this.alertService.showAlertSuccess("Sucesso ao deletar usuário! Seus dados foram excluídos.")
 
         setTimeout( () => {
           window.location.href= '/login';
-        },1000)
+        },1200)
       },
       error: (error) => {
 
