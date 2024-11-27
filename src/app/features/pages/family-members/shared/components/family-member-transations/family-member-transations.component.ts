@@ -250,7 +250,7 @@ export class FamilyMemberTransationsComponent extends BaseGetIdComponent<FamilyM
       }
 
       // Adiciona a tabela de faturas não consolidadas
-      currentY = formatarTabela('Faturas Não Consolidadas', faturas_nao_consolidadas, currentY);
+      // currentY = formatarTabela('Faturas Não Consolidadas', faturas_nao_consolidadas, currentY);
 
       // Verifica se precisa adicionar nova página para as informações gerais
       if (currentY > doc.internal.pageSize.height - 60) {
@@ -262,10 +262,10 @@ export class FamilyMemberTransationsComponent extends BaseGetIdComponent<FamilyM
       doc.setFontSize(12);
       currentY += 15;
       doc.text(`Total de Movimentações: ${data.data.fatura_geral.total_movimentacoes}`, 14, currentY);
-      currentY += 10;
-      doc.text(`Total de Movimentações na Fatura: ${data.data.fatura_geral.total_movimentacoes_fatura}`, 14, currentY);
-      currentY += 10;
-      doc.text(`Total Geral de Movimentações: ${data.data.fatura_geral.total_geral_movimentacoes}`, 14, currentY);
+      // currentY += 10;
+      // doc.text(`Total de Movimentações na Fatura: ${data.data.fatura_geral.total_movimentacoes_fatura}`, 14, currentY);
+      // currentY += 10;
+      // doc.text(`Total Geral de Movimentações: ${data.data.fatura_geral.total_geral_movimentacoes}`, 14, currentY);
 
       // Salva o PDF
       doc.save(`cobranca_${memberSendEmail.id_parente}_${memberSendEmail.mes}_${memberSendEmail.ano}.pdf`);
