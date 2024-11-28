@@ -24,7 +24,13 @@
             ],
             "allowedCommonJsDependencies": [
               "core-js/modules/es.array.index-of.js",
-              "jspdf-autotable"
+              "jspdf-autotable",
+              "canvg",
+              "apexcharts",
+              "rgbcolor",
+              "core-js",
+              "raf"
+
 
             ],
             "tsConfig": "tsconfig.app.json",
@@ -63,7 +69,7 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
+                  "replace": "src/environments/environment.development.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
