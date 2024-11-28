@@ -202,7 +202,7 @@ export class FamilyMemberTransationsComponent extends BaseGetIdComponent<FamilyM
         }
 
         const tabelaDados = dados.map((item: Movimentacao) => [
-          item.descricao,
+          item.descricao && item.descricao.trim() !== '' ? item.descricao : 'Outros',
           formatarData(item.data_pagamento),
           item.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
         ]);
@@ -261,14 +261,19 @@ export class FamilyMemberTransationsComponent extends BaseGetIdComponent<FamilyM
       // Adiciona as informações gerais da fatura com espaçamento adequado
       doc.setFontSize(12);
       currentY += 15;
-      doc.text(`Total de Movimentações: ${data.data.fatura_geral.total_movimentacoes}`, 14, currentY);
+      doc.text(
+        `Total de Movimentações: ${data.data.fatura_geral.total_movimentacoes.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`,
+        14,
+        currentY
+      );
+      
       // currentY += 10;
       // doc.text(`Total de Movimentações na Fatura: ${data.data.fatura_geral.total_movimentacoes_fatura}`, 14, currentY);
       // currentY += 10;
       // doc.text(`Total Geral de Movimentações: ${data.data.fatura_geral.total_geral_movimentacoes}`, 14, currentY);
 
       // Salva o PDF
-      doc.save(`cobranca_${memberSendEmail.id_parente}_${memberSendEmail.mes}_${memberSendEmail.ano}.pdf`);
+      doc.save(`cobranca_${memberSendEmail.mes}_${memberSendEmail.ano}.pdf`);
     });
 }
 }
