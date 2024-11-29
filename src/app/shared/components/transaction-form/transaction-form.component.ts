@@ -99,6 +99,7 @@ export class TransactionFormComponent implements OnChanges {
     if(this.openModalIncome || this.openModalExpense){
 
 
+      console.log("this.edit", this.editId)
       if(this.editId ){
         this.resourceFormIncomeExpense.get('tipo_recorrencia')?.disable();
         this.resourceFormIncomeExpense.get('quantity_member')?.disable();
@@ -240,6 +241,8 @@ export class TransactionFormComponent implements OnChanges {
     this.resourceFormIncomeExpense.get('id_financeiro')?.setValue(value)
 
     this.dropdownOpenPayment = false;
+    this.dropdownOpenCategory = false;
+
   }
 
   selectCategory(category: Category) {
