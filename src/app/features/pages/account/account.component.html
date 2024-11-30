@@ -93,9 +93,10 @@
     
                 <div class="form-group mb-2 col-md-6 col-sm-12">
                     <label for="nome">Ícone da conta<b> * </b></label>
+                    
                     <img class="icon mx-3 button-cursor" src="./assets/icons_user/{{imageSelected}}"
                     [alt]="imageSelected" (click)="openGallery()"
-                    tabindex="0"
+                    tabindex="0" role="button"
                     (keyup)="onKeyPressGallery($event)"
                     >
                 </div>
