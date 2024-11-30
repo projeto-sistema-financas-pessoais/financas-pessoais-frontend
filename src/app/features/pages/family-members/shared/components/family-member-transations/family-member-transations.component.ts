@@ -1,10 +1,9 @@
-import { Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Component, Injector, ViewChild } from '@angular/core';
+import { takeUntil } from 'rxjs';
 import { FamilyMembers, MemberSendEmail } from '../../models/family-members.model';
 import { FamilyMembersService } from '../../services/family-members.service';
 import { BaseGetIdComponent } from 'src/app/shared/components/base/base-get-id.component';
-import { FaturaInfo, TransactionList } from 'src/app/features/pages/transaction/shared/models/transation-list.model';
+import { TransactionList } from 'src/app/features/pages/transaction/shared/models/transation-list.model';
 import { AuthService } from 'src/app/features/auth/shared/services/auth.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalConfig } from 'src/app/shared/models/moda-config.model';
@@ -59,9 +58,9 @@ export class FamilyMemberTransationsComponent extends BaseGetIdComponent<FamilyM
 
   constructor
   (  injector : Injector,
-    private familyMembersService: FamilyMembersService,
-    protected authService: AuthService,
-    private alertService: AlertModalService,
+    private readonly familyMembersService: FamilyMembersService,
+    protected readonly authService: AuthService,
+    private readonly alertService: AlertModalService,
 
     ){
     super(injector, new FamilyMembers({}), familyMembersService);
@@ -238,7 +237,7 @@ export class FamilyMemberTransationsComponent extends BaseGetIdComponent<FamilyM
       currentY += 20;
 
       // Recupera os dados da resposta
-      const { movimentacoes_nao_consolidadas, faturas_nao_consolidadas } = data.data;
+      const { movimentacoes_nao_consolidadas,  } = data.data;
 
       // Adiciona a tabela de movimentações não consolidadas
       currentY = formatarTabela('Movimentações Não Consolidadas', movimentacoes_nao_consolidadas, currentY);

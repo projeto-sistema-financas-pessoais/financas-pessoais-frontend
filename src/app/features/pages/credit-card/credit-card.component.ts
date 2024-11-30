@@ -45,7 +45,7 @@ export class CreditCardComponent  extends BaseFormComponent<CreditCard>{
   ];
 
   protected getMonth(value: any) {
-    const [year1, month1, day1] = String(value).split('-').map(Number);
+    const [, month1, ] = String(value).split('-').map(Number);
     this.monthNew = this.month[month1-1];
   }
   

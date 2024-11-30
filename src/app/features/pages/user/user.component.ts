@@ -1,5 +1,5 @@
-import { Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Injector, ViewChild } from '@angular/core';
+import { FormGroup, Validators } from '@angular/forms';
 import { UserService } from './shared/services/user.service'
 import { AuthService } from '../../auth/shared/services/auth.service';
 import { User } from './shared/models/user.model'
@@ -31,8 +31,7 @@ export class UserComponent  extends BaseFormComponent<User>{
     protected readonly userService: UserService,
     protected readonly authService: AuthService,
     injector : Injector,
-    private router: Router,
-    private datePipe: DatePipe 
+    private readonly router: Router,
      ){
   
     super(injector, new User({}), 'usuario', 'Usuário', userService);

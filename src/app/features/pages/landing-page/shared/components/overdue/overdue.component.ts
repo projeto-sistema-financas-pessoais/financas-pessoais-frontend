@@ -19,11 +19,7 @@ export class OverdueComponent extends BaseTransationComponent implements OnInit 
   transactionList: TransactionList[] = [];
   faturaInfo: FaturaInfo[] = []
 
-  // item!: TransactionList;
-
   nameUser!: string;
-
-
 
   month = [
     "Janeiro",
@@ -43,12 +39,11 @@ export class OverdueComponent extends BaseTransationComponent implements OnInit 
 
   constructor(
     private readonly overdueService: OverdueService,
-    private router: Router,
+    private readonly router: Router,
     injector : Injector,
     ) { 
     super(injector);
 
-    // this.item = new TransactionList()
   }
 
   ngOnInit() {
@@ -65,10 +60,7 @@ export class OverdueComponent extends BaseTransationComponent implements OnInit 
     .subscribe({
       next: (data: Overdue) => {
           this.transactionList = data.movimentacoes;
-          this.faturaInfo = data.faturas
-
-          
-          // this.item = data[0];
+          this.faturaInfo = data.faturas    
           console.log( "list",data)
       }, 
       error: (error: HttpErrorResponse) => {
@@ -82,13 +74,13 @@ export class OverdueComponent extends BaseTransationComponent implements OnInit 
   }
 
   getMonth(date: string) {
-    const [year1, month1, day1] = String(date).split('-').map(Number);
+    const [, month1, ] = String(date).split('-').map(Number);
 
     return this.month[month1 -1]
   }
 
   setQuery(item: FaturaInfo){
-    const [year1, month1, day1] = String(item.data_fechamento).split('-').map(Number);
+    const [year1, month1, ] = String(item.data_fechamento).split('-').map(Number);
 
 
     let queryParams: any = {mes:  month1, ano:  year1};

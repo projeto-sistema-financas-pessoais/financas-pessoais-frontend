@@ -13,12 +13,11 @@ export class ModalComponent {
   @Input() public modalConfig!: ModalConfig 
 
   @Output() returnMessage: EventEmitter<string> = new EventEmitter<string>();
-  @ViewChild('modal_default') private modalDefault!: TemplateRef<ModalComponent>
-  @ViewChild('modal_small') private modalSmall!: TemplateRef<ModalComponent>
+  @ViewChild('modal_default') private readonly modalDefault!: TemplateRef<ModalComponent>
+  @ViewChild('modal_small') private readonly modalSmall!: TemplateRef<ModalComponent>
 
   constructor(
-    private modalService: NgbModal,
-    private router: Router,
+    private readonly modalService: NgbModal,
   ){}
 
 

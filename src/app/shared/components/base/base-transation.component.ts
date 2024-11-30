@@ -1,4 +1,4 @@
-import { Directive, Injector, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Directive, Injector, OnDestroy, ViewChild } from "@angular/core";
 import { Subject, takeUntil } from "rxjs";
 import { TransationService } from "src/app/features/pages/transaction/shared/services/transation.service";
 import { AlertModalService } from "../../services/alert-modal.service";

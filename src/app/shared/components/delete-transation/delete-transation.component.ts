@@ -6,7 +6,7 @@ import { TransactionList } from 'src/app/features/pages/transaction/shared/model
   templateUrl: './delete-transation.component.html',
   styles: [`@import'src/styles.scss';`]
 })
-export class DeleteTransationComponent implements OnInit {
+export class DeleteTransationComponent {
 
   constructor() { }
   @Output() dismiss: EventEmitter<any> = new EventEmitter;
@@ -14,8 +14,5 @@ export class DeleteTransationComponent implements OnInit {
 
 
   @Input() deleteItem!: TransactionList
-
-  ngOnInit() {
-  }
 
 }

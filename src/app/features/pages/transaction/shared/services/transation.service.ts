@@ -47,7 +47,7 @@ export class TransationService  {
     return this.http.post<any>(`${environment.financas}/movimentacao/consolidar` , transationConsolidated, {headers: this.headers})
   }
 
-  changeLimitAndExpense(idMovimentacao: number, change: Boolean): Observable<any>{
+  changeLimitAndExpense(idMovimentacao: number, change: boolean): Observable<any>{
     return this.http.post<any>(`${environment.financas}/movimentacao/participa_limite_faturas_gastos?id_movimentacao=${idMovimentacao}&participa_limite_fatura_gastos=${change}` ,null, {headers: this.headers})
   }
 

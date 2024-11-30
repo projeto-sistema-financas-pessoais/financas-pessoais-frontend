@@ -11,7 +11,7 @@ export interface IconCategory {
 export class ImageIconCategoryService {
 
 
-  private imageList: IconCategory[] = [
+  private readonly imageList: IconCategory[] = [
     { fileName: 'transport.svg' , color: '#00A8E1'},
     { fileName: 'starhappy.svg' , color: '#FFEA00'},
     { fileName: 'schooll.svg' , color: '#800080'},

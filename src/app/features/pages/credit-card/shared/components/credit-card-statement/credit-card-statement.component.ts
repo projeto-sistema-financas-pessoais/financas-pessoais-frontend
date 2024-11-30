@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { Component, Injector, ViewChild } from '@angular/core';
 import { CreditCard, StatementSend } from '../../models/credit-card.model';
 import { CreditCardService } from '../../services/credit-card.service';
 import { BaseGetIdComponent } from 'src/app/shared/components/base/base-get-id.component';
@@ -56,8 +56,8 @@ export class CreditCardStatementComponent extends BaseGetIdComponent<CreditCard>
 
   constructor(  injector : Injector,
     private readonly accountService: AccountService,
-    private alertService: AlertModalService,
-    private creditCardService: CreditCardService){
+    private readonly alertService: AlertModalService,
+    private readonly creditCardService: CreditCardService){
     super(injector, new CreditCard({}), creditCardService );
     this.dateToday= this.formatDateToday(); 
 
@@ -77,7 +77,7 @@ export class CreditCardStatementComponent extends BaseGetIdComponent<CreditCard>
     if(evt){
 
 
-      const [year, month, day] = String(evt.fatura_info?.data_fechamento).split('-').map(Number);
+      const [year, month, ] = String(evt.fatura_info?.data_fechamento).split('-').map(Number);
 
       this.dateMonth = this.month[month-1] + " " + year
 
@@ -117,9 +117,9 @@ export class CreditCardStatementComponent extends BaseGetIdComponent<CreditCard>
   }
 
   checkMonth(date1: any, date2: any){
-    const [year1, month1, day1] = String(date1).split('-').map(Number);
+    const [, month1, ] = String(date1).split('-').map(Number);
 
-    const [year2, month2, day2] = String(date2).split('-').map(Number);
+    const [, month2, ] = String(date2).split('-').map(Number);
 
     if(month1 !== month2){
       return true
@@ -130,9 +130,9 @@ export class CreditCardStatementComponent extends BaseGetIdComponent<CreditCard>
 
 
   checkMothYear(date1: any, date2: any){
-    const [year1, month1, day1] = String(date1).split('-').map(Number);
+    const [year1, month1, ] = String(date1).split('-').map(Number);
 
-    const [year2, month2, day2] = String(date2).split('-').map(Number);
+    const [year2, month2, ] = String(date2).split('-').map(Number);
 
 
     if (year2 === year1) {

@@ -10,7 +10,7 @@ import { filter } from 'rxjs';
 export class AppComponent {
   pageTitle: string = '';  // Título padrão
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private readonly router: Router, private readonly route : ActivatedRoute) {}
 
   ngOnInit() {
     this.router.events

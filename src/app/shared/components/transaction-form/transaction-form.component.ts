@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { TransationService } from 'src/app/features/pages/transaction/shared/services/transation.service';
@@ -9,7 +9,6 @@ import { FamilyMembers } from 'src/app/features/pages/family-members/shared/mode
 import { Category } from 'src/app/features/pages/user/shared/models/category.model';
 import { CondicaoPagamento, FormaPagamento, TipoConta, TipoMovimentacao, TipoRecorrencia } from '../../models/enum.model';
 import { CreditCard } from 'src/app/features/pages/credit-card/shared/models/credit-card.model';
-import { DivideMember } from '../../../features/pages/transaction/shared/models/transation.model';
 
 @Component({
   selector: 'app-transaction-form',
@@ -45,10 +44,6 @@ export class TransactionFormComponent implements OnChanges {
   @Input() categoryIncome: Category[] = [];
   @Input() categoryExpense: Category[] = [];
 
-
-  // @Input() divideMember!: FormArray;
-  // divideMember!: FormArray
-
   @Input() creditCard: CreditCard [] = [];
 
   @Input() accountDebito: Account[] = []
@@ -74,8 +69,8 @@ export class TransactionFormComponent implements OnChanges {
 
   constructor(
     private readonly transationService: TransationService,
-    private alertService: AlertModalService,
-    private formBuilder: FormBuilder,
+    private readonly alertService: AlertModalService,
+    private readonly formBuilder: FormBuilder,
   ) {
     this.enumMovimentacao = TipoMovimentacao
     this.enumFormaPagamento = FormaPagamento;
@@ -128,9 +123,23 @@ export class TransactionFormComponent implements OnChanges {
 
 
 
+
+
+
   chargeVariable(){
     if(this.openModalIncome || this.openModalExpense){
-      const categoriaId = this.resourceFormIncomeExpense.get('id_categoria')?.value
+      
+      this.chargeIncomeExpenseCategory();
+      this.chargeIncomeExpenseFinance();
+     
+
+    }else if(this.openModalTransfer){
+      this.chargeTransfer()
+    }
+  }
+
+  chargeIncomeExpenseCategory(){
+    const categoriaId = this.resourceFormIncomeExpense.get('id_categoria')?.value
       if(categoriaId !== null){
         if(this.openModalExpense){
           const category = this.categoryExpense.find(item => item.id_categoria == Number(categoriaId))
@@ -146,31 +155,35 @@ export class TransactionFormComponent implements OnChanges {
             console.log("não achou categoria income", category)
         }
       }
+  }
 
-      const financeiroId = this.resourceFormIncomeExpense.get('id_financeiro')?.value
-      const formaPagamento = this.resourceFormIncomeExpense.get('forma_pagamento')?.value
+  chargeIncomeExpenseFinance(){
+
+    const financeiroId = this.resourceFormIncomeExpense.get('id_financeiro')?.value
+    const formaPagamento = this.resourceFormIncomeExpense.get('forma_pagamento')?.value
 
 
-      if(financeiroId != null && formaPagamento != null){
-        if( formaPagamento == this.enumFormaPagamento.CREDITO){
-          const creditCard = this.creditCard.find(item => item.id_cartao_credito == Number(financeiroId))
-          if(creditCard)  
-            this.selectPayment(creditCard, this.enumFormaPagamento.CREDITO)
-        }
-        else if( formaPagamento == this.enumFormaPagamento.DINHEIRO){
-          const dinheiro = this.accountDinheiro.find(item => item.id_conta == Number(financeiroId))
-          if(dinheiro)  
-            this.selectPayment(dinheiro, this.enumFormaPagamento.DINHEIRO)
-        }
-        else if( formaPagamento == this.enumFormaPagamento.DEBITO){
-          const debito = this.accountDebito.find(item => item.id_conta == Number(financeiroId))
-          if(debito)  
-            this.selectPayment(debito, this.enumFormaPagamento.DEBITO)
-        }
+    if(financeiroId != null && formaPagamento != null){
+      if( formaPagamento == this.enumFormaPagamento.CREDITO){
+        const creditCard = this.creditCard.find(item => item.id_cartao_credito == Number(financeiroId))
+        if(creditCard)  
+          this.selectPayment(creditCard, this.enumFormaPagamento.CREDITO)
       }
-
-    }else if(this.openModalTransfer){
-      const contaAtualId  = this.resourceFormTransfer.get('id_conta_atual')?.value
+      else if( formaPagamento == this.enumFormaPagamento.DINHEIRO){
+        const dinheiro = this.accountDinheiro.find(item => item.id_conta == Number(financeiroId))
+        if(dinheiro)  
+          this.selectPayment(dinheiro, this.enumFormaPagamento.DINHEIRO)
+      }
+      else if( formaPagamento == this.enumFormaPagamento.DEBITO){
+        const debito = this.accountDebito.find(item => item.id_conta == Number(financeiroId))
+        if(debito)  
+          this.selectPayment(debito, this.enumFormaPagamento.DEBITO)
+      }
+    }
+  }
+  
+  chargeTransfer(){
+    const contaAtualId  = this.resourceFormTransfer.get('id_conta_atual')?.value
       const contaTranferenciaId = this.resourceFormTransfer.get('id_conta_transferencia')?.value
 
       console.log("conta", contaAtualId, contaTranferenciaId)
@@ -183,8 +196,9 @@ export class TransactionFormComponent implements OnChanges {
           this.selectAccountTransfer(contaTransferencia)
 
       }
-    }
   }
+
+
 
   get divideMember(): FormArray {
     return this.resourceFormIncomeExpense.get('divide_parente') as FormArray;
@@ -269,8 +283,11 @@ export class TransactionFormComponent implements OnChanges {
         console.log("entrou")
         let valueSend;
         let  memberId;
-        i == 0 ?  valueSend = valueMemberFinal + remainingValue :  valueSend = valueMemberFinal
-        const value = Number(valueSend.toFixed(2))
+        if (i === 0) {
+          valueSend = valueMemberFinal + remainingValue;
+        } else {
+          valueSend = valueMemberFinal;
+        }        const value = Number(valueSend.toFixed(2))
         memberId = this.member[i].id_parente || null
 
         this.divideMember.push(this.createDivideMember(memberId, value));
@@ -421,14 +438,16 @@ export class TransactionFormComponent implements OnChanges {
   }
 
   submitIncomeExpense(){
-    if(this.editId != null){
+
+    if (this.editId != null) {
       this.editTransation();
-    }else{
-      if(this.openModalExpense){
-        this.addTransationExpense(true)
-      }else{
-        this.addTransationIncome(true)
-      }
+      return;
+    }
+  
+    if (this.openModalExpense) {
+      this.addTransationExpense(true);
+    } else {
+      this.addTransationIncome(true);
     }
     
   }

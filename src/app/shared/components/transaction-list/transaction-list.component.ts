@@ -1,7 +1,7 @@
 import { BaseTransationComponent } from '../base/base-transation.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, Injector, Input, Output, ViewChild } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Component, EventEmitter, Injector, Input, Output } from '@angular/core';
+import { takeUntil } from 'rxjs';
 import { CondicaoPagamento, FormaPagamento, TipoMovimentacao } from 'src/app/shared/models/enum.model';
 import { TransationFilter, TransactionList } from 'src/app/features/pages/transaction/shared/models/transation-list.model';
 import { Category } from 'src/app/features/pages/user/shared/models/category.model';
@@ -76,9 +76,9 @@ export class TransactionListComponent extends BaseTransationComponent {
 
   constructor(
     injector : Injector,
-    private route: ActivatedRoute,
-    private router: Router,
-    private location: Location
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly location: Location
     ){
 
     super(injector);
@@ -192,10 +192,7 @@ export class TransactionListComponent extends BaseTransationComponent {
     let sumTotalMemberConsolidatedExpense: number = 0;
 
     this.transactionList.forEach(item => {
-
-      
-      // sumTotal += Number(item.valor);
-
+ 
       if(item.tipoMovimentacao == this.enumMovimentacao.RECEITA){
         sumTotalIncome += Number(item.valor)
         if(item.consolidado){
@@ -223,14 +220,8 @@ export class TransactionListComponent extends BaseTransationComponent {
         
       }
 
-
-      // if (item.consolidado) {
-
-      //   sumConsolidated +=  Number(item.valor);
-      // }
       if(item.participa_limite_fatura_gastos){
         sumTotalConfirmed +=  Number(item.valor);
-
       }
 
       if(this.type == 'member'){
@@ -265,11 +256,7 @@ export class TransactionListComponent extends BaseTransationComponent {
     }
 
     if(this.type == 'credit'){
-      // this.valuetotal.emit(sumTotal);
-      // this.valueConsolidated.emit(sumConsolidated);
       this.valueTotalConfirmed.emit(sumTotalConfirmed)
-
-
       
     }else if(this.type == 'member'){
       
