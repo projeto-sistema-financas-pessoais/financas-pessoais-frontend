@@ -1,4 +1,4 @@
-import { Directive, Injector, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Directive, Injector, OnDestroy, ViewChild } from "@angular/core";
 import { Subject, takeUntil } from "rxjs";
 import { TransationService } from "src/app/features/pages/transaction/shared/services/transation.service";
 import { AlertModalService } from "../../services/alert-modal.service";
@@ -43,18 +43,14 @@ export abstract class BaseTransationComponent implements  OnDestroy{
 
     selectedCategoryName: string | null = null;
     selectedCategoryIcon: string | null = null;
-    dropdownOpenCategory: boolean = false;
 
     selectedPaymentName: string | null = null;
     selectedPaymentIcon: string | null = null;
-    dropdownOpenPayment: boolean = false;
 
 
-    dropdownOpenAccountCurrent: boolean = false;
     selectedAccontCurrentName: string | null = null;
     selectedAccontCurrentIcon: string | null = null;
 
-    dropdownOpenAccountTransfer: boolean = false;
     selectedAccontTransferName: string | null = null;
     selectedAccontTransferIcon: string | null = null;
 

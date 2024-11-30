@@ -11,6 +11,7 @@ import { AuthService } from '../../auth/shared/services/auth.service';
   styleUrls: ['./family-members.component.scss']
 })
 export class FamilyMembersComponent extends BaseFormComponent<FamilyMembers>{
+ 
 
   constructor(
     protected readonly familyMembersService: FamilyMembersService,
@@ -40,6 +41,9 @@ export class FamilyMembersComponent extends BaseFormComponent<FamilyMembers>{
     this.buildForm();
     this.nameUser = this.authService.GetUser().name || 'null'
 
+  }
+
+  protected override enableForm(enable: boolean): void {
   }
 
 }

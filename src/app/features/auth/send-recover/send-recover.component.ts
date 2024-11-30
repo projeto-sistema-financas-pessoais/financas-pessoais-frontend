@@ -11,12 +11,12 @@ import { AuthService } from '../shared/services/auth.service';
 })
 export class SendRecoverComponent {
   resourceForm!: FormGroup;
-  private ngUnsubscribe = new Subject<void>();
+  private readonly ngUnsubscribe = new Subject<void>();
 
   constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private alertService: AlertModalService
+    private readonly formBuilder: FormBuilder,
+    private readonly authService: AuthService,
+    private readonly alertService: AlertModalService
   ) {}
 
   ngOnDestroy(): void {

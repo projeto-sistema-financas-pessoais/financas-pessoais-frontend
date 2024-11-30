@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -6,7 +6,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   templateUrl: './alert-modal.component.html',
   styleUrls: ['./alert-modal.component.scss']
 })
-export class AlertModalComponent implements OnInit {
+export class AlertModalComponent {
 
   @Input() message!: string;
   @Input() type ='success' // standard
@@ -14,9 +14,6 @@ export class AlertModalComponent implements OnInit {
 
   
   constructor(public bsModalRef: BsModalRef ){ }
-
-  ngOnInit() {
-  }
 
   OnClose(){
     this.bsModalRef.hide();

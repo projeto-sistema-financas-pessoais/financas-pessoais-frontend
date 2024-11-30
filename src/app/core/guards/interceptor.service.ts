@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AlertModalService } from '../../shared/services/alert-modal.service';
@@ -9,8 +9,8 @@ import { AuthService } from 'src/app/features/auth/shared/services/auth.service'
 export class InterceptorService implements HttpInterceptor {
 
   constructor(
-    private authService: AuthService,
-    private alertModelService: AlertModalService
+    private readonly authService: AuthService,
+    private readonly alertModelService: AlertModalService
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

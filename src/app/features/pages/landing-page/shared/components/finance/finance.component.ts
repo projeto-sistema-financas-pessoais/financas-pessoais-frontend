@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { Account } from 'src/app/features/pages/account/shared/models/account.model';
 import { AccountService } from 'src/app/features/pages/account/shared/services/account.service';

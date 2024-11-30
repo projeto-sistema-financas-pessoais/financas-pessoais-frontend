@@ -15,7 +15,7 @@ export class LoginComponent {
   response!: LoginResponse;
 
 
-  private ngUnsubscribe = new Subject<void>();
+  private readonly ngUnsubscribe = new Subject<void>();
   showPassword: boolean = true;
   showConfirmPassword: boolean = false;
 

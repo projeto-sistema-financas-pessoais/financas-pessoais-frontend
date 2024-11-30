@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/shared/services/auth.service';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-landing-page',

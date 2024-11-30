@@ -14,13 +14,19 @@
     <div class="container mt-5">
     
         <div class="menu f-16">
-            <div class="menu-item text-center" (click)="changeModelCategory(true)"
+            <div class="menu-item text-center button-cursor" 
+            (click)="changeModelCategory(true)"
+            tabindex="0" 
+            (keyup)="onKeyDownModelCategory($event, true)"
             [ngClass]="income ? 'active': ''">
                 <h5>Receita</h5>
                 <div *ngIf="income" class="underline"></div>
 
             </div>
-            <div class="menu-item" (click)="changeModelCategory(false)"
+            <div class="menu-item button-cursor" 
+            (click)="changeModelCategory(false)"
+            tabindex="0" 
+            (keyup)="onKeyDownModelCategory($event, true)"
             [ngClass]="!income ? 'active': ''">
                 <h5>Despesa</h5>
                 <div *ngIf="!income" class="underline"></div>
@@ -92,7 +98,7 @@
     }@else {
         <div class="container-d-flex justify-content-center py-5">
             <div class="text-center">
-                <img src="./assets/images/data.png" height="250" width="250">
+                <img src="./assets/images/data.png" height="250" width="250" alt="Imagem que indica falta de dados">
                 <div  class="color-light-1 pt-1">Você não possui categoria do tipo {{income ? 'receita' : 'despesa'}}. Cadastre uma nova!</div>
             </div>
         </div>
@@ -128,8 +134,10 @@
     
                 <div class="form-group mb-2 col-md-6 col-sm-12">
                     <label class="f-16" for="nome">Ícone da categoria<b> * </b></label>
-                    <img class=" mx-3 button-cursor" src="./assets/icones_category/{{imageSelected}}"
-                    alt="" (click)="openGallery()">
+                    <img class=" mx-3 button-cursor outline" src="./assets/icones_category/{{imageSelected}}"
+                    alt="" (click)="openGallery()"
+                    tabindex="0"
+                    (keyup)="onKeyPressGallery($event)">
                 </div>
         
     
@@ -166,7 +174,11 @@
         <ng-template #gallery>
             <div class="image-gallery">
                 <div *ngFor="let icon of icons" class="icon-item">
-                  <img  class="button-cursor" src="./assets/icones_category/{{icon.fileName}}" [alt]="icon.fileName"  (click)="selectedIcon(icon.fileName)"/>
+                  <img  class="button-cursor outline" src="./assets/icones_category/{{icon.fileName}}" 
+                  [alt]="icon.fileName" 
+                  (click)="selectedIcon(icon.fileName)"
+                  tabindex="0"
+                    (keyup)="onKeyDown($event, icon.fileName)"/>
                 </div>
               </div>
         </ng-template>

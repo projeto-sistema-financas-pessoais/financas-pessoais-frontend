@@ -3,8 +3,6 @@ import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/features/auth/shared/services/auth.service';
 import { environment } from 'src/environments/environment.development';
-import { MonthBudgetCategory } from '../models/month-budget-category.model';
-import { TransactionList } from '../../../transaction/shared/models/transation-list.model';
 import { Overdue } from '../models/overdue.model';
 
 @Injectable({

@@ -1,12 +1,12 @@
-import { Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Injector, ViewChild } from '@angular/core';
+import { FormGroup, Validators } from '@angular/forms';
 import { UserService } from './shared/services/user.service'
 import { AuthService } from '../../auth/shared/services/auth.service';
 import { User } from './shared/models/user.model'
 import { BaseFormComponent } from 'src/app/shared/components/base/base-form.component';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common'; 
-import { take, takeUntil } from "rxjs";
+import { takeUntil } from "rxjs";
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 
 
@@ -18,6 +18,7 @@ import { ModalComponent } from 'src/app/shared/components/modal/modal.component'
 
 })
 export class UserComponent  extends BaseFormComponent<User>{
+  
   userForm!: FormGroup;
   user!: User
 
@@ -30,8 +31,7 @@ export class UserComponent  extends BaseFormComponent<User>{
     protected readonly userService: UserService,
     protected readonly authService: AuthService,
     injector : Injector,
-    private router: Router,
-    private datePipe: DatePipe 
+    private readonly router: Router,
      ){
   
     super(injector, new User({}), 'usuario', 'Usuário', userService);
@@ -136,4 +136,6 @@ export class UserComponent  extends BaseFormComponent<User>{
     })
   }
 
+  protected override enableForm(enable: boolean): void {
+  }
 }

@@ -19,11 +19,15 @@
           <label class="f-16 d-flex align-items-center" for="id_carteira">
               <mat-icon class="color-light-1 me-1" >account_balance</mat-icon>Conta atual <b> * </b>
           </label> 
-          <div class="form-select" (click)="toggleDropdownAccountCurrent()">
+          <div class="form-select" 
+          type="button" 
+          id="dropdownContaAtualButton" 
+          data-bs-toggle="dropdown" 
+          aria-expanded="false">
             <img *ngIf="selectedAccontCurrentIcon" [src]="'./assets/icons_user/' + selectedAccontCurrentIcon" alt="Ícone" style="width: 20px; margin-right: 8px;">
             {{ selectedAccontCurrentName || 'Selecione uma opção' }}
           </div>
-          <div *ngIf="dropdownOpenAccountCurrent" class="dropdown-options">
+          <div class="dropdown-menu dropdown-options" aria-labelledby="dropdownContaAtualButton" style="width: 100%;">
             <div class="dropdown-option" *ngFor="let item of account" (click)="selectAccountCurrent(item)">
               <img [src]="'./assets/icons_user/' + item.nome_icone" alt="{{item.nome}}" style="width: 20px; margin-right: 8px;">
               {{ item.nome }}
@@ -40,20 +44,25 @@
           <label class="f-16 d-flex align-items-center" for="id_carteira">
               <mat-icon class="color-light-1 me-1" >account_balance</mat-icon>Conta destino <b> * </b>
           </label> 
-          <div class="form-select" (click)="toggleDropdownAccountTransfer()">
+          <div class="form-select" 
+          type="button" 
+          id="dropdownContaTransferenciaButton" 
+          data-bs-toggle="dropdown" 
+          aria-expanded="false">
             <img *ngIf="selectedAccontTransferIcon" [src]="'./assets/icons_user/' + selectedAccontTransferIcon" alt="Ícone" style="width: 20px; margin-right: 8px;">
             {{ selectedAccontTransferName || 'Selecione uma opção' }}
           </div>
-          <div *ngIf="dropdownOpenAccountTransfer" class="dropdown-options">
+          <div class="dropdown-menu dropdown-options" aria-labelledby="dropdownContaTransferenciaButton" style="width: 100%;">
             <div class="dropdown-option" *ngFor="let item of account" (click)="selectAccountTransfer(item)">
               <img [src]="'./assets/icons_user/' + item.nome_icone" alt="{{item.nome}}" style="width: 20px; margin-right: 8px;">
               {{ item.nome }}
             </div>
           </div>
-          <app-form-field-error [control]="resourceFormTransfer.get('id_conta_transferencia')"></app-form-field-error>
           <p class="text-danger"
           *ngIf="checkIfAccountTransf()"
           > Conta atual não pode ser igual a conta destino</p>
+          <app-form-field-error [control]="resourceFormTransfer.get('id_conta_transferencia')"></app-form-field-error>
+          
       </div>
 
       <div class="d-flex justify-content-center">
@@ -77,7 +86,7 @@
   <div class="row">
       <div class="form-group mb-2 col-md-6 col-sm-12">
           <label class="f-16" for="valor">
-            {{editId !== null && resourceFormIncomeExpense.get('condicao_pagamento')?.value == enumCondicaoPagamento.PARCELADO ? 'Valor da Parcela' : 'Valor'}}
+            {{(editId != null || editId != undefined) && resourceFormIncomeExpense.get('condicao_pagamento')?.value == enumCondicaoPagamento.PARCELADO ? 'Valor da Parcela' : 'Valor'}}
             <b> * </b></label>
           <input type="number" class="form-control" id="valor" formControlName="valor" [placeholder]=" openModalExpense ? 'Digite o valor da despesa': 'Digite o valor da receita' ">
           <app-form-field-error [control]="resourceFormIncomeExpense.get('valor')"></app-form-field-error>
@@ -90,34 +99,48 @@
       </div>
 
 
-      <div class="mb-2 custom-dropdown col-md-6 col-sm-12">
-          <label class="f-16" for="id_categoria">Categoria <b> * </b></label>
-          <div class="form-select" (click)="toggleDropdownCategory()">
-            <img *ngIf="selectedCategoryIcon" [src]="'./assets/icones_category/' + selectedCategoryIcon" alt="Ícone da categoria" style="width: 20px; margin-right: 8px;">
-            {{ selectedCategoryName || 'Selecione uma opção' }}
-          </div>
-          <div *ngIf="dropdownOpenCategory" class="dropdown-options">
-             
-             <ng-container *ngIf="openModalExpense; else incomeCategory">
-              <div class="dropdown-option" *ngFor="let item of categoryExpense" (click)="selectCategory(item)">
-                  <img [src]="'./assets/icones_category/' + item.nome_icone" alt="{{item.nome}}" style="width: 20px; margin-right: 8px;">
-                  {{ item.nome }}
-                </div>
-              </ng-container>
+       <div class="mb-2 custom-dropdown col-md-6 col-sm-12">
+        <label class="f-16" for="id_categoria">Categoria <b> * </b></label>
+        <div 
+          class="form-select" 
+          type="button" 
+          id="dropdownCategoryButton" 
+          data-bs-toggle="dropdown" 
+          aria-expanded="false">
+          <img *ngIf="resourceFormIncomeExpense.get('id_categoria')?.value && selectedCategoryIcon" [src]="'./assets/icones_category/' + selectedCategoryIcon" alt="Ícone da categoria" style="width: 20px; margin-right: 8px;">
 
-              <ng-template #incomeCategory>
-                  <div class="dropdown-option" *ngFor="let item of categoryIncome" (click)="selectCategory(item)">
-                      <img [src]="'./assets/icones_category/' + item.nome_icone" alt="{{item.nome}}" style="width: 20px; margin-right: 8px;">
-                      {{ item.nome }}
-                    </div>
-              </ng-template>
-              
-              
-            
-          </div>
-          <app-form-field-error [control]="resourceFormIncomeExpense.get('id_categoria')"></app-form-field-error>
-
+          @if(resourceFormIncomeExpense.get('id_categoria')?.value && selectedPaymentName){
+            {{ selectedCategoryName}}
+          }@else{
+            {{"Selecione uma opção"}}
+          }
+        </div>
+        <div *ngIf="(openModalExpense && categoryExpense.length != 0) || (openModalIncome && categoryIncome.length != 0)" 
+        class="dropdown-menu dropdown-options" aria-labelledby="dropdownCategoryButton">
+          <ng-container *ngIf="openModalExpense; else incomeCategory">
+            <div *ngFor="let item of categoryExpense">
+              <div class="dropdown-option"(click)="selectCategory(item)">
+                <img [src]="'./assets/icones_category/' + item.nome_icone" alt="{{item.nome}}" style="width: 20px; margin-right: 8px;">
+                {{ item.nome }}
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #incomeCategory>
+            <div *ngFor="let item of categoryIncome">
+              <div class="dropdown-option" (click)="selectCategory(item)">
+                <img [src]="'./assets/icones_category/' + item.nome_icone" alt="{{item.nome}}" style="width: 20px; margin-right: 8px;">
+                {{ item.nome }}
+              </div>
+            </div>
+          </ng-template>
+        </div>
+        <p *ngIf="(openModalExpense && categoryExpense.length == 0) || (openModalIncome && categoryIncome.length == 0)" class="text-danger">
+          Você não tem categorias. 
+          <a href="/configuracoes-de-usuario/categorias">Cadastre uma</a> 
+        </p>
+        <app-form-field-error [control]="resourceFormIncomeExpense.get('id_categoria')"></app-form-field-error>
       </div>
+      
 
       <div class="form-group mb-2 col-md-6 col-sm-12">
           <label class="f-16" for="forma_pagamento">Forma de Pagamento<b> * </b></label>
@@ -134,39 +157,65 @@
           </select>                    
           <app-form-field-error [control]="resourceFormIncomeExpense.get('forma_pagamento')"></app-form-field-error>
       </div>
-
      
 
       <!-- Credito -->
-      <div *ngIf="resourceFormIncomeExpense.get('forma_pagamento')?.value === enumFormaPagamento.CREDITO" class="mb-2 custom-dropdown col-md-6 col-sm-12">
-          <label class="f-16 d-flex align-items-center" for="id_categoria">
+      <div *ngIf="resourceFormIncomeExpense.get('forma_pagamento')?.value === enumFormaPagamento.CREDITO" 
+      class="mb-2 custom-dropdown col-md-6 col-sm-12">
+          <label class="f-16 d-flex align-items-center" for="id_credito">
                  <mat-icon class="color-light-1 me-1" >credit_card</mat-icon>Cartão de Crédito <b> * </b>
           </label>
-          <div class="form-select" (click)="toggleDropdownPayment()">
-            <img *ngIf="selectedPaymentIcon" [src]="'./assets/icons_user/' + selectedPaymentIcon" alt="Ícone" style="width: 20px; margin-right: 8px;">
-            {{ selectedPaymentName || 'Selecione uma opção' }}
+          <div 
+          class="form-select"
+          id="dropdownCreditoButton" 
+          data-bs-toggle="dropdown" 
+          aria-expanded="false">
+            <img *ngIf="resourceFormIncomeExpense.get('id_financeiro')?.value && selectedPaymentIcon" 
+            [src]="'./assets/icons_user/' + selectedPaymentIcon" alt="Ícone" style="width: 20px; margin-right: 8px;">
+            @if(resourceFormIncomeExpense.get('id_financeiro')?.value && selectedPaymentName){
+              {{ selectedPaymentName}}
+            }@else{
+              {{"Selecione uma opção"}}
+            }
           </div>
-          <div *ngIf="dropdownOpenPayment" class="dropdown-options">
+          <div *ngIf="creditCard.length != 0" class="dropdown-menu dropdown-options" aria-labelledby="dropdownCreditoButton">
             <div class="dropdown-option" *ngFor="let item of creditCard" (click)="selectPayment(item, enumFormaPagamento.CREDITO)">
               <img [src]="'./assets/icons_user/' + item.nome_icone" alt="{{item.nome}}" style="width: 20px; margin-right: 8px;">
               {{ item.nome }}
             </div>
           </div>
+          <p *ngIf="creditCard.length == 0" class="text-danger">
+            Você não tem cartões de crédito. 
+            <a href="/cartao-de-credito">Cadastre um</a> 
+          </p>
           <app-form-field-error [control]="resourceFormIncomeExpense.get('id_financeiro')"></app-form-field-error>
 
       </div>
 
+
+
       <!-- Dinheiro -->
-      <div *ngIf="resourceFormIncomeExpense.get('forma_pagamento')?.value === enumFormaPagamento.DINHEIRO" class="mb-2 custom-dropdown col-md-6 col-sm-12">
+      <div *ngIf="resourceFormIncomeExpense.get('forma_pagamento')?.value === enumFormaPagamento.DINHEIRO" 
+      class="mb-2 custom-dropdown col-md-6 col-sm-12">
           <label class="f-16 d-flex align-items-center" for="id_carteira">
               <mat-icon class="color-light-1 me-1" >account_balance</mat-icon>Conta Carteira <b> * </b>
 
           </label>
-          <div class="form-select" (click)="toggleDropdownPayment()">
-            <img *ngIf="selectedPaymentIcon" [src]="'./assets/icons_user/' + selectedPaymentIcon" alt="Ícone" style="width: 20px; margin-right: 8px;">
-            {{ selectedPaymentName || 'Selecione uma opção' }}
+          <div 
+          class="form-select"
+          id="dropdownDinheiroButton" 
+          data-bs-toggle="dropdown" 
+          aria-expanded="false"
+          >
+            <img *ngIf="resourceFormIncomeExpense.get('id_financeiro')?.value && selectedPaymentIcon" [src]="'./assets/icons_user/' + selectedPaymentIcon" alt="Ícone" style="width: 20px; margin-right: 8px;">
+            @if(resourceFormIncomeExpense.get('id_financeiro')?.value && selectedPaymentName){
+              {{ selectedPaymentName}}
+            }@else{
+              {{"Selecione uma opção"}}
+            }
+            
           </div>
-          <div *ngIf="dropdownOpenPayment" class="dropdown-options">
+          <div class="dropdown-menu dropdown-options" aria-labelledby="dropdownDinheiroButton">
             <div class="dropdown-option" *ngFor="let item of accountDinheiro" (click)="selectPayment(item, enumFormaPagamento.DINHEIRO)">
               <img [src]="'./assets/icons_user/' + item.nome_icone" alt="{{item.nome}}" style="width: 20px; margin-right: 8px;">
               {{ item.nome }}
@@ -179,22 +228,35 @@
 
       <!-- Débito -->
 
-      <div *ngIf="resourceFormIncomeExpense.get('forma_pagamento')?.value === enumFormaPagamento.DEBITO"  class="mb-2 custom-dropdown col-md-6 col-sm-12">
+      <div *ngIf="resourceFormIncomeExpense.get('forma_pagamento')?.value === enumFormaPagamento.DEBITO"  
+      class="mb-2 custom-dropdown col-md-6 col-sm-12">
                   
 
           <label class="f-16 d-flex align-items-center" for="id_carteira">
               <mat-icon class="color-light-1 me-1" >account_balance</mat-icon>Conta Débito <b> * </b>
           </label> 
-          <div class="form-select" (click)="toggleDropdownPayment()">
-            <img *ngIf="selectedPaymentIcon" [src]="'./assets/icons_user/' + selectedPaymentIcon" alt="Ícone" style="width: 20px; margin-right: 8px;">
-            {{ selectedPaymentName || 'Selecione uma opção' }}
+          <div class="form-select" 
+          class="form-select"
+          id="dropdownDebitoButton" 
+          data-bs-toggle="dropdown" 
+          aria-expanded="false">
+            <img *ngIf="resourceFormIncomeExpense.get('id_financeiro')?.value && selectedPaymentIcon" [src]="'./assets/icons_user/' + selectedPaymentIcon" alt="Ícone" style="width: 20px; margin-right: 8px;">
+            @if(resourceFormIncomeExpense.get('id_financeiro')?.value && selectedPaymentName){
+              {{ selectedPaymentName}}
+            }@else{
+              {{"Selecione uma opção"}}
+            }
           </div>
-          <div *ngIf="dropdownOpenPayment" class="dropdown-options">
+          <div *ngIf="accountDebito.length != 0" class="dropdown-menu dropdown-options" aria-labelledby="dropdownDebitoButton">
             <div class="dropdown-option" *ngFor="let item of accountDebito" (click)="selectPayment(item, enumFormaPagamento.DEBITO)">
               <img [src]="'./assets/icons_user/' + item.nome_icone" alt="{{item.nome}}" style="width: 20px; margin-right: 8px;">
               {{ item.nome }}
             </div>
           </div>
+          <p *ngIf="accountDebito.length == 0" class="text-danger">
+            Você não tem contas de débito. 
+            <a href="/contas">Cadastre uma</a> 
+          </p>
           <app-form-field-error [control]="resourceFormIncomeExpense.get('id_financeiro')"></app-form-field-error>
 
       </div>
@@ -220,7 +282,7 @@
           <input type="number" class="form-control" id="quantidade_parcelas" formControlName="quantidade_parcelas" placeholder="Digite a quantidade de parcelas">
           <small *ngIf="editId == null" class="text-muted">
             O valor inserido será dividido pelo número de parcelas
-           </small>
+          </small>
           <app-form-field-error [control]="resourceFormIncomeExpense.get('quantidade_parcelas')"></app-form-field-error>
         
         </div>

@@ -1,4 +1,4 @@
-import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
+import { Component, Injector} from '@angular/core';
 import { AccountService } from './shared/services/account.service';
 import { Account } from './shared/models/account.model';
 import { Validators } from '@angular/forms';
@@ -11,7 +11,7 @@ import { TipoConta } from 'src/app/shared/models/enum.model';
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent extends BaseFormComponent<Account> {
-
+ 
   tipoConta: string[] = [
     "Corrente",
     "Poupança",
@@ -45,4 +45,6 @@ export class AccountComponent extends BaseFormComponent<Account> {
     });
   }
 
+  protected override enableForm(enable: boolean): void {
+  }
 }

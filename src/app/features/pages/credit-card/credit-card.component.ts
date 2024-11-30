@@ -11,8 +11,7 @@ import { ModalComponent } from 'src/app/shared/components/modal/modal.component'
   styleUrls: ['./credit-card.component.scss']
 })
 export class CreditCardComponent  extends BaseFormComponent<CreditCard>{
-
-
+  
   constructor(
     protected readonly creditCard: CreditCardService,
     injector : Injector,
@@ -46,7 +45,7 @@ export class CreditCardComponent  extends BaseFormComponent<CreditCard>{
   ];
 
   protected getMonth(value: any) {
-    const [year1, month1, day1] = String(value).split('-').map(Number);
+    const [, month1, ] = String(value).split('-').map(Number);
     this.monthNew = this.month[month1-1];
   }
   
@@ -79,4 +78,9 @@ export class CreditCardComponent  extends BaseFormComponent<CreditCard>{
       dia_vencimento: [null, [Validators.required, Validators.min(1), Validators.max(30)]], 
     });
   }
+
+  protected override enableForm(enable: boolean): void {
+  }
+
+
 }
