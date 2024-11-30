@@ -46,5 +46,6 @@ export class AccountComponent extends BaseFormComponent<Account> {
   }
 
   protected override enableForm(enable: boolean): void {
+    console.log("enable", enable)
   }
 }
