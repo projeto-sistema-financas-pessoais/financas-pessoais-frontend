@@ -15,7 +15,6 @@ export class AuthService {
 
   constructor(
     public injector: Injector, 
-    private router: Router
   ){
     this.http = injector.get(HttpClient);    
   }

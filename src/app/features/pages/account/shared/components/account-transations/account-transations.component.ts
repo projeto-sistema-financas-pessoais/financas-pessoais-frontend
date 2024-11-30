@@ -1,8 +1,6 @@
-import { Component, Injector, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Injector } from '@angular/core';
 import { Account } from '../../models/account.model';
 import { AccountService } from '../../services/account.service';
-import { Subject, takeUntil } from 'rxjs';
 import { BaseGetIdComponent } from 'src/app/shared/components/base/base-get-id.component';
 import { TransactionList } from 'src/app/features/pages/transaction/shared/models/transation-list.model';
 

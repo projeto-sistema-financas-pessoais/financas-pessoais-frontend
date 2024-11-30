@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Register } from '../shared/models/register.model';
 import { AuthService } from '../shared/services/auth.service';
 import { Subject, takeUntil } from 'rxjs';
@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit, OnDestroy{
 
   resourceForm!: FormGroup;
 
-  private ngUnsubscribe = new Subject<void>();
+  private readonly ngUnsubscribe = new Subject<void>();
   data_nascimento!: Date
 
   constructor(

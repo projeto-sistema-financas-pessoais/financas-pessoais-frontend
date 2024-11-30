@@ -9,8 +9,7 @@ export interface Icon {
 })
 export class ImageAccountService {
 
-  // private imagePath = './assets/icons_user/';
-  private imageList: Icon[] = [
+  private readonly imageList: Icon[] = [
     { fileName: '1_pagamento.svg', displayName: 'Pagamento' },
     { fileName: '2_cartaodecredito.svg', displayName: 'Cartão de Crédito' },
     { fileName: '3_conta.svg', displayName: 'Conta' },

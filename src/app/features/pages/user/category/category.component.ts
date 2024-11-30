@@ -1,6 +1,5 @@
 import { Component, Injector } from '@angular/core';
 import { BaseFormComponent } from 'src/app/shared/components/base/base-form.component';
-import { CreditCard } from '../../credit-card/shared/models/credit-card.model';
 import { CategoryService } from '../shared/services/category.service';
 import { Validators } from '@angular/forms';
 import { Category } from '../shared/models/category.model';
@@ -35,9 +34,9 @@ export class CategoryComponent extends BaseFormComponent<Category>{
     protected readonly categoryService: CategoryService,
     protected imageIconCategoryService: ImageIconCategoryService,
     injector : Injector,
-    private router: Router,
-    private route: ActivatedRoute,
-    private location: Location
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly location: Location
 
 
      ){
@@ -61,7 +60,7 @@ export class CategoryComponent extends BaseFormComponent<Category>{
 
     this.route.queryParams.subscribe(params => {
       if (params['value']) {
-        params['value'] == "Receita" ?  this.income = true : this.income = false;
+        this.income = params['value'] === "Receita";
       }
     });
 
@@ -148,6 +147,23 @@ export class CategoryComponent extends BaseFormComponent<Category>{
     item.ativo = !item.ativo;
     this.editResource(item);
   }
+
+  protected override enableForm(enable: boolean): void {
+    if(enable){
+      this.resourceForm.get('modelo_categoria')?.enable();
+
+    }else{
+      this.resourceForm.get('modelo_categoria')?.disable();
+
+    }
+  }
  
 
+  onKeyDownModelCategory(event: KeyboardEvent, model: boolean){
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.changeModelCategory(model); 
+      event.preventDefault(); 
+    }
+
+  }
 }

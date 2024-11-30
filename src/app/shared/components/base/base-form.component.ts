@@ -78,7 +78,9 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
     this.openModalAdd = true;
     this.openModalEdit = false;
     this.openMenuGallery = false;
-    this.buildForm()
+    this.buildForm();
+    this.enableForm(true);
+
     if(this.images)
       this.imageSelected = this.images[0].fileName;
 
@@ -111,6 +113,7 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
   private loadForm(resource: T){
     this.resourceForm.patchValue(resource);
     this.imageSelected = this.resourceForm.get('nome_icone')?.value
+    this.enableForm(false);
 
   }
 
@@ -225,6 +228,22 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
     resource[`id_${this.nameId}`]  = this.idEdit;
     this.editResource(resource)
   }
+
+  onKeyPressGallery(event: KeyboardEvent): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.openGallery();
+      event.preventDefault(); // Previne o scroll ao pressionar Espaço
+    }
+  }
+
+  onKeyDown(event: KeyboardEvent, fileName: string): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.selectedIcon(fileName);
+      event.preventDefault(); // Previne o scroll ao pressionar Espaço
+    }
+  }
   protected abstract buildForm(item?:T): void;
+
+  protected abstract enableForm(enable: boolean): void;
 
 }

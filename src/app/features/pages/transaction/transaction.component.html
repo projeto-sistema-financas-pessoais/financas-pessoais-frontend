@@ -14,9 +14,19 @@
                 </button>
 
                 <div class="dropdown-menu f-16" id="dropdownMenu">
-                    <div class="dropdown-item button-cursor color-green-2" (click)="openIncome()">Receita</div>
-                    <div class="dropdown-item button-cursor color-green-2" (click)="openExpense()">Despesa</div>
-                    <div class="dropdown-item button-cursor color-green-2" (click)="openTransfer()">Transferência</div>
+                    <div class="dropdown-item button-cursor color-green-2" 
+                    (click)="openIncome()"
+                    tabindex="0" 
+                    (keyup)="onKeyDownOpenIncome($event)"
+                    >Receita</div>
+                    <div class="dropdown-item button-cursor color-green-2" 
+                    (click)="openExpense()"
+                    tabindex="0" 
+                    (keyup)="onKeyDownOpenExpense($event)">Despesa</div>
+                    <div class="dropdown-item button-cursor color-green-2" 
+                    (click)="openTransfer()"
+                    tabindex="0" 
+                    (keyup)="onKeyDownOpenTransfer($event)">Transferência</div>
 
                 </div>
         </ng-container>
@@ -25,13 +35,19 @@
 
 
         <div *ngIf="!isMobile" class=" d-flex flex-wrap justify-content-center display-none">
-            <button type="button" class="display-none btn btn-transation income my-2 ms-0 me-2" (click)="openIncome()">
+            <button type="button" class="display-none btn btn-transation income my-2 ms-0 me-2 button-cursor" 
+            (click)="openIncome()"
+            tabindex="0" 
+            (keyup)="onKeyDownOpenIncome($event)">
                 <i class="fa-solid fa-arrow-trend-up icon-size"></i>
                 <br class="display-none">
                 <span class="display-none"> Receita</span>
             </button>
     
-            <button type="button" class="display-none btn btn-transation expense m-2" (click)="openExpense()">
+            <button type="button" class="display-none btn btn-transation expense m-2 button-cursor" 
+            (click)="openExpense()"
+            tabindex="0" 
+            (keyup)="onKeyDownOpenExpense($event)">
                 <i class="fa-solid fa-arrow-trend-down icon-size" ></i>
 
                 <br class="display-none">
@@ -39,7 +55,10 @@
             </button>
     
     
-            <button type="button" class="display-none btn btn-transation transfer m-2" (click)="openTransfer()">
+            <button type="button" class="display-none btn btn-transation transfer m-2 button-cursor" 
+            (click)="openTransfer()"
+            tabindex="0" 
+            (keyup)="onKeyDownOpenTransfer($event)">
                 <i class="fa-solid fa-shuffle icon-size" ></i> 
                 <br class="display-none">
                 <span class="display-none"> Transf.</span>
@@ -70,11 +89,8 @@
         [openModalExpense]="openModalExpense"
         [selectedCategoryName]="selectedCategoryName"
         [selectedCategoryIcon]="selectedCategoryIcon"
-        [dropdownOpenCategory]="dropdownOpenCategory"
         [selectedPaymentName]="selectedPaymentName"
         [selectedPaymentIcon]="selectedPaymentIcon"
-        [dropdownOpenPayment]="dropdownOpenPayment"
-        [dropdownOpenAccountCurrent]="dropdownOpenAccountCurrent"
         [selectedAccontCurrentName]="selectedAccontCurrentName"
         [selectedAccontTransferName]="selectedAccontTransferName"
         [selectedAccontTransferIcon]="selectedAccontTransferIcon"

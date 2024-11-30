@@ -65,5 +65,11 @@
 }
 
 .menu-item:hover {
-    color: $color-green-2;; 
+    color: $color-green-2;
+}
+
+.outline:focus{
+    outline: 2px solid $color-green-2 !important;
+    outline-offset: 2px; 
+
 }

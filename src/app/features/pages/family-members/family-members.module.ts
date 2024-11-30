@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FamilyMembersComponent } from './family-members.component';
 import { FamilyMembersRoutingModule } from './family-members-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';

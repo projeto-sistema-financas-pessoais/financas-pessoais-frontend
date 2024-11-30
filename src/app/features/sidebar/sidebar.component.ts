@@ -18,7 +18,7 @@ export class SidebarComponent {
 
 
   constructor(
-    private observer: BreakpointObserver,
+    private readonly observer: BreakpointObserver,
     public authService: AuthService,
     ) {}
 

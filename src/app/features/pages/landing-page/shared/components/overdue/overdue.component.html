@@ -36,6 +36,9 @@
     
         <div class="col-md-2 d-flex justify-content-center  align-items-center gap-3">
           <div *ngIf="!item.id_fatura"
+          tabindex="0" 
+          (keydown)="onKeyDownChangeConsolidated($event, item)"
+
           (click)="changeConsolidated(item, 'overdue')" class="button-cursor text-center">
               <i *ngIf="item.consolidado" class="color-green-4 fa-solid fa-circle-check "></i>
               <i *ngIf="!item.consolidado" class="color-light-3 fa-solid fa-circle-check"></i>
@@ -102,6 +105,8 @@
         <div class="col-md-2 d-flex justify-content-center  align-items-center gap-3">
           <i class="color-green-2 f-16  ms-2 button-cursor fa-solid fa-arrow-up-right-from-square" 
           (click)="setQuery(item)"
+          tabindex="0" 
+        (keydown)="onKeyQuery($event, item)"
          ></i>
 
         </div>        
@@ -149,11 +154,8 @@
       [openModalExpense]="openModalExpense"
       [selectedCategoryName]="selectedCategoryName"
       [selectedCategoryIcon]="selectedCategoryIcon"
-      [dropdownOpenCategory]="dropdownOpenCategory"
       [selectedPaymentName]="selectedPaymentName"
       [selectedPaymentIcon]="selectedPaymentIcon"
-      [dropdownOpenPayment]="dropdownOpenPayment"
-      [dropdownOpenAccountCurrent]="dropdownOpenAccountCurrent"
       [selectedAccontCurrentName]="selectedAccontCurrentName"
       [selectedAccontTransferName]="selectedAccontTransferName"
       [selectedAccontTransferIcon]="selectedAccontTransferIcon"

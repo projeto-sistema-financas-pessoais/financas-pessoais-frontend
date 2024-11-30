@@ -21,11 +21,14 @@
     height: 50px;
     border-radius: 50%;
     background-color: $color-light-2;
-    border: 1px solid  $color-light-2;;
-
+    border: 1px solid  $color-light-2;
+    outline: none; 
 }
 
-
+.icon:focus {
+  outline: 2px solid $color-green-2;
+  outline-offset: 2px; 
+}
 
 .image-gallery {
     display: flex;
