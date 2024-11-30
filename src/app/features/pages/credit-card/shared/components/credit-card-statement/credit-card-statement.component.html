@@ -191,16 +191,19 @@
                 </p>
 
                 <div class="mb-2 custom-dropdown">
-                                
-
+        
                     <label class="f-16 d-flex align-items-center" for="id_carteira">
                         <mat-icon class="color-light-1 me-1" >account_balance</mat-icon>Conta &nbsp;<b> * </b>
                     </label> 
-                    <div class="form-select" (click)="toggleDropdownAccountCurrent()">
+                    <div class="form-select" 
+                        type="button" 
+                        id="dropdownContaButton" 
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false">
                     <img *ngIf="selectedAccontCurrentIcon" [src]="'./assets/icons_user/' + selectedAccontCurrentIcon" alt="Ícone" style="width: 20px; margin-right: 8px;">
                     {{ selectedAccontCurrentName || 'Selecione uma opção' }}
                     </div>
-                    <div *ngIf="dropdownOpenAccountCurrent" class="dropdown-options">
+                    <div class="dropdown-menu dropdown-options" aria-labelledby="dropdownContaButton" style="width: 100%;">
                     <div class="dropdown-option" *ngFor="let item of account" (click)="selectAccountCurrent(item)">
                         <img [src]="'./assets/icons_user/' + item.nome_icone" alt="{{item.nome}}" style="width: 20px; margin-right: 8px;">
                         {{ item.nome }}
@@ -210,7 +213,7 @@
 
             </span>
 
-            <div class="d-flex justify-content-evenly mt-4">
+            <div class="d-flex justify-content-evenly mt-5">
 
                 <button type="button" class="btn btn-outline-secondary f-16" (click)="modalSmall.dismiss()" >Cancelar</button>
                 <button type="button" class="btn btn-green f-16" [disabled]="!statementSend.id_conta" (click)="closeCardStatement()">Pagar</button>
