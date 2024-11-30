@@ -80,6 +80,8 @@ export class CreditCardComponent  extends BaseFormComponent<CreditCard>{
   }
 
   protected override enableForm(enable: boolean): void {
+    console.log("enable", enable)
+
   }
 
 

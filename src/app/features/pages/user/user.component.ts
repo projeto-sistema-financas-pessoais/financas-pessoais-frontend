@@ -137,5 +137,7 @@ export class UserComponent  extends BaseFormComponent<User>{
   }
 
   protected override enableForm(enable: boolean): void {
+    console.log("enable", enable)
+
   }
 }
