@@ -43,18 +43,14 @@ export abstract class BaseTransationComponent implements  OnDestroy{
 
     selectedCategoryName: string | null = null;
     selectedCategoryIcon: string | null = null;
-    dropdownOpenCategory: boolean = false;
 
     selectedPaymentName: string | null = null;
     selectedPaymentIcon: string | null = null;
-    dropdownOpenPayment: boolean = false;
 
 
-    dropdownOpenAccountCurrent: boolean = false;
     selectedAccontCurrentName: string | null = null;
     selectedAccontCurrentIcon: string | null = null;
 
-    dropdownOpenAccountTransfer: boolean = false;
     selectedAccontTransferName: string | null = null;
     selectedAccontTransferIcon: string | null = null;
 

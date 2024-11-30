@@ -27,17 +27,13 @@ export class TransactionFormComponent implements OnChanges {
 
   @Input() selectedCategoryName: string | null = null;
   @Input() selectedCategoryIcon: string | null = null;
-  @Input() dropdownOpenCategory: boolean = false;
 
   @Input() selectedPaymentName: string | null = null;
   @Input() selectedPaymentIcon: string | null = null;
-  @Input() dropdownOpenPayment: boolean = false;
 
-  @Input() dropdownOpenAccountCurrent: boolean = false
   @Input() selectedAccontCurrentName: string | null = null;
   @Input() selectedAccontCurrentIcon: string | null = null;
 
-  @Input() dropdownOpenAccountTransfer: boolean = false;
   @Input() selectedAccontTransferName: string | null = null;
   @Input() selectedAccontTransferIcon: string | null = null;
 
@@ -200,30 +196,10 @@ export class TransactionFormComponent implements OnChanges {
     return atual  == transf && atual!= null && transf !== null
   }
 
-  toggleDropdownCategory() {
-    this.dropdownOpenCategory = !this.dropdownOpenCategory;
-  }
-
-  toggleDropdownPayment(){
-    this.dropdownOpenPayment= !this.dropdownOpenPayment;
-
-  }
-
-  toggleDropdownAccountTransfer(){
-    this.dropdownOpenAccountTransfer= !this.dropdownOpenAccountTransfer;
-
-  }
-
-  toggleDropdownAccountCurrent(){
-    this.dropdownOpenAccountCurrent= !this.dropdownOpenAccountCurrent;
-
-  }
-
   selectAccountTransfer(resource: Account){
     this.selectedAccontTransferName = resource.nome;
     this.selectedAccontTransferIcon = resource.nome_icone;
     this.resourceFormTransfer.get('id_conta_transferencia')?.setValue(resource.id_conta)
-    this.dropdownOpenAccountTransfer = false;
   }
 
   selectPayment(resource: any, type: string) {
@@ -240,9 +216,6 @@ export class TransactionFormComponent implements OnChanges {
     
     this.resourceFormIncomeExpense.get('id_financeiro')?.setValue(value)
 
-    this.dropdownOpenPayment = false;
-    this.dropdownOpenCategory = false;
-
   }
 
   selectCategory(category: Category) {
@@ -250,7 +223,6 @@ export class TransactionFormComponent implements OnChanges {
     this.selectedCategoryIcon = category.nome_icone;
     this.resourceFormIncomeExpense.get('id_categoria')?.setValue(category.id_categoria)
     console.log("categoria", category, this.resourceFormIncomeExpense.get('id_categoria')?.value)
-    this.dropdownOpenCategory = false;
   }
 
 
@@ -258,7 +230,6 @@ export class TransactionFormComponent implements OnChanges {
     this.selectedAccontCurrentName = resource.nome;
     this.selectedAccontCurrentIcon = resource.nome_icone;
     this.resourceFormTransfer.get('id_conta_atual')?.setValue(resource.id_conta)
-    this.dropdownOpenAccountCurrent = false;
   }
 
   cleanSelected(){
