@@ -14,7 +14,6 @@
 
 .ellipsis {
     display: -webkit-box;
-    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     white-space: normal;    
     line-height: 1.2em;
@@ -35,14 +34,22 @@
     }
 }
 
-.overflow{
+.overflow-overdue {
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 300px;
+    position: relative !important;
 
-    @media  screen and (max-width: 801px) {
-
+    @media screen and (max-width: 801px) {
         width: 280px;
     }
-    
+}
+
+.dropdown-menu {
+    position: fixed !important;
+    z-index: 1050;
+}
+
+.btn-group {
+    position: relative;
 }

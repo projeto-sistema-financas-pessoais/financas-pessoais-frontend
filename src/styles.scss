@@ -161,8 +161,9 @@ body {
   z-index: 1000;
 }
 
-.dropdown-option:focus, .button-cursor:focus{
-  outline: 2px solid $color-green-2;
+.dropdown-option:focus-visible, 
+.button-cursor:focus-visible {
+  outline: 1px solid $color-green-2
 }
 
 .dropdown-option {
