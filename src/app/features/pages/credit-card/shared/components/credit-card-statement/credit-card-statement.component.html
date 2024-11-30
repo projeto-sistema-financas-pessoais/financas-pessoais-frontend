@@ -204,7 +204,9 @@
                     {{ selectedAccontCurrentName || 'Selecione uma opção' }}
                     </div>
                     <div class="dropdown-menu dropdown-options" aria-labelledby="dropdownContaButton" style="width: 100%;">
-                    <div class="dropdown-option" *ngFor="let item of account" (click)="selectAccountCurrent(item)">
+                    <div class="dropdown-option" *ngFor="let item of account" 
+                    (click)="selectAccountCurrent(item)"
+                    >
                         <img [src]="'./assets/icons_user/' + item.nome_icone" alt="{{item.nome}}" style="width: 20px; margin-right: 8px;">
                         {{ item.nome }}
                     </div>

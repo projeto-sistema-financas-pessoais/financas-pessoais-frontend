@@ -43,4 +43,29 @@ export class TransactionsComponent  extends BaseTransationComponent implements O
    
   }
 
+
+  onKeyDownOpenIncome(event: KeyboardEvent){
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.openIncome(); 
+      event.preventDefault(); 
+    }
+
+  }
+
+  onKeyDownOpenExpense(event: KeyboardEvent){
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.openExpense(); 
+      event.preventDefault(); 
+    }
+
+  }
+
+  onKeyDownOpenTransfer(event: KeyboardEvent){
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.openTransfer(); 
+      event.preventDefault(); 
+    }
+
+  }
+
 }

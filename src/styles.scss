@@ -24,9 +24,6 @@ b{
 }
 
 
-
-
-
 .cursor-blocked{
   cursor: not-allowed;
 }
@@ -162,6 +159,10 @@ body {
   border: 1px solid #ccc;
   background-color: white;
   z-index: 1000;
+}
+
+.dropdown-option:focus, .button-cursor:focus{
+  outline: 2px solid $color-green-2;
 }
 
 .dropdown-option {

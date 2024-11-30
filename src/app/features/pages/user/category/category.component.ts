@@ -159,4 +159,11 @@ export class CategoryComponent extends BaseFormComponent<Category>{
   }
  
 
+  onKeyDownModelCategory(event: KeyboardEvent, model: boolean){
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.changeModelCategory(model); 
+      event.preventDefault(); 
+    }
+
+  }
 }

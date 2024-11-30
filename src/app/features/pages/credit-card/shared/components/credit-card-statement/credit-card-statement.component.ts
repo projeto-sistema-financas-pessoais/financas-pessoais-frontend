@@ -225,6 +225,7 @@ export class CreditCardStatementComponent extends BaseGetIdComponent<CreditCard>
     this.statementSend.id_conta = resource.id_conta
     this.dropdownOpenAccountCurrent = false;
   }
+
 }
 
 

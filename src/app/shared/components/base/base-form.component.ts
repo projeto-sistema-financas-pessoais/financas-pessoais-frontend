@@ -228,6 +228,20 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
     resource[`id_${this.nameId}`]  = this.idEdit;
     this.editResource(resource)
   }
+
+  onKeyPressGallery(event: KeyboardEvent): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.openGallery();
+      event.preventDefault(); // Previne o scroll ao pressionar Espaço
+    }
+  }
+
+  onKeyDown(event: KeyboardEvent, fileName: string): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.selectedIcon(fileName);
+      event.preventDefault(); // Previne o scroll ao pressionar Espaço
+    }
+  }
   protected abstract buildForm(item?:T): void;
 
   protected abstract enableForm(enable: boolean): void;

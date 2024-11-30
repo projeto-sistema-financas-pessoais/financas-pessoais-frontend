@@ -104,7 +104,9 @@
                 <div class="form-group mb-2 col-md-6 col-sm-12 f-16">
                     <label for="nome">Ícone do cartão de crédito<b> * </b></label>
                     <img class="icon mx-3 button-cursor" src="./assets/icons_user/{{imageSelected}}"
-                    alt="" (click)="openGallery()">
+                    [alt]="imageSelected" (click)="openGallery()"
+                    tabindex="0"
+                    (keyup)="onKeyPressGallery($event)">
                 </div>
         
     
@@ -162,7 +164,11 @@
         <ng-template #gallery>
             <div class="image-gallery">
                 <div *ngFor="let icon of images" class="icon-item">
-                  <img  class="icon button-cursor" src="./assets/icons_user/{{icon.fileName}}" [alt]="icon.displayName"  (click)="selectedIcon(icon.fileName)"/>
+                  <img  class="icon button-cursor" 
+                  src="./assets/icons_user/{{icon.fileName}}"
+                   [alt]="icon.displayName"  (click)="selectedIcon(icon.fileName)"
+                   tabindex="0"
+                   (keyup)="onKeyDown($event, icon.fileName)"/>
                   <p>{{ icon.displayName }}</p>
                 </div>
               </div>

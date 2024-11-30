@@ -87,4 +87,19 @@ export class OverdueComponent extends BaseTransationComponent implements OnInit 
     const url = this.router.createUrlTree([`/cartao-de-credito/fatura-e-movimentacoes-do-cartao/${item.id_cartao_credito}`], { queryParams }).toString();
     window.location.href = url
   }
+
+  onKeyDownChangeConsolidated(event: KeyboardEvent, item: any): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.changeConsolidated(item, 'overdue'); 
+      event.preventDefault(); 
+    }
+  }
+
+  onKeyQuery(event: KeyboardEvent, item: FaturaInfo){
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.setQuery(item); 
+      event.preventDefault(); 
+    }
+  }
+  
 }

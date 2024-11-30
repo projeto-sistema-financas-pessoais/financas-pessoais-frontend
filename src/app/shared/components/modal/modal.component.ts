@@ -72,4 +72,20 @@ export class ModalComponent {
   return(){
     this.returnMessage.emit('return')
   }
+
+  onKeyReturn(event: KeyboardEvent){
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.return(); 
+      event.preventDefault(); 
+    }
+
+  }
+
+  onKeyDismiss(event: KeyboardEvent){
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.dismiss(); 
+      event.preventDefault(); 
+    }
+
+  }
 }
