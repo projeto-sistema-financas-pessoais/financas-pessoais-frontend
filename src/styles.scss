@@ -239,7 +239,6 @@ body {
 
 .custom-dropdown {
   position: relative;
-  // width: 100%;
   cursor: pointer;
 }
 
@@ -248,6 +247,11 @@ body {
   position: absolute;
   top: 100%;
   left: 0;
+
+  @media (max-width: 802px) {
+    width: 100%;
+  }
+
   width: 93%;
   border: 1px solid #ccc;
   background-color: white;

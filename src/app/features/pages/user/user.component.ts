@@ -6,7 +6,7 @@ import { User } from './shared/models/user.model'
 import { BaseFormComponent } from 'src/app/shared/components/base/base-form.component';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common'; 
-import { take, takeUntil } from "rxjs";
+import { takeUntil } from "rxjs";
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 
 
@@ -18,6 +18,7 @@ import { ModalComponent } from 'src/app/shared/components/modal/modal.component'
 
 })
 export class UserComponent  extends BaseFormComponent<User>{
+  
   userForm!: FormGroup;
   user!: User
 
@@ -136,4 +137,6 @@ export class UserComponent  extends BaseFormComponent<User>{
     })
   }
 
+  protected override enableForm(enable: boolean): void {
+  }
 }

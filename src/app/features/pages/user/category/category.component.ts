@@ -148,6 +148,16 @@ export class CategoryComponent extends BaseFormComponent<Category>{
     item.ativo = !item.ativo;
     this.editResource(item);
   }
+
+  protected override enableForm(enable: boolean): void {
+    if(enable){
+      this.resourceForm.get('modelo_categoria')?.enable();
+
+    }else{
+      this.resourceForm.get('modelo_categoria')?.disable();
+
+    }
+  }
  
 
 }

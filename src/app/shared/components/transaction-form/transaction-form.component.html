@@ -19,11 +19,15 @@
           <label class="f-16 d-flex align-items-center" for="id_carteira">
               <mat-icon class="color-light-1 me-1" >account_balance</mat-icon>Conta atual <b> * </b>
           </label> 
-          <div class="form-select" (click)="toggleDropdownAccountCurrent()">
+          <div class="form-select" 
+          type="button" 
+          id="dropdownContaAtualButton" 
+          data-bs-toggle="dropdown" 
+          aria-expanded="false">
             <img *ngIf="selectedAccontCurrentIcon" [src]="'./assets/icons_user/' + selectedAccontCurrentIcon" alt="Ícone" style="width: 20px; margin-right: 8px;">
             {{ selectedAccontCurrentName || 'Selecione uma opção' }}
           </div>
-          <div *ngIf="dropdownOpenAccountCurrent" class="dropdown-options">
+          <div class="dropdown-menu dropdown-options" aria-labelledby="dropdownContaAtualButton" style="width: 100%;">
             <div class="dropdown-option" *ngFor="let item of account" (click)="selectAccountCurrent(item)">
               <img [src]="'./assets/icons_user/' + item.nome_icone" alt="{{item.nome}}" style="width: 20px; margin-right: 8px;">
               {{ item.nome }}
@@ -40,20 +44,25 @@
           <label class="f-16 d-flex align-items-center" for="id_carteira">
               <mat-icon class="color-light-1 me-1" >account_balance</mat-icon>Conta destino <b> * </b>
           </label> 
-          <div class="form-select" (click)="toggleDropdownAccountTransfer()">
+          <div class="form-select" 
+          type="button" 
+          id="dropdownContaTransferenciaButton" 
+          data-bs-toggle="dropdown" 
+          aria-expanded="false">
             <img *ngIf="selectedAccontTransferIcon" [src]="'./assets/icons_user/' + selectedAccontTransferIcon" alt="Ícone" style="width: 20px; margin-right: 8px;">
             {{ selectedAccontTransferName || 'Selecione uma opção' }}
           </div>
-          <div *ngIf="dropdownOpenAccountTransfer" class="dropdown-options">
+          <div class="dropdown-menu dropdown-options" aria-labelledby="dropdownContaTransferenciaButton" style="width: 100%;">
             <div class="dropdown-option" *ngFor="let item of account" (click)="selectAccountTransfer(item)">
               <img [src]="'./assets/icons_user/' + item.nome_icone" alt="{{item.nome}}" style="width: 20px; margin-right: 8px;">
               {{ item.nome }}
             </div>
           </div>
-          <app-form-field-error [control]="resourceFormTransfer.get('id_conta_transferencia')"></app-form-field-error>
           <p class="text-danger"
           *ngIf="checkIfAccountTransf()"
           > Conta atual não pode ser igual a conta destino</p>
+          <app-form-field-error [control]="resourceFormTransfer.get('id_conta_transferencia')"></app-form-field-error>
+          
       </div>
 
       <div class="d-flex justify-content-center">
@@ -106,7 +115,8 @@
             {{"Selecione uma opção"}}
           }
         </div>
-        <ul class="dropdown-menu dropdown-options" aria-labelledby="dropdownCategoryButton">
+        <div *ngIf="(openModalExpense && categoryExpense.length != 0) || (openModalIncome && categoryIncome.length != 0)" 
+        class="dropdown-menu dropdown-options" aria-labelledby="dropdownCategoryButton">
           <ng-container *ngIf="openModalExpense; else incomeCategory">
             <div *ngFor="let item of categoryExpense">
               <div class="dropdown-option"(click)="selectCategory(item)">
@@ -123,7 +133,11 @@
               </div>
             </div>
           </ng-template>
-        </ul>
+        </div>
+        <p *ngIf="(openModalExpense && categoryExpense.length == 0) || (openModalIncome && categoryIncome.length == 0)" class="text-danger">
+          Você não tem categorias. 
+          <a href="/configuracoes-de-usuario/categorias">Cadastre uma</a> 
+        </p>
         <app-form-field-error [control]="resourceFormIncomeExpense.get('id_categoria')"></app-form-field-error>
       </div>
       
