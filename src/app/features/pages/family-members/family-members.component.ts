@@ -44,6 +44,8 @@ export class FamilyMembersComponent extends BaseFormComponent<FamilyMembers>{
   }
 
   protected override enableForm(enable: boolean): void {
+    console.log("enable", enable)
+
   }
 
 }
