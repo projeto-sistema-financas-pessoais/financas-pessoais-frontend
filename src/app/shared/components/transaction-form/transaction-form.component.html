@@ -106,7 +106,8 @@
           type="button" 
           id="dropdownCategoryButton" 
           data-bs-toggle="dropdown" 
-          aria-expanded="false">
+          aria-expanded="false"
+          tabindex ="0">
           <img *ngIf="resourceFormIncomeExpense.get('id_categoria')?.value && selectedCategoryIcon" [src]="'./assets/icones_category/' + selectedCategoryIcon" alt="Ícone da categoria" style="width: 20px; margin-right: 8px;">
 
           @if(resourceFormIncomeExpense.get('id_categoria')?.value && selectedPaymentName){
@@ -119,7 +120,7 @@
         class="dropdown-menu dropdown-options" aria-labelledby="dropdownCategoryButton">
           <ng-container *ngIf="openModalExpense; else incomeCategory">
             <div *ngFor="let item of categoryExpense">
-              <div class="dropdown-option"(click)="selectCategory(item)">
+              <div class="dropdown-option"(click)="selectCategory(item)" >
                 <img [src]="'./assets/icones_category/' + item.nome_icone" alt="{{item.nome}}" style="width: 20px; margin-right: 8px;">
                 {{ item.nome }}
               </div>
@@ -169,7 +170,8 @@
           class="form-select"
           id="dropdownCreditoButton" 
           data-bs-toggle="dropdown" 
-          aria-expanded="false">
+          aria-expanded="false"
+          tabindex ="0">
             <img *ngIf="resourceFormIncomeExpense.get('id_financeiro')?.value && selectedPaymentIcon" 
             [src]="'./assets/icons_user/' + selectedPaymentIcon" alt="Ícone" style="width: 20px; margin-right: 8px;">
             @if(resourceFormIncomeExpense.get('id_financeiro')?.value && selectedPaymentName){
@@ -206,6 +208,7 @@
           id="dropdownDinheiroButton" 
           data-bs-toggle="dropdown" 
           aria-expanded="false"
+          tabindex ="0"
           >
             <img *ngIf="resourceFormIncomeExpense.get('id_financeiro')?.value && selectedPaymentIcon" [src]="'./assets/icons_user/' + selectedPaymentIcon" alt="Ícone" style="width: 20px; margin-right: 8px;">
             @if(resourceFormIncomeExpense.get('id_financeiro')?.value && selectedPaymentName){
@@ -239,7 +242,8 @@
           class="form-select"
           id="dropdownDebitoButton" 
           data-bs-toggle="dropdown" 
-          aria-expanded="false">
+          aria-expanded="false"
+          tabindex ="0">
             <img *ngIf="resourceFormIncomeExpense.get('id_financeiro')?.value && selectedPaymentIcon" [src]="'./assets/icons_user/' + selectedPaymentIcon" alt="Ícone" style="width: 20px; margin-right: 8px;">
             @if(resourceFormIncomeExpense.get('id_financeiro')?.value && selectedPaymentName){
               {{ selectedPaymentName}}
