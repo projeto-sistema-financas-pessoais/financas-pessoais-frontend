@@ -361,6 +361,7 @@ export class TransactionFormComponent implements OnChanges {
           this.resourceFormIncomeExpense.get('valor')?.setValue(null)
           this.resourceFormIncomeExpense.get('descricao')?.setValue(null)
           this.resourceFormIncomeExpense.get('quantity_member')?.setValue("Somente eu")
+          this.divideMember.clear();
         }
         console.log('sucesso', data)
       },
