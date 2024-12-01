@@ -25,7 +25,11 @@
           data-bs-toggle="dropdown" 
           aria-expanded="false">
             <img *ngIf="selectedAccontCurrentIcon" [src]="'./assets/icons_user/' + selectedAccontCurrentIcon" alt="Ícone" style="width: 20px; margin-right: 8px;">
-            {{ selectedAccontCurrentName || 'Selecione uma opção' }}
+            @if(resourceFormTransfer.get('id_conta_atual')?.value && selectedAccontCurrentName){
+              {{ selectedAccontCurrentName}}
+            }@else{
+              {{"Selecione uma opção"}}
+            }
           </div>
           <div class="dropdown-menu dropdown-options" aria-labelledby="dropdownContaAtualButton" style="width: 100%;">
             <div class="dropdown-option" *ngFor="let item of account" (click)="selectAccountCurrent(item)">
@@ -50,7 +54,11 @@
           data-bs-toggle="dropdown" 
           aria-expanded="false">
             <img *ngIf="selectedAccontTransferIcon" [src]="'./assets/icons_user/' + selectedAccontTransferIcon" alt="Ícone" style="width: 20px; margin-right: 8px;">
-            {{ selectedAccontTransferName || 'Selecione uma opção' }}
+            @if(resourceFormTransfer.get('id_conta_transferencia')?.value && selectedAccontTransferName){
+              {{ selectedAccontTransferName}}
+            }@else{
+              {{"Selecione uma opção"}}
+            }
           </div>
           <div class="dropdown-menu dropdown-options" aria-labelledby="dropdownContaTransferenciaButton" style="width: 100%;">
             <div class="dropdown-option" *ngFor="let item of account" (click)="selectAccountTransfer(item)">
@@ -110,7 +118,7 @@
           tabindex ="0">
           <img *ngIf="resourceFormIncomeExpense.get('id_categoria')?.value && selectedCategoryIcon" [src]="'./assets/icones_category/' + selectedCategoryIcon" alt="Ícone da categoria" style="width: 20px; margin-right: 8px;">
 
-          @if(resourceFormIncomeExpense.get('id_categoria')?.value && selectedPaymentName){
+          @if(resourceFormIncomeExpense.get('id_categoria')?.value && selectedCategoryName){
             {{ selectedCategoryName}}
           }@else{
             {{"Selecione uma opção"}}
