@@ -103,10 +103,12 @@
     
                 <div class="form-group mb-2 col-md-6 col-sm-12 f-16">
                     <label for="nome">Ícone do cartão de crédito<b> * </b></label>
-                    <img class="icon mx-3 button-cursor" src="./assets/icons_user/{{imageSelected}}"
-                    [alt]="imageSelected" (click)="openGallery()"
-                    tabindex="0"
-                    (keyup)="onKeyPressGallery($event)">
+    
+
+                    <button class="custom-button icon button-cursor mx-3" (click)="openGallery()" tabindex="0">
+                        <img class="icon" src="./assets/icons_user/{{imageSelected}}" alt="Icone" (keyup)="onKeyPressGallery($event)" />
+                    </button>
+                      
                 </div>
         
     
