@@ -48,11 +48,9 @@ export class AccountTransationsComponent extends BaseGetIdComponent<Account> {
     
     if(evt){
       const datePayment = new Date(evt.data_pagamento);
-    
-      const month = datePayment.getMonth();
-      const year = datePayment.getFullYear();
-  
-      this.dateMonth = this.month[month] + " " + year
+
+      const [year, month, ] = String(evt.data_pagamento).split('-').map(Number);
+      this.dateMonth = this.month[month -1] + " " + year
       this.itemStatement = evt;
 
   
