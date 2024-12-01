@@ -4,14 +4,20 @@
 
         <div class="m-5 style-font">
             <div class="d-flex"   [ngClass]="modalConfig.canReturn ? 'justify-content-between': 'justify-content-end'">
-                <i *ngIf="modalConfig.canReturn" class="fa-solid fa-chevron-left button-cursor f-16 color-light-1"
-                 (click)="return()"
-                 tabindex="0"
-                 (keyup)="onKeyReturn($event)"></i>
-                <i class="fa-regular fa-circle-xmark button-cursor f-22 color-light-1" 
-                (click)="dismiss()"
+                <button *ngIf="modalConfig.canReturn"  class="custom-button button-cursor" tabindex="0" 
+                (click)="return()"
+                 (keyup)="onKeyReturn($event)">
+
+                <i class="fa-solid fa-chevron-left button-cursor f-16 color-light-1"
+                 ></i>
+                </button>
+                
+                <button class="custom-button button-cursor" (click)="dismiss()"
                 tabindex="0"
-                (keyup)="onKeyDismiss($event)"></i>
+                (keyup)="onKeyDismiss($event)">
+                <i class="fa-regular fa-circle-xmark button-cursor f-22 color-light-1"></i>
+                </button>
+               
             </div>
     
             <div class="d-flex justify-content-center">

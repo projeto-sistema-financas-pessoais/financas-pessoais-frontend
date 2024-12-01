@@ -1,7 +1,7 @@
 <div class="f-20 color-black-1"> {{!type ? 'Contas a pagar atrasadas' : 'Contas a receber atrasadas'}}</div>
 
 @if(transactionList.length !=0 || faturaInfo.length !=0){
-  <div class="overflow  scroll pt-3">
+  <div class="overflow-overdue scroll pt-3">
     <ng-container *ngFor="let item of transactionList; let i = index;" >
 
       <div class="d-flex justify-content-between align-items-center flex-row pt-1">
@@ -46,9 +46,13 @@
     
           </div>
     
-          <div class="btn-group f-16 text-center">
-            <i class="menu-icon fa-solid fa-ellipsis-vertical button-cursor" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-            <div class="dropdown-menu" id="dropdownMenu">
+          <div class="btn-group f-16 text-center dropdown">
+            <div class="menu-icon button-cursor" 
+
+              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-container="body">
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </div>
+            <div class="dropdown-menu dropdown-menu-end" id="dropdownMenu">
                 <a class="dropdown-item button-cursor color-green-2" (click)="openDelete(item)">
                     <i class="fa-solid fa-trash"></i> Excluir
                 </a>
@@ -57,7 +61,7 @@
                     <i class="fa-solid fa-pen-to-square" ></i> Editar
                   </a>
             </div>
-        </div>
+          </div>
           
           
       </div>
@@ -106,6 +110,7 @@
           <i class="color-green-2 f-16  ms-2 button-cursor fa-solid fa-arrow-up-right-from-square" 
           (click)="setQuery(item)"
           tabindex="0" 
+
         (keydown)="onKeyQuery($event, item)"
          ></i>
 
