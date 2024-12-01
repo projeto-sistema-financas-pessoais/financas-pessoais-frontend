@@ -134,10 +134,10 @@
     
                 <div class="form-group mb-2 col-md-6 col-sm-12">
                     <label class="f-16" for="nome">Ícone da categoria<b> * </b></label>
-                    <img class=" mx-3 button-cursor outline" src="./assets/icones_category/{{imageSelected}}"
-                    alt="" (click)="openGallery()"
-                    tabindex="0"
-                    (keyup)="onKeyPressGallery($event)">
+               
+                    <button class="custom-button  outline button-cursor mx-3" (click)="openGallery()" tabindex="0">
+                        <img class=" outline" src="./assets/icones_category/{{imageSelected}}" alt="Icone" (keyup)="onKeyPressGallery($event)" />
+                    </button>
                 </div>
         
     

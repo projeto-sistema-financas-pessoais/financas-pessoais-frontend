@@ -68,8 +68,9 @@
     color: $color-green-2;
 }
 
-.outline:focus{
+.outline:focus-visible{
     outline: 2px solid $color-green-2 !important;
     outline-offset: 2px; 
+    border-radius: 15%;
 
 }
