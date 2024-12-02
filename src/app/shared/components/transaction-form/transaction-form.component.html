@@ -115,7 +115,7 @@
           id="dropdownCategoryButton" 
           data-bs-toggle="dropdown" 
           aria-expanded="false"
-          tabindex ="0">
+          >
           <img *ngIf="resourceFormIncomeExpense.get('id_categoria')?.value && selectedCategoryIcon" [src]="'./assets/icones_category/' + selectedCategoryIcon" alt="Ícone da categoria" style="width: 20px; margin-right: 8px;">
 
           @if(resourceFormIncomeExpense.get('id_categoria')?.value && selectedCategoryName){
