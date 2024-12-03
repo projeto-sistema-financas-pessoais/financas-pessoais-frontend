@@ -6,7 +6,7 @@
         (click)="openAddModal()">
             <i class="fa-solid fa-plus f-16 mx-2 "></i> 
             
-            <span class="display-none">Adicionar novo categoria</span>
+            <span class="display-none">Adicionar nova categoria</span>
         </button>
 
     </div>
@@ -26,7 +26,7 @@
             <div class="menu-item button-cursor" 
             (click)="changeModelCategory(false)"
             tabindex="0" 
-            (keyup)="onKeyDownModelCategory($event, true)"
+            (keyup)="onKeyDownModelCategory($event, false)"
             [ngClass]="!income ? 'active': ''">
                 <h5>Despesa</h5>
                 <div *ngIf="!income" class="underline"></div>
