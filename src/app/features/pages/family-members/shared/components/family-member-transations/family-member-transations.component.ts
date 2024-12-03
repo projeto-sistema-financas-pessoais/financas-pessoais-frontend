@@ -81,15 +81,16 @@ export class FamilyMemberTransationsComponent extends BaseGetIdComponent<FamilyM
     
     if(evt){
       const datePayment = new Date(evt.data_pagamento);
-    
-      const month = datePayment.getMonth();
-      const year = datePayment.getFullYear();
+
+      const [year, month, ] = String(evt.data_pagamento).split('-').map(Number);
   
       this.memberSendEmail.ano = year;
-      this.memberSendEmail.mes = month +1;
+      this.memberSendEmail.mes = month;
       this.memberSendEmail.id_parente = this.resourceData.id_parente;
-      this.dateMonth = this.month[month] + " " + year
+      this.dateMonth = this.month[month -1] + " " + year
       this.itemStatement = evt;
+
+      console.log("mes, ano", month, year, this,this.memberSendEmail, datePayment)
 
     }else{
       this.itemStatement = undefined

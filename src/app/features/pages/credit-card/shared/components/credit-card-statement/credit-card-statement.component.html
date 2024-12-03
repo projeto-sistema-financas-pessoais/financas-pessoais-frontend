@@ -135,7 +135,6 @@
                 <button type="button" [disabled]="isButtonDisabled()"
                 (click)="openCloseCardStatement()"
                 class="btn btn-outline-secondary f-16">
-                    <!-- {{datePayment < dateToday || (dateToday.getMonth() !== datePayment.getMonth()) ? 'Antecipar pagamento' : 'Fechar fatura'}} -->
 
                     @if(checkIfDateIsLess(this.dateToday ,this.itemStatement.fatura_info?.data_fechamento  , true)){
                         Antecipar pagamento

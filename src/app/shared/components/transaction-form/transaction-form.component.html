@@ -115,7 +115,8 @@
           id="dropdownCategoryButton" 
           data-bs-toggle="dropdown" 
           aria-expanded="false"
-          tabindex ="0">
+          tabindex="0"
+          >
           <img *ngIf="resourceFormIncomeExpense.get('id_categoria')?.value && selectedCategoryIcon" [src]="'./assets/icones_category/' + selectedCategoryIcon" alt="Ícone da categoria" style="width: 20px; margin-right: 8px;">
 
           @if(resourceFormIncomeExpense.get('id_categoria')?.value && selectedCategoryName){
@@ -124,7 +125,7 @@
             {{"Selecione uma opção"}}
           }
         </div>
-        <div *ngIf="(openModalExpense && categoryExpense.length != 0) || (openModalIncome && categoryIncome.length != 0)" 
+        <div  
         class="dropdown-menu dropdown-options" aria-labelledby="dropdownCategoryButton">
           <ng-container *ngIf="openModalExpense; else incomeCategory">
             <div *ngFor="let item of categoryExpense">
@@ -185,7 +186,7 @@
             @if(resourceFormIncomeExpense.get('id_financeiro')?.value && selectedPaymentName){
               {{ selectedPaymentName}}
             }@else{
-              {{"Selecione uma opção"}}
+              Selecione uma opção
             }
           </div>
           <div *ngIf="creditCard.length != 0" class="dropdown-menu dropdown-options" aria-labelledby="dropdownCreditoButton">
@@ -222,7 +223,7 @@
             @if(resourceFormIncomeExpense.get('id_financeiro')?.value && selectedPaymentName){
               {{ selectedPaymentName}}
             }@else{
-              {{"Selecione uma opção"}}
+              Selecione uma opção
             }
             
           </div>
@@ -256,7 +257,7 @@
             @if(resourceFormIncomeExpense.get('id_financeiro')?.value && selectedPaymentName){
               {{ selectedPaymentName}}
             }@else{
-              {{"Selecione uma opção"}}
+              Selecione uma opção
             }
           </div>
           <div *ngIf="accountDebito.length != 0" class="dropdown-menu dropdown-options" aria-labelledby="dropdownDebitoButton">
@@ -313,7 +314,7 @@
 
       <ng-container *ngIf="resourceFormIncomeExpense.get('forma_pagamento')?.value !== null">
           <div class="form-group mb-2 col-md-6 col-sm-6">
-              <label  class="f-16" for="data_pagamento">Data de Pagamento <b> * </b></label>
+              <label  class="f-16" for="data_pagamento">Data<b> * </b></label>
               <input type="date" class="form-control" id="data_pagamento" formControlName="data_pagamento" >
               <app-form-field-error [control]="resourceFormIncomeExpense.get('data_pagamento')">
                   <span *ngIf="resourceFormIncomeExpense.get('data_pagamento')?.invalid && resourceFormIncomeExpense.get('data_pagamento')?.touched">. A data é inválida
