@@ -31,11 +31,33 @@
                 </div>
                 <div class="form-group mb-2">
                     <label for="senha">Senha<b> * </b></label>
-                    <input type="password" class="form-control" id="senha" formControlName="senha" placeholder="Digite sua senha" 
-                     ng-reflect-name="senha" autocomplete="current-password">
-
-                    <app-form-field-error [control]="resourceForm.get('senha')"></app-form-field-error>
-
+                    <div class="password-wrapper">
+                        <input [type]="showPassword ? 'text' : 'password'" 
+                                class="form-control pr-5" 
+                                id="senha" 
+                                formControlName="senha" 
+                                placeholder="Digite sua senha" 
+                                ng-reflect-name="senha" 
+                                autocomplete="current-password">
+                        <button type="button" class="btn-eye position-absolute" (click)="togglePasswordVisibility('password')">
+                            <i class="fa" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+                        </button>
+                    </div>
+                        <app-form-field-error [control]="resourceForm.get('senha')"></app-form-field-error>
+                </div>
+                <div class="form-group mb-2 position-relative">
+                    <label for="confirmPassword">Confirme a Senha<b> * </b></label>
+                    <div class="password-wrapper">
+                    <input [type]="showConfirmPassword ? 'text' : 'password'" 
+                           class="form-control pr-5" 
+                           id="confirmPassword" 
+                           formControlName="confirmPassword" 
+                           placeholder="Confirme sua nova senha">
+                    <button type="button" class="btn-eye position-absolute" (click)="togglePasswordVisibility('confirmPassword')">
+                        <i class="fa" [ngClass]="showConfirmPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+                    </button>
+                    </div>
+                    <app-form-field-error [control]="resourceForm.get('confirmPassword')"></app-form-field-error>
                 </div>
                 <div class="d-flex justify-content-center">
                     <button type="submit" [disabled]="resourceForm.invalid" class=" btn btn-green btn-block btn-lg" >Cadastrar</button>
