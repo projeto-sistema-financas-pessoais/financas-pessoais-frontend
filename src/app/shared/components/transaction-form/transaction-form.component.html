@@ -3,7 +3,7 @@
   <form [formGroup]="resourceFormTransfer" (submit)="editId == null ? addTransationTransfer(true) : editTransation()">
       <div class="form-group mb-2">
           <label class="f-16" for="valor_tranferencia">Valor da transferência<b> * </b></label>
-          <input type="number" class="form-control" id="valor_tranferencia" formControlName="valor" placeholder="Digite o valor da transferência">
+          <input type="text" appCurrencyInput class="form-control" id="valor_tranferencia" formControlName="valor" placeholder="Digite o valor da transferência">
           <app-form-field-error [control]="resourceFormTransfer.get('nome')"></app-form-field-error>
       </div>
 
@@ -88,7 +88,7 @@
           <label class="f-16" for="valor">
             {{(editId != null || editId != undefined) && resourceFormIncomeExpense.get('condicao_pagamento')?.value == enumCondicaoPagamento.PARCELADO ? 'Valor da Parcela' : 'Valor'}}
             <b> * </b></label>
-          <input type="number" class="form-control" id="valor" formControlName="valor" [placeholder]=" openModalExpense ? 'Digite o valor da despesa': 'Digite o valor da receita' ">
+          <input type="text" appCurrencyInput class="form-control" id="valor" formControlName="valor" [placeholder]=" openModalExpense ? 'Digite o valor da despesa': 'Digite o valor da receita' ">
           <app-form-field-error [control]="resourceFormIncomeExpense.get('valor')"></app-form-field-error>
       </div>
 
@@ -358,7 +358,7 @@
 
                       <div class="form-group mb-2 col-md-6 col-sm-12">
                           <label class="f-16" for="valor-{{i}}">Valor<b> * </b></label>
-                          <input type="number" class="form-control" id="valor-{{i}}" formControlName="valor_parente" placeholder="Digite o valor da despesa">
+                          <input type="text" appCurrencyInput class="form-control" id="valor-{{i}}" formControlName="valor_parente" placeholder="Digite o valor da despesa">
                           <app-form-field-error [control]="resourceFormIncomeExpense.get('valor_parente')"></app-form-field-error>
                       </div>
 

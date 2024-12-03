@@ -259,7 +259,7 @@ export class TransactionFormComponent implements OnChanges {
   }
 
   
-  createDivideMember(memberId: number | null, value: number): FormGroup{
+  createDivideMember(memberId: number | null, value: string): FormGroup{
     return this.formBuilder.group({
       id_parente: [memberId, Validators.required],
       valor_parente: [value, Validators.required],
@@ -290,7 +290,7 @@ export class TransactionFormComponent implements OnChanges {
         }        const value = Number(valueSend.toFixed(2))
         memberId = this.member[i].id_parente || null
 
-        this.divideMember.push(this.createDivideMember(memberId, value));
+        this.divideMember.push(this.createDivideMember(memberId, String(value)));
       }
     }
   }
