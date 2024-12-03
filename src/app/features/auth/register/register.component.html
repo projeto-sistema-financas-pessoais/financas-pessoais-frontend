@@ -57,10 +57,13 @@
                         <i class="fa" [ngClass]="showConfirmPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
                     </button>
                     </div>
+                    <p *ngIf="checkPassword()" class="text-danger">
+                        As senhas não coincidem
+                    </p>
                     <app-form-field-error [control]="resourceForm.get('confirmPassword')"></app-form-field-error>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="submit" [disabled]="resourceForm.invalid" class=" btn btn-green btn-block btn-lg" >Cadastrar</button>
+                    <button type="submit" [disabled]="resourceForm.invalid || resourceForm.get('senha')?.value !== resourceForm.get('confirmPassword')?.value" class=" btn btn-green btn-block btn-lg" >Cadastrar</button>
     
                 </div>
             </form>

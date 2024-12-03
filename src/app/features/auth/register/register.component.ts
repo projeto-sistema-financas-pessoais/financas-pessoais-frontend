@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit, OnDestroy{
       data_nascimento: [null, [Validators.required ]],
       email: [null, [Validators.required, Validators.email]],
       senha: [null, [Validators.required, Validators.minLength(6)]],
-      confirmPassword: [null, [Validators.required]]
+      confirmPassword: [null, [Validators.required, Validators.minLength(6)]]
     });
   }
 
@@ -88,5 +88,10 @@ export class RegisterComponent implements OnInit, OnDestroy{
     } else if (field === 'confirmPassword') {
       this.showConfirmPassword = !this.showConfirmPassword;
     }
+  }
+
+  checkPassword(){
+    return this.resourceForm.get('confirmPassword')?.value.length >= 6 &&  
+    this.resourceForm.get('confirmPassword')?.value !==  this.resourceForm.get('senha')?.value;
   }
 }

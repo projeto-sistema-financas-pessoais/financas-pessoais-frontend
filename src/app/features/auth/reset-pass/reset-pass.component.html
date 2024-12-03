@@ -32,6 +32,9 @@
                                 <i class="fa" [ngClass]="showConfirmPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
                             </button>
                             </div>
+                            <p *ngIf="checkPassword()" class="text-danger">
+                                As senhas não coincidem
+                            </p>
                             <app-form-field-error [control]="resourceForm.get('confirmPassword')"></app-form-field-error>
                         </div>
                         

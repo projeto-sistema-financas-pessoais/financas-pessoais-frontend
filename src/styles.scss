@@ -55,6 +55,11 @@ b{
   border-color: $color-green-2;
 }
 
+@-moz-document url-prefix() {
+  body {
+    font-family: "Arial", sans-serif !important; /* Fonte específica para o Firefox */
+  }
+}
 
 body { 
   margin: 0;

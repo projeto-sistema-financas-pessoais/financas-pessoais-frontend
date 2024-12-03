@@ -35,7 +35,7 @@ export class ResetPassComponent implements OnInit {
   protected buildResourceForm(): void {
     this.resourceForm = this.formBuilder.group({
       novaSenha: [null, [Validators.required, Validators.minLength(6)]],
-      confirmPassword: [null, [Validators.required]]
+      confirmPassword: [null, [Validators.required, Validators.minLength(6)]]
     });
   }
 
@@ -70,6 +70,12 @@ export class ResetPassComponent implements OnInit {
     } else if (field === 'confirmPassword') {
       this.showConfirmPassword = !this.showConfirmPassword;
     }
+  }
+
+
+  checkPassword(){
+    return this.resourceForm.get('confirmPassword')?.value.length >= 6 &&  
+    this.resourceForm.get('confirmPassword')?.value !==  this.resourceForm.get('novaSenha')?.value;
   }
 }
 
