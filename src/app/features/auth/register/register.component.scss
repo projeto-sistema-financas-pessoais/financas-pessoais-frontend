@@ -1,11 +1,44 @@
 @import 'src/styles.scss';
 
-.card{
-    border-color:transparent;
+.card {
+    border-color: transparent;
     box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.1);
-
 }
 
-a{
+.position-relative {
+    position: relative;
+}
+
+a {
     color: $color-green-3;
-  }
+}
+
+.btn-eye {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #125342;
+    z-index: 2; // Garante que fique acima de outros elementos
+}
+
+.btn-eye:focus {
+    outline: none;
+}
+
+.fa-eye,
+.fa-eye-slash {
+    font-size: 0.8rem;
+    color: #125342;
+}
+
+.password-wrapper {
+    position: relative;
+
+    input {
+        padding-right: 40px; // Espaço para o botão de olho
+    }
+}
