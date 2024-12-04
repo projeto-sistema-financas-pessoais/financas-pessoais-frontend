@@ -15,6 +15,7 @@ import { SidebarComponent } from './features/sidebar/sidebar.component';
 import { InterceptorService } from './core/guards/interceptor.service';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    TooltipModule.forRoot(),
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()), 

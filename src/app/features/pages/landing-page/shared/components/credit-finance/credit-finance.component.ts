@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { CreditCard } from 'src/app/features/pages/credit-card/shared/models/credit-card.model';
 import { CreditCardService } from 'src/app/features/pages/credit-card/shared/services/credit-card.service';
@@ -34,6 +35,8 @@ export class CreditFinanceComponent implements OnInit {
 
   constructor(
     protected readonly creditCardService: CreditCardService,
+    private readonly router: Router,
+
   ) { }
 
 
@@ -71,5 +74,9 @@ export class CreditFinanceComponent implements OnInit {
         console.log("error to get all", error)
       }
     })
+  }
+
+  navigateCreateCreditCard(){
+    localStorage.setItem('openModal', JSON.stringify('true'));
   }
 }

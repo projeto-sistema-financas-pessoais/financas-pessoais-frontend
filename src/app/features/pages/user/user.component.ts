@@ -31,7 +31,6 @@ export class UserComponent  extends BaseFormComponent<User>{
     protected readonly userService: UserService,
     protected readonly authService: AuthService,
     injector : Injector,
-    private readonly router: Router,
      ){
   
     super(injector, new User({}), 'usuario', 'Usuário', userService);
@@ -68,10 +67,6 @@ export class UserComponent  extends BaseFormComponent<User>{
 
       }
     })
-  }
-
-  navigateToPage() {
-    this.router.navigate(['/configuracoes-de-usuario/categorias']);
   }
 
   protected openDelete(email: User["email"]){

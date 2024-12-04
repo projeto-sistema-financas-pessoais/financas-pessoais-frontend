@@ -3,7 +3,7 @@
   <form [formGroup]="resourceFormTransfer" (submit)="editId == null ? addTransationTransfer(true) : editTransation()">
       <div class="form-group mb-2">
           <label class="f-16" for="valor_tranferencia">Valor da transferência<b> * </b></label>
-          <input type="number" class="form-control" id="valor_tranferencia" formControlName="valor" placeholder="Digite o valor da transferência">
+          <input type="text" appCurrencyInput class="form-control" id="valor_tranferencia" formControlName="valor" placeholder="Digite o valor da transferência">
           <app-form-field-error [control]="resourceFormTransfer.get('nome')"></app-form-field-error>
       </div>
 
@@ -96,7 +96,7 @@
           <label class="f-16" for="valor">
             {{(editId != null || editId != undefined) && resourceFormIncomeExpense.get('condicao_pagamento')?.value == enumCondicaoPagamento.PARCELADO ? 'Valor da Parcela' : 'Valor'}}
             <b> * </b></label>
-          <input type="number" class="form-control" id="valor" formControlName="valor" [placeholder]=" openModalExpense ? 'Digite o valor da despesa': 'Digite o valor da receita' ">
+          <input type="text" appCurrencyInput class="form-control" id="valor" formControlName="valor" [placeholder]=" openModalExpense ? 'Digite o valor da despesa': 'Digite o valor da receita' ">
           <app-form-field-error [control]="resourceFormIncomeExpense.get('valor')"></app-form-field-error>
       </div>
 
@@ -144,9 +144,10 @@
             </div>
           </ng-template>
         </div>
-        <p *ngIf="(openModalExpense && categoryExpense.length == 0) || (openModalIncome && categoryIncome.length == 0)" class="text-danger">
+        <p *ngIf="(openModalExpense && categoryExpense.length == 0) || (openModalIncome && categoryIncome.length == 0)" 
+        class="text-danger">
           Você não tem categorias. 
-          <a href="/configuracoes-de-usuario/categorias">Cadastre uma</a> 
+          <a href="/configuracoes-de-usuario/categorias" (click)="navigateCreate()">Cadastre uma</a> 
         </p>
         <app-form-field-error [control]="resourceFormIncomeExpense.get('id_categoria')"></app-form-field-error>
       </div>
@@ -197,7 +198,7 @@
           </div>
           <p *ngIf="creditCard.length == 0" class="text-danger">
             Você não tem cartões de crédito. 
-            <a href="/cartao-de-credito">Cadastre um</a> 
+            <a href="/cartao-de-credito" (click)="navigateCreate()">Cadastre um</a> 
           </p>
           <app-form-field-error [control]="resourceFormIncomeExpense.get('id_financeiro')"></app-form-field-error>
 
@@ -268,7 +269,7 @@
           </div>
           <p *ngIf="accountDebito.length == 0" class="text-danger">
             Você não tem contas de débito. 
-            <a href="/contas">Cadastre uma</a> 
+            <a href="/contas" (click)="navigateCreate()">Cadastre uma</a> 
           </p>
           <app-form-field-error [control]="resourceFormIncomeExpense.get('id_financeiro')"></app-form-field-error>
 
@@ -367,7 +368,7 @@
 
                       <div class="form-group mb-2 col-md-6 col-sm-12">
                           <label class="f-16" for="valor-{{i}}">Valor<b> * </b></label>
-                          <input type="number" class="form-control" id="valor-{{i}}" formControlName="valor_parente" placeholder="Digite o valor da despesa">
+                          <input type="text" appCurrencyInput class="form-control" id="valor-{{i}}" formControlName="valor_parente" placeholder="Digite o valor da despesa">
                           <app-form-field-error [control]="resourceFormIncomeExpense.get('valor_parente')"></app-form-field-error>
                       </div>
 

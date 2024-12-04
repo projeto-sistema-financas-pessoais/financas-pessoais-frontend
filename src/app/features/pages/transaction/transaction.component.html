@@ -14,16 +14,16 @@
                 </button>
 
                 <div class="dropdown-menu f-16" id="dropdownMenu">
-                    <div class="dropdown-item button-cursor color-green-2" 
+                    <div class="dropdown-item button-cursor color-green-6" 
                     (click)="openIncome()"
                     tabindex="0" 
                     (keyup)="onKeyDownOpenIncome($event)"
                     >Receita</div>
-                    <div class="dropdown-item button-cursor color-green-2" 
+                    <div class="dropdown-item button-cursor color-green-6" 
                     (click)="openExpense()"
                     tabindex="0" 
                     (keyup)="onKeyDownOpenExpense($event)">Despesa</div>
-                    <div class="dropdown-item button-cursor color-green-2" 
+                    <div class="dropdown-item button-cursor color-green-6" 
                     (click)="openTransfer()"
                     tabindex="0" 
                     (keyup)="onKeyDownOpenTransfer($event)">Transferência</div>
@@ -38,30 +38,36 @@
             <button type="button" class="display-none btn btn-transation income my-2 ms-0 me-2 button-cursor" 
             (click)="openIncome()"
             tabindex="0" 
-            (keyup)="onKeyDownOpenIncome($event)">
+            (keyup)="onKeyDownOpenIncome($event)"
+            tooltip="Adicionar nova despesa" container="body" placement="bottom" [delay]="800">
                 <i class="fa-solid fa-arrow-trend-up icon-size"></i>
                 <br class="display-none">
-                <span class="display-none"> Receita</span>
+                <span class="display-none"> Nova Receita</span>
             </button>
     
             <button type="button" class="display-none btn btn-transation expense m-2 button-cursor" 
             (click)="openExpense()"
             tabindex="0" 
-            (keyup)="onKeyDownOpenExpense($event)">
+            (keyup)="onKeyDownOpenExpense($event)"
+            tooltip="Adicionar nova despesa" container="body" placement="bottom" [delay]="800">
+
                 <i class="fa-solid fa-arrow-trend-down icon-size" ></i>
 
+
                 <br class="display-none">
-                <span class="display-none "> Despesa</span>
+                <span class="display-none "> Nova Despesa</span>
             </button>
     
     
             <button type="button" class="display-none btn btn-transation transfer m-2 button-cursor" 
             (click)="openTransfer()"
             tabindex="0" 
-            (keyup)="onKeyDownOpenTransfer($event)">
+            (keyup)="onKeyDownOpenTransfer($event)"
+            tooltip="Adicionar nova transferência" container="body" placement="bottom" [delay]="800">
+
                 <i class="fa-solid fa-shuffle icon-size" ></i> 
                 <br class="display-none">
-                <span class="display-none"> Transf.</span>
+                <span class="display-none"> Nova Transf.</span>
             </button>
 
         </div>

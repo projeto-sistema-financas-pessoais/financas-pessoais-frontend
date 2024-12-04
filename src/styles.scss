@@ -12,14 +12,31 @@ b{
 
 .h-100{
     min-height: 91vh;
+    @media  screen and (max-width: 1440px) {
+
+      min-height: 90vh;
+  
+    }
 }
 
 .full-screen{
   min-height: 91vh;
+
+  @media  screen and (max-width: 1440px) {
+
+    min-height: 90vh;
+
+  }
 }
 
 .full-screen-login{
   min-height: 91vh;
+
+  @media  screen and (max-width: 1440px) {
+
+    min-height: 90vh;
+
+  }
   min-width: 100vw;
 }
 
@@ -55,6 +72,11 @@ b{
   border-color: $color-green-2;
 }
 
+@-moz-document url-prefix() {
+  body {
+    font-family: "Arial", sans-serif !important; /* Fonte específica para o Firefox */
+  }
+}
 
 body { 
   margin: 0;
@@ -200,4 +222,38 @@ html, body { height: 100%; }
 
 .scroll::-webkit-scrollbar-thumb {
   border-radius: 4px; 
+}
+
+
+::ng-deep .tooltip-inner {
+  background-color: $color-black-1 !important; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+
+  color: white !important;
+  font-family: 'Open Sans', sans-serif !important; 
+  font-size: 12px !important; 
+  opacity: 1 !important;
+  
+}
+
+:ng-deep .bs-tooltip-top .arrow::before,
+::ng-deep .bs-tooltip-auto[x-placement^="top"] .arrow::before {
+    border-top-color: $color-black-1 !important;
+}
+
+
+
+/* Right */
+::ng-deep .bs-tooltip-right .arrow::before,
+::ng-deep .bs-tooltip-auto[x-placement^="right"] .arrow::before {
+  border-right-color: $color-black-1 !important; /* Cor da seta */
+  opacity: 1 !important; /* Opacidade da seta */
+}
+
+
+::ng-deep .bs-tooltip-left .arrow::before,
+::ng-deep .bs-tooltip-auto[x-placement^="left"] .arrow::before {
+  border-left-color: $color-black-1 !important; /* Cor da seta */
+  opacity: 1 !important; /* Opacidade da seta */
 }

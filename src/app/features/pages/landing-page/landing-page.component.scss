@@ -20,3 +20,34 @@ mat-button-toggle-group {
     margin-left: 12px;
   }
   
+
+
+
+  .menu {
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.menu-item {
+    // margin: 0 10px; 
+    cursor: pointer; 
+    color: $color-green-2; 
+
+}
+
+.menu-item.active h5 {
+    color: $color-green-2; 
+    font-weight: bold; 
+}
+
+.underline {
+    height: 3px; 
+    background-color: $color-green-2;  
+    width: 100%; 
+    transition: width 0.3s; 
+}
+
+.menu-item:hover {
+    color: $color-green-2; 
+}
