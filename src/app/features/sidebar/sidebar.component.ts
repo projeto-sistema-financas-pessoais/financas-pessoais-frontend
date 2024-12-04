@@ -28,8 +28,8 @@ export class SidebarComponent {
         this.isMobile = true;
       } else {
         this.isMobile = false;
-        const colapse = JSON.parse(localStorage.getItem('collapsed')!) as string;
-        this.isCollapsed = colapse == 'true'
+        const colapse = JSON.parse(localStorage.getItem('collapsed')!) as boolean;
+        this.isCollapsed = colapse
       }
 
     });
@@ -54,6 +54,8 @@ export class SidebarComponent {
     }
 
     localStorage.setItem('collapsed', JSON.stringify(this.isCollapsed));
+
+    console.log("this.is collaspse", this.isCollapsed)
 
   }
 
