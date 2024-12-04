@@ -9,6 +9,7 @@ import { FamilyMembers } from 'src/app/features/pages/family-members/shared/mode
 import { Category } from 'src/app/features/pages/user/shared/models/category.model';
 import { CondicaoPagamento, FormaPagamento, TipoConta, TipoMovimentacao, TipoRecorrencia } from '../../models/enum.model';
 import { CreditCard } from 'src/app/features/pages/credit-card/shared/models/credit-card.model';
+import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-transaction-form',
@@ -352,6 +353,7 @@ export class TransactionFormComponent implements OnChanges {
     .subscribe({
       next:(data) => {
         this.alertService.showAlertSuccess("Sucesso ao salvar nova despesa!")
+  
         if(reload){
           setTimeout(() =>{
             window.location.reload();
@@ -440,6 +442,7 @@ export class TransactionFormComponent implements OnChanges {
 
   submitIncomeExpense(){
 
+    
     if (this.editId != null) {
       this.editTransation();
       return;
@@ -450,7 +453,15 @@ export class TransactionFormComponent implements OnChanges {
     } else {
       this.addTransationIncome(true);
     }
+
+    localStorage.setItem('openModal', JSON.stringify('false'));
+
     
+  }
+
+  navigateCreate(){
+    localStorage.setItem('openModal', JSON.stringify('true'));
+
   }
 
 

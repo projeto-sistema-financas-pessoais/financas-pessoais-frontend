@@ -63,6 +63,8 @@ export class ModalComponent {
 
   async dismiss(): Promise<void> {
     
+    localStorage.setItem('openModal', JSON.stringify(false));
+
     this.modalRef?.dismiss()
     this.modalRef = null;
 

@@ -1,4 +1,4 @@
-import { Directive, Injector, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Directive, Injector, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { Subject, takeUntil } from "rxjs";
 import { Icon, ImageAccountService } from "../../services/image-account.service";
 import { FormBuilder, FormGroup } from "@angular/forms";
@@ -10,7 +10,7 @@ import { BaseModel } from "../../models/base/base-model.model";
 import { HttpErrorResponse } from "@angular/common/http";
 
 @Directive()
-export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, OnDestroy{
+export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, OnDestroy, AfterViewInit{
 
   protected ngUnsubscribe = new Subject<void>();
   modalConfig! : ModalConfig;
@@ -45,6 +45,13 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
     this.imageListService = this.injector.get(ImageAccountService)
     this.alertService = this.injector.get(AlertModalService)
   }
+  ngAfterViewInit(): void {
+    const open = JSON.parse(localStorage.getItem('openModal')!) as string;
+
+    if (open == 'true'){
+      this.openAddModal();
+    }  
+  }
 
   ngOnInit(): void {
     this.images = this.imageListService.getImages();
@@ -52,7 +59,6 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
 
     this.getAll(false);
     this.buildForm();
-
   }
 
   ngOnDestroy(): void {
@@ -149,6 +155,7 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
     .subscribe({
       next: () =>{
         console.log("criada!")
+        this.modalDefault.dismiss();
         window.location.reload()
       },
       error: (error: HttpErrorResponse) => {

@@ -114,7 +114,7 @@
     
                 <div class="form-group mb-2 f-16">
                     <label for="limite">Limite <b> * </b></label>
-                    <input type="number" class="form-control" id="limite" formControlName="limite" placeholder="Digite o limite do cartão">
+                    <input type="text" appCurrencyInput class="form-control" id="limite" formControlName="limite" placeholder="Digite o limite do cartão">
                     <app-form-field-error [control]="resourceForm.get('limite')"></app-form-field-error>
                 </div>
 

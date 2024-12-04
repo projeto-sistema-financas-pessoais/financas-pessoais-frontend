@@ -52,6 +52,7 @@ export class LoginComponent {
           localStorage.setItem('access_token', JSON.stringify(response.access_token));
           localStorage.setItem('user_name', JSON.stringify(response.name));
           localStorage.setItem('email', JSON.stringify(this.resourceForm.get('email')?.value));
+          localStorage.setItem('collapsed', JSON.stringify('true'));
 
           console.log("login response", response)
           this.alertService.showAlertSuccess("Sucesso ao fazer login")
