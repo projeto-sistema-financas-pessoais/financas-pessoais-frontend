@@ -1,5 +1,8 @@
 <div class="f-20 color-black-1 d-flex align-items-center"> Fatura {{monthStatement}}
-  <i class="color-green-2 f-16  ms-2 button-cursor fa-solid fa-arrow-up-right-from-square" [routerLink]="'/cartao-de-credito'"></i>
+
+  <a [routerLink]="'/cartao-de-credito'">
+    <i class="color-green-2 f-16  ms-2 button-cursor  fa-solid fa-chevron-right "  ></i>
+  </a>
 </div>
 
 @if(creditCard.length !=0){
@@ -42,7 +45,7 @@
 
   <div class="f-14 color-light-1 py-4 d-flex justify-content-center">
     <span >Você não possui cartões de crédito.
-      <a [routerLink]="'/cartao-de-credito'">Crie uma novo </a>
+      <a [routerLink]="'/cartao-de-credito'" (click)="navigateCreateCreditCard()">Crie um novo. </a>
     </span>  
 
   </div>

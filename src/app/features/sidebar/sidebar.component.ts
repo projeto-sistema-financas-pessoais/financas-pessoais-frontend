@@ -14,7 +14,7 @@ export class SidebarComponent {
   sidenav!: MatSidenav;
   isMobile: boolean = true;
   isCollapsed: boolean  = true;
-
+  chargeHtml: boolean = false;
 
 
   constructor(
@@ -28,8 +28,20 @@ export class SidebarComponent {
         this.isMobile = true;
       } else {
         this.isMobile = false;
+        const colapse = JSON.parse(localStorage.getItem('collapsed')!) as boolean;
+        this.isCollapsed = colapse
       }
+
     });
+
+
+    setTimeout( () =>{
+      this.chargeHtml = true;
+
+    },500)
+
+    
+    
   }
 
   toggleMenu() {
@@ -40,9 +52,16 @@ export class SidebarComponent {
       this.sidenav.open(); // On desktop/tablet, the menu can never be fully closed
       this.isCollapsed = !this.isCollapsed;
     }
+
+    localStorage.setItem('collapsed', JSON.stringify(this.isCollapsed));
+
+    console.log("this.is collaspse", this.isCollapsed)
+
   }
 
   logout(){
     this.authService.logout();
   }
+
+
 }

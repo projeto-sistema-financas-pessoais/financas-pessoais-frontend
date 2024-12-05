@@ -1,4 +1,4 @@
-<div class="f-20 color-black-1"> {{!type ? 'Contas a pagar atrasadas' : 'Contas a receber atrasadas'}}</div>
+<div class="f-20 color-black-1"> {{!type ? 'Contas a pagar' : 'Contas a receber'}}</div>
 
 @if(transactionList.length !=0 || faturaInfo.length !=0){
   <div class="overflow-overdue scroll pt-3">
@@ -86,7 +86,7 @@
           
           <div class="text-start">
             <div class="ms-3 color-black-1 f-16 ellipsis">Fatura de {{getMonth(item.data_fechamento)}}</div>
-            <div class="ms-3 color-light-1 f-16 ">{{item.data_fechamento  | formatday}}</div>
+            <div class="ms-3 color-light-1 f-16 ">{{item.data_vencimento  | formatday}}</div>
     
           </div>
     
@@ -128,8 +128,8 @@
 }@else {
 
   <div class="f-14 color-light-1 py-4 d-flex justify-content-center">
-    <span >Você não possui {{type? 'receitas': 'despesas'}} atrasadas.  
-    
+    <span >Você não possui {{type? 'receitas': 'despesas'}} pendentes.  
+    <a [routerLink]="'/movimentacoes'" (click)="navigateTransation()"> Cadastre uma nova {{type? 'receita': 'despesa'}}.</a>
     </span>  
 
   </div>

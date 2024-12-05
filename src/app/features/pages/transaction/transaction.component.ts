@@ -1,5 +1,5 @@
 import { BaseTransationComponent } from 'src/app/shared/components/base/base-transation.component';
-import { Component, Injector, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Injector, OnInit } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 
@@ -8,7 +8,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
   templateUrl: './transaction.component.html',
   styleUrls: ['./transaction.component.scss']
 })
-export class TransactionsComponent  extends BaseTransationComponent implements OnInit{
+export class TransactionsComponent  extends BaseTransationComponent implements OnInit, AfterViewInit{
 
   nameUser!: string
 
@@ -26,6 +26,18 @@ export class TransactionsComponent  extends BaseTransationComponent implements O
 
     super(injector);
 
+  }
+  ngAfterViewInit(): void {
+    const open = JSON.parse(localStorage.getItem('openModal')!) as string;
+
+    if (open == 'income'){
+      this.openIncome();
+    }    
+
+    if (open == 'expense'){
+      this.openExpense();
+    }    
+  
   }
 
   ngOnInit(): void {

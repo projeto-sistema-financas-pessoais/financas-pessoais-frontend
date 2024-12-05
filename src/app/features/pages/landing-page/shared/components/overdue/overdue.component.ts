@@ -102,4 +102,11 @@ export class OverdueComponent extends BaseTransationComponent implements OnInit 
     }
   }
   
+  navigateTransation(){
+    if(this.type)
+      localStorage.setItem('openModal', JSON.stringify('income'));
+    else
+      localStorage.setItem('openModal', JSON.stringify('expense'));
+
+  }
 }

@@ -15,7 +15,8 @@ import { AlertModalService } from 'src/app/shared/services/alert-modal.service';
 export class RegisterComponent implements OnInit, OnDestroy{
 
   resourceForm!: FormGroup;
-
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
   private readonly ngUnsubscribe = new Subject<void>();
   data_nascimento!: Date
 
@@ -40,6 +41,7 @@ export class RegisterComponent implements OnInit, OnDestroy{
       data_nascimento: [null, [Validators.required ]],
       email: [null, [Validators.required, Validators.email]],
       senha: [null, [Validators.required, Validators.minLength(6)]],
+      confirmPassword: [null, [Validators.required, Validators.minLength(6)]]
     });
   }
 
@@ -79,5 +81,17 @@ export class RegisterComponent implements OnInit, OnDestroy{
       }
     })
 
+  }
+  togglePasswordVisibility(field: string) {
+    if (field === 'password') {
+      this.showPassword = !this.showPassword;
+    } else if (field === 'confirmPassword') {
+      this.showConfirmPassword = !this.showConfirmPassword;
+    }
+  }
+
+  checkPassword(){
+    return this.resourceForm.get('confirmPassword')?.value.length >= 6 &&  
+    this.resourceForm.get('confirmPassword')?.value !==  this.resourceForm.get('senha')?.value;
   }
 }

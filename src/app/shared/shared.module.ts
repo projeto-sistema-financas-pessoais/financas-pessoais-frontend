@@ -13,6 +13,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { FirstTwoWordsPipe } from './pipes/format-name.pipe';
 import { DeleteTransationComponent } from './components/delete-transation/delete-transation.component';
 import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
+import { CurrencyInputDirective } from './services/currency-input.directive';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { TransactionFormComponent } from './components/transaction-form/transact
     FirstTwoWordsPipe,
     TransactionListComponent,
     DeleteTransationComponent,
-    TransactionFormComponent
+    TransactionFormComponent,
+    CurrencyInputDirective
   ],
   imports: [
     CommonModule,
@@ -50,7 +52,8 @@ import { TransactionFormComponent } from './components/transaction-form/transact
     TransactionListComponent,
     FirstTwoWordsPipe,
     DeleteTransationComponent,
-    TransactionFormComponent
+    TransactionFormComponent,
+    CurrencyInputDirective
 
 
 

@@ -152,9 +152,11 @@
                 </div>
 
                 <div *ngIf="resourceForm.get('modelo_categoria')?.value == 'Despesa'" class="form-group mb-2">
-                    <label class="f-16" for="valor_categoria">Meta de gastos da categoria</label>
-                    <input type="number" class="form-control" id="valor_categoria" formControlName="valor_categoria" placeholder="Meta de gastos">
-                    <app-form-field-error [control]="resourceForm.get('tipo_categoria')"></app-form-field-error>
+                    <div class="f-16">
+                        <label for="valor_categoria">Meta de gastos da categoria</label>
+                        <input type="text" appCurrencyInput class="form-control" id="valor_categoria" formControlName="valor_categoria" placeholder="Meta de gastos">
+                        <app-form-field-error [control]="resourceForm.get('valor_categoria')"></app-form-field-error>
+                    </div>
                 </div>
             </div>
 

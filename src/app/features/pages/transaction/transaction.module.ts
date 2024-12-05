@@ -4,6 +4,7 @@ import { TransactionsRoutingModule } from './transaction-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 
 @NgModule({
@@ -14,7 +15,9 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     SharedModule,
     TransactionsRoutingModule,
     FormsModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    TooltipModule.forRoot(),
+
     
 
   ]
