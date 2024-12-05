@@ -146,6 +146,14 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
     this.imageSelected = value
   }
 
+  updateName(){
+    if(this.openModalEdit){
+      this.modalConfig.modalTitle = `Editar ${this.nameComplete}`
+    }else{
+      this.modalConfig.modalTitle = `Adicionar ${this.nameComplete}`
+
+    }
+  }
 
   protected addResource(){
     let resource = Object.assign({}, this.resourceForm.value);

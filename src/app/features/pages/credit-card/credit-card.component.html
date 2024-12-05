@@ -87,7 +87,7 @@
 </div>
 
 
-<app-modal #modal_default [modalConfig]="modalConfig" (returnMessage)="this.openMenuGallery = false; this.modalConfig.canReturn = false;"   (dismiss)="this.openModalEdit = false; this.focusedField = null">
+<app-modal #modal_default [modalConfig]="modalConfig" (returnMessage)="this.openMenuGallery = false; this.modalConfig.canReturn = false; updateName()"   (dismiss)="this.openModalEdit = false; this.focusedField = null">
 
     <div modal-generic-content class="pt-3">
 
