@@ -56,7 +56,7 @@ export class CurrencyInputDirective implements ControlValueAccessor {
   }
 
   private toDisplayFormat(value: string): string {
-    console.log("value", value)
+    // console.log("value", value)
     return String(value).replace('.', ',');
   }
 

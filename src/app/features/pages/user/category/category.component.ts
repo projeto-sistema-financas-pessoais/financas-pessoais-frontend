@@ -49,7 +49,7 @@ export class CategoryComponent extends BaseFormComponent<Category>{
       tipo_categoria: ["", [Validators.required]],
       modelo_categoria: ["", [Validators.required]],
       nome_icone: [this.imageSelected, [Validators.required]],
-      valor_categoria: [null]
+      valor_categoria: ['']
 
     });
   }
