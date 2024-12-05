@@ -136,7 +136,7 @@ export abstract class BaseFormComponent<T extends BaseModel> implements OnInit, 
 
   protected selectedIcon(value: string, ){
     this.modalConfig = {
-      modalTitle: `Adicionar ${this.nameComplete}`,
+      modalTitle:  this.openModalEdit ? `Editar ${this.nameComplete}`:   `Adicionar ${this.nameComplete}`,
       canReturn: false
     }
     this.openMenuGallery = false;
