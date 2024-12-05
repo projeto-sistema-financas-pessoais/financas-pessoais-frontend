@@ -262,7 +262,7 @@ export abstract class BaseTransationComponent implements  OnDestroy{
 
   protected buildFormTransfer(): void {
     this.resourceFormTransfer = this.formBuilder.group({
-      valor: [null, [Validators.required]],
+      valor: ['', [Validators.required]],
       descricao: [null,  [Validators.maxLength(30)]],
       id_conta_atual: [null, [Validators.required]],
       id_conta_transferencia: [null, [Validators.required]],
@@ -274,7 +274,7 @@ export abstract class BaseTransationComponent implements  OnDestroy{
     let date = new Date().toISOString();
     let data_pagamento = new Date().toLocaleDateString('en-CA')
     this.resourceFormIncomeExpense = this.formBuilder.group({
-      valor: [null, [Validators.required]],
+      valor: ['', [Validators.required]],
       descricao: [null,  [Validators.maxLength(30)]],
       id_categoria: [null, [Validators.required]],
       id_financeiro: [null, [Validators.required]],

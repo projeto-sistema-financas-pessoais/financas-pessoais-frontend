@@ -71,7 +71,7 @@ export class CreditCardComponent  extends BaseFormComponent<CreditCard>{
     }
     this.resourceForm = this.formBuilder.group({
       nome: [null, [Validators.required]],
-      limite: [null, [Validators.required]],
+      limite: ['', [Validators.required]],
       nome_icone: [this.imageSelected, [Validators.required]],
       ativo: [true],
       dia_fechamento: [null, [Validators.required, Validators.min(1), Validators.max(30)]], 
